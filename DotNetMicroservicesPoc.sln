@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetMicroservicesPoc", "DotNetMicroservicesPoc\DotNetMicroservicesPoc.csproj", "{5F1FDFCC-FAD9-41F0-B696-1BCB55A95E5F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService", "PricingService\PricingService.csproj", "{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService.Test", "PricingService.Test\PricingService.Test.csproj", "{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5F1FDFCC-FAD9-41F0-B696-1BCB55A95E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F1FDFCC-FAD9-41F0-B696-1BCB55A95E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F1FDFCC-FAD9-41F0-B696-1BCB55A95E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F1FDFCC-FAD9-41F0-B696-1BCB55A95E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
