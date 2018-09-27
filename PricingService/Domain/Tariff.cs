@@ -9,21 +9,28 @@ namespace PricingService.Domain
     {
         public string Code { get; private set; }
         private List<BasePremiumCalculationRule> basePremiumRules;
+        private List<DiscountMarkupRule> discountMarkupRules;
+
+        public BasePremiumCalculationRuleList BasePremiumRules => new BasePremiumCalculationRuleList(basePremiumRules);
+
+        public DiscountMarkupRuleList DiscountMarkupRules => new DiscountMarkupRuleList(discountMarkupRules);
 
         public Tariff(string code)
         {
             Code = code;
             this.basePremiumRules = new List<BasePremiumCalculationRule>();
+            this.discountMarkupRules = new List<DiscountMarkupRule>();
         }
 
         public Calculation CalculatePrice(Calculation calculation)
         {
             CalcBasePrices(calculation);
-            calculation.UpdateTotal();
+            ApplyDiscounts(calculation);
+            UpdateTotals(calculation);
             return calculation;
         }
 
-        public BasePremiumCalculationRuleList BasePremiumRules => new BasePremiumCalculationRuleList(basePremiumRules);
+        
 
         private void CalcBasePrices(Calculation calculation)
         {
@@ -31,6 +38,16 @@ namespace PricingService.Domain
             {
                 cover.SetPrice(BasePremiumRules.CalculateBasePriceFor(cover,calculation));
             }
+        }
+
+        private void ApplyDiscounts(Calculation calculation)
+        {
+            DiscountMarkupRules.Apply(calculation);
+        }
+
+        private void UpdateTotals(Calculation calculation)
+        {
+            calculation.UpdateTotal();
         }
     }
 }

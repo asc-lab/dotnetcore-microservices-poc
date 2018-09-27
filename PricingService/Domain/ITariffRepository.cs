@@ -10,5 +10,6 @@ namespace PricingService.Domain
         Tariff WithCode(string code);
 
         void Add(Tariff tariff);
+        bool Exists(string code);
     }
 }

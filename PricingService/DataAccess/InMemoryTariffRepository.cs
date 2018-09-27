@@ -16,6 +16,11 @@ namespace PricingService.DataAccess
             db.Add(tariff.Code, tariff);
         }
 
+        public bool Exists(string code)
+        {
+            return db.ContainsKey(code);
+        }
+
         public Tariff WithCode(string code)
         {
             return db[code];

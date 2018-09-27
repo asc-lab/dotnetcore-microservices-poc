@@ -28,19 +28,19 @@ namespace PricingService.Domain
             if (IsNullOrEmpty(ApplyIfFormula))
                 return true;
 
-            var parameters = calculation.ToCalculationParams();
+            var (paramDefinitions,values) = calculation.ToCalculationParams();
             return (bool)new Interpreter()
-                .Parse(ApplyIfFormula, parameters.Item1.ToArray())
-                .Invoke(parameters.Item2.ToArray());
+                .Parse(ApplyIfFormula, paramDefinitions.ToArray())
+                .Invoke(values.ToArray());
         }
 
         public decimal CalculateBasePrice(Calculation calculation)
         {
-            var parameters = calculation.ToCalculationParams();
+            var (paramDefinitions, values) = calculation.ToCalculationParams();
 
             return (decimal)new Interpreter()
-                .Parse(BasePriceFormula, parameters.Item1.ToArray())
-                .Invoke(parameters.Item2.ToArray());
+                .Parse(BasePriceFormula, paramDefinitions.ToArray())
+                .Invoke(values.ToArray());
         }
 
     }

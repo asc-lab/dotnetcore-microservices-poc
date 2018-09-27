@@ -17,7 +17,13 @@ namespace PricingService.Init
 
         public void Seed()
         {
-            allTariffs.Add(DemoTariffFactory.Travel());
+            if (!allTariffs.Exists("TRI")) allTariffs.Add(DemoTariffFactory.Travel());
+
+            if (!allTariffs.Exists("HSI")) allTariffs.Add(DemoTariffFactory.House());
+
+            if (!allTariffs.Exists("FAI")) allTariffs.Add(DemoTariffFactory.Farm());
+
+            if (!allTariffs.Exists("CAR")) allTariffs.Add(DemoTariffFactory.Car());
         }
     }
 }
