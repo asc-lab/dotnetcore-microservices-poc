@@ -16,4 +16,8 @@
     <ProjectReference Include="..\PricingService\PricingService.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

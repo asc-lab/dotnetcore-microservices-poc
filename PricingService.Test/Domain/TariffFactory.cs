@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PricingService.Domain;
 
-namespace PricingService.Init
+namespace PricingService.Test.Domain
 {
-    using Domain;
-
-    internal static class DemoTariffFactory
+    internal static class TariffFactory
     {
         internal static Tariff Travel()
         {

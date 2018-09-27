@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using PricingService.Api.Commands;
 using PricingService.Domain;
 using System;
@@ -12,6 +13,7 @@ namespace PricingService.Commands
     public class CalculatePriceHandler : IRequestHandler<CalculatePriceCommand, CalculatePriceResult>
     {
         private ITariffRepository allTariffs;
+        private CalculatePriceCommandValidator commandValidator = new CalculatePriceCommandValidator(); 
 
         public CalculatePriceHandler(ITariffRepository allTariffs)
         {
@@ -20,6 +22,8 @@ namespace PricingService.Commands
 
         public async Task<CalculatePriceResult> Handle(CalculatePriceCommand cmd, CancellationToken cancellationToken)
         {
+            commandValidator.ValidateAndThrow(cmd);
+
             Tariff tariff = allTariffs.WithCode(cmd.ProductCode);
 
             var calculation = tariff.CalculatePrice(ToCalculation(cmd));
