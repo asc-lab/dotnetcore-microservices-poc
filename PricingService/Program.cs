@@ -15,15 +15,7 @@ namespace PricingService
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
-            {
-                var initializer = scope.ServiceProvider.GetService<Init.DataLoader>();
-                initializer.Seed();
-            }
-
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

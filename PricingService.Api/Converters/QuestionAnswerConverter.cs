@@ -24,7 +24,19 @@ namespace PricingService.Api.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var questionAnswer = value as QuestionAnswer;
+            if (questionAnswer!=null)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("questionCode");
+                serializer.Serialize(writer, questionAnswer.QuestionCode);
+                writer.WritePropertyName("questionType");
+                serializer.Serialize(writer, questionAnswer.QuestionType);
+                writer.WritePropertyName("answer");
+                serializer.Serialize(writer, questionAnswer.GetAnswer());
+                writer.WriteEndObject();
+            }
+            
         }
 
         QuestionAnswer Create(Type objectType, JObject jsonObject)
