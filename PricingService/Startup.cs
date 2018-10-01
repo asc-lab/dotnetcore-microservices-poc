@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PricingService.Configuration;
+using PricingService.DataAccess.Marten;
 using PricingService.Init;
 
 namespace PricingService
@@ -34,7 +34,8 @@ namespace PricingService
                 {
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
                 });
-            services.AddPricingDataAccess();
+            
+            services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPricingDemoInitializer();
             services.AddMediatR();
             

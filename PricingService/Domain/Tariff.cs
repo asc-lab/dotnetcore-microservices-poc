@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,16 +8,21 @@ namespace PricingService.Domain
 {
     public class Tariff
     {
+        public Guid Id { get; private set; }
         public string Code { get; private set; }
+        [JsonProperty]
         private List<BasePremiumCalculationRule> basePremiumRules;
+        [JsonProperty]
         private List<DiscountMarkupRule> discountMarkupRules;
 
+        [JsonIgnore]
         public BasePremiumCalculationRuleList BasePremiumRules => new BasePremiumCalculationRuleList(basePremiumRules);
-
+        [JsonIgnore]
         public DiscountMarkupRuleList DiscountMarkupRules => new DiscountMarkupRuleList(discountMarkupRules);
 
         public Tariff(string code)
         {
+            Id = Guid.NewGuid();
             Code = code;
             this.basePremiumRules = new List<BasePremiumCalculationRule>();
             this.discountMarkupRules = new List<DiscountMarkupRule>();

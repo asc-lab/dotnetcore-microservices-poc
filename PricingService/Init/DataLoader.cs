@@ -8,22 +8,24 @@ namespace PricingService.Init
 {
     public class DataLoader
     {
-        private ITariffRepository allTariffs;
+        private IUnitOfWork unitOfWork;
 
-        public DataLoader(ITariffRepository allTariffs)
+        public DataLoader(IUnitOfWork unitOfWork)
         {
-            this.allTariffs = allTariffs;
+            this.unitOfWork = unitOfWork;
         }
 
         public void Seed()
         {
-            if (!allTariffs.Exists("TRI")) allTariffs.Add(DemoTariffFactory.Travel());
+            if (!unitOfWork.Tariffs.Exists("TRI")) unitOfWork.Tariffs.Add(DemoTariffFactory.Travel());
 
-            if (!allTariffs.Exists("HSI")) allTariffs.Add(DemoTariffFactory.House());
+            if (!unitOfWork.Tariffs.Exists("HSI")) unitOfWork.Tariffs.Add(DemoTariffFactory.House());
 
-            if (!allTariffs.Exists("FAI")) allTariffs.Add(DemoTariffFactory.Farm());
+            if (!unitOfWork.Tariffs.Exists("FAI")) unitOfWork.Tariffs.Add(DemoTariffFactory.Farm());
 
-            if (!allTariffs.Exists("CAR")) allTariffs.Add(DemoTariffFactory.Car());
+            if (!unitOfWork.Tariffs.Exists("CAR")) unitOfWork.Tariffs.Add(DemoTariffFactory.Car());
+
+            unitOfWork.CommitChanges();
         }
     }
 }
