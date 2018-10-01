@@ -19,7 +19,7 @@ namespace PricingService.Test.Controllers
         }
 
         [Fact]
-        public async void CanCallPricing()
+        public async void PriceForTravelPolicyIsCorrect()
         {
             var client = factory.CreateClient();
 
@@ -37,7 +37,18 @@ namespace PricingService.Test.Controllers
                 }
             });
 
-            Equal(98M, response.TotalPrice);
+            True(response.Success);
+            Equal(98M, response.Data.TotalPrice);
+        }
+
+        [Fact]
+        public async void CommandIsProperlyValidated()
+        {
+            var client = factory.CreateClient();
+            var response = await client.DoPostAsync<CalculatePriceResult>("/api/Pricing", new CalculatePriceCommand { });
+
+            False(response.Success);
+            Equal("400", response.ErrorCode);
         }
     }
 }

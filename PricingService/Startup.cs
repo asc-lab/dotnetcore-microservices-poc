@@ -11,8 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
 using PricingService.Init;
+using GlobalExceptionHandler.WebApi;
 
 namespace PricingService
 {
@@ -38,17 +40,14 @@ namespace PricingService
             services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPricingDemoInitializer();
             services.AddMediatR();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+            app.UseGlobalExceptionHandler(cfg => cfg.MapExceptions());
+            if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }
