@@ -15,6 +15,7 @@ using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
 using PricingService.Init;
 using GlobalExceptionHandler.WebApi;
+using PricingService.Infrastructure;
 
 namespace PricingService
 {
@@ -40,7 +41,7 @@ namespace PricingService
             services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPricingDemoInitializer();
             services.AddMediatR();
-
+            services.AddLogingBehaviour();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
