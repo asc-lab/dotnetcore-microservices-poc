@@ -1,4 +1,5 @@
-﻿using PricingService.Api.Commands;
+﻿using Microsoft.Extensions.Configuration;
+using PricingService.Api.Commands;
 using RestEase;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace PolicyService.RestClients
     {
         private readonly IPricingClient restEasyClient;
 
-        public PricingClient()
+        public PricingClient(IConfiguration configuration)
         {
-            this.restEasyClient = RestClient.For<IPricingClient>("https://localhost:5001/api/pricing");
+            this.restEasyClient = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
         }
 
         public Task<CalculatePriceResult> CalculatePrice([Body] CalculatePriceCommand cmd)

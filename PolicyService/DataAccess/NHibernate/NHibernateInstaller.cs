@@ -14,7 +14,7 @@ namespace PolicyService.DataAccess.NHibernate
 {
     public static class NHibernateInstaller
     {
-        public static IServiceCollection AddNHibernate(this IServiceCollection services)
+        public static IServiceCollection AddNHibernate(this IServiceCollection services,string cnString)
         {
             var cfg = new Configuration();
 
@@ -26,7 +26,7 @@ namespace PolicyService.DataAccess.NHibernate
                 db.BatchSize = 500;
                 db.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
                 db.LogSqlInConsole = false;
-                db.ConnectionString = @"Server=localhost\SQLEXPRESS;Database=lab_policy_service;Trusted_Connection=True;";
+                db.ConnectionString = cnString;
                 db.Timeout = 30;/*seconds*/
             });
 
@@ -38,7 +38,6 @@ namespace PolicyService.DataAccess.NHibernate
 
             services.AddSingleton<ISessionFactory>(cfg.BuildSessionFactory());
 
-            //services.AddScoped<ISession>(svc => svc.GetService<ISessionFactory>().OpenSession());
             services.AddSingleton<IUnitOfWorkProvider, UnitOfWorkProvider>();
 
             return services;

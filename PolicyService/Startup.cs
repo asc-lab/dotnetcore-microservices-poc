@@ -31,7 +31,7 @@ namespace PolicyService
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR();
             services.AddPricingRestClient();
-            services.AddNHibernate();
+            services.AddNHibernate(Configuration.GetConnectionString("DefaultConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

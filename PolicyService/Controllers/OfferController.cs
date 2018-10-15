@@ -19,39 +19,12 @@ namespace PolicyService.Controllers
             this.bus = bus;
         }
 
-
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/values
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateOfferCommand cmd)
         {
             var result = await bus.Send(cmd);
             return new JsonResult(result);
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
