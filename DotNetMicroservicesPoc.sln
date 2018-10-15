@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService", "PricingService\PricingService.csproj", "{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricingService", "PricingService\PricingService.csproj", "{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService.Test", "PricingService.Test\PricingService.Test.csproj", "{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricingService.Test", "PricingService.Test\PricingService.Test.csproj", "{B403DB5E-05C1-4D8E-BF31-AEBBCB3C04D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService.Api", "PricingService.Api\PricingService.Api.csproj", "{77EAC85D-CE6F-4996-9ADC-932A28053D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricingService.Api", "PricingService.Api\PricingService.Api.csproj", "{77EAC85D-CE6F-4996-9ADC-932A28053D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicyService.Api", "PolicyService.Api\PolicyService.Api.csproj", "{A2A29E24-DC5B-453D-8514-D3DDF79B284F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicyService", "PolicyService\PolicyService.csproj", "{36EC8F58-0207-4E6D-B574-C2CD24DE023C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicyService.Tests", "PolicyService.Tests\PolicyService.Tests.csproj", "{3D15ED2D-92CD-46C4-9321-D32263809143}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{77EAC85D-CE6F-4996-9ADC-932A28053D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77EAC85D-CE6F-4996-9ADC-932A28053D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77EAC85D-CE6F-4996-9ADC-932A28053D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A29E24-DC5B-453D-8514-D3DDF79B284F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A29E24-DC5B-453D-8514-D3DDF79B284F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A29E24-DC5B-453D-8514-D3DDF79B284F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A29E24-DC5B-453D-8514-D3DDF79B284F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36EC8F58-0207-4E6D-B574-C2CD24DE023C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36EC8F58-0207-4E6D-B574-C2CD24DE023C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36EC8F58-0207-4E6D-B574-C2CD24DE023C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36EC8F58-0207-4E6D-B574-C2CD24DE023C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D15ED2D-92CD-46C4-9321-D32263809143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D15ED2D-92CD-46C4-9321-D32263809143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D15ED2D-92CD-46C4-9321-D32263809143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D15ED2D-92CD-46C4-9321-D32263809143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

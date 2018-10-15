@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json;
-using PricingService.Api.Converters;
+using PolicyService.Api.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PricingService.Api.Commands.Dto
+namespace PolicyService.Api.Commands.Dtos
 {
     [JsonConverter(typeof(QuestionAnswerConverter))]
     public abstract class QuestionAnswer
     {
         public string QuestionCode { get; set; }
-        public abstract QuestionType QuestionType {get; }
+        public abstract QuestionType QuestionType { get; }
         public abstract Object GetAnswer();
-        
+
     }
 
     public enum QuestionType
