@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Polly;
 using PricingService.Api.Commands;
 using RestEase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PolicyService.RestClients
@@ -18,6 +20,10 @@ namespace PolicyService.RestClients
     {
         private readonly IPricingClient restEasyClient;
 
+        private static Policy retryPolicy = Policy
+            .Handle<HttpRequestException>()
+            .WaitAndRetryAsync(retryCount: 3, sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(3));
+
         public PricingClient(IConfiguration configuration)
         {
             this.restEasyClient = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
@@ -25,7 +31,8 @@ namespace PolicyService.RestClients
 
         public Task<CalculatePriceResult> CalculatePrice([Body] CalculatePriceCommand cmd)
         {
-            return this.restEasyClient.CalculatePrice(cmd);
+            return retryPolicy.ExecuteAsync(async () => await this.restEasyClient.CalculatePrice(cmd));
+            //return this.restEasyClient.CalculatePrice(cmd);
         }
     }
 }
