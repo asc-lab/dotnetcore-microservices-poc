@@ -13,14 +13,18 @@ namespace PolicyService.DataAccess.NHibernate
         private readonly ISession session;
         private readonly ITransaction tx;
         private readonly OfferRepository offerRepository;
+        private readonly PolicyRepository policyRepository;
 
         public IOfferRepository Offers => offerRepository;
+
+        public IPolicyRepository Policies => policyRepository;
 
         public UnitOfWork(ISessionFactory sessionFactory)
         {
             session = sessionFactory.OpenSession();
             tx = session.BeginTransaction();
             offerRepository = new OfferRepository(session);
+            policyRepository = new PolicyRepository(session);
         }
 
         public void CommitChanges()

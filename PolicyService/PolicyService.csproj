@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <None Remove="Domain\Offer.hbm.xml" />
+    <None Remove="Domain\Policy.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Domain\Policy.hbm.xml" />
     <EmbeddedResource Include="Domain\Offer.hbm.xml" />
   </ItemGroup>
 
@@ -20,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="NHibernate" Version="5.1.3" />
     <PackageReference Include="Polly" Version="6.1.0" />
     <PackageReference Include="RestEase" Version="1.4.7" />

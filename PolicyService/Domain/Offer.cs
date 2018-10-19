@@ -75,9 +75,17 @@ namespace PolicyService.Domain
 
         protected Offer() { } //NH required
 
-        public virtual void Convert()
+        public virtual Policy Buy(PolicyHolder customer)
         {
+            if (IsExpired(DateTimeOffset.Now))
+                throw new ApplicationException($"Offer {Number} has expired");
 
+            if (Status != OfferStatus.New)
+                throw new ApplicationException($"Offer {Number} is not in new status and connot be bought");
+
+            Status = OfferStatus.Converted;
+
+            return new Policy(customer, this);
         }
 
         public virtual bool IsExpired(DateTimeOffset theDate)

@@ -10,6 +10,8 @@ namespace PolicyService.Domain
     {
         IOfferRepository Offers { get; }
 
+        IPolicyRepository Policies { get; }
+
         void CommitChanges();
     }
 

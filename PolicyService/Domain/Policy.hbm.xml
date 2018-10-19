@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PolicyService" namespace="PolicyService.Domain">
+  <typedef name="PolicyStatus" class="NHibernate.Type.EnumStringType`1[[PolicyService.Domain.PolicyStatus, PolicyService]], NHibernate" />
+
+  <class  name="Policy" table="dbo.policies">
+    <id name="Id" column="id">
+      <generator class="guid.comb" />
+    </id>
+    <property name="Number" column="number"/>
+    <property name="ProductCode" column="product_code"/>
+    <property name="Status" column="status" type="PolicyStatus"/>
+    <property name="CreateionDate" column="creation_date"/>
+    <bag name="Versions" table="dbo.policy_versions" lazy="true" inverse="true" cascade="all-delete-orphan" access="field.camelcase">
+      <key column="policy_id"/>
+      <one-to-many class="PolicyVersion"/>
+    </bag>
+  </class>
+
+  <class  name="PolicyVersion" table="dbo.policy_versions">
+    <id name="Id" column="id">
+      <generator class="guid.comb" />
+    </id>
+    <many-to-one name="Policy" column="policy_id" />
+    <property name="VersionNumber" column="version_number"/>
+    <component name="CoverPeriod">
+      <property name="ValidFrom" column="cover_from"/>
+      <property name="ValidTo" column="cover_to"/>
+    </component>
+    <component name="VersionValidityPeriod">
+      <property name="ValidFrom" column="valid_from"/>
+      <property name="ValidTo" column="valid_to"/>
+    </component>
+    <component name="PolicyHolder">
+      <property name="FirstName" column="holder_first_name"/>
+      <property name="LastName" column="holder_last_name"/>
+      <property name="Pesel" column="holder_tax_id"/>
+    </component>
+    <property name="TotalPremiumAmount" column="total_premium"/>
+    <bag name="Covers" access="field.camelcase" table="dbo.policy_covers" lazy="true">
+      <key>
+        <column name="policy_version_id" />
+      </key>
+      <composite-element class="PolicyService.Domain.Cover, PolicyService">
+        <property name="Code" column="cover_code"/>
+        <property name="Price" column="price"/>
+      </composite-element>
+    </bag>
+  </class>
+</hibernate-mapping>
