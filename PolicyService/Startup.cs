@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PolicyService.Api.Events;
 using PolicyService.DataAccess.NHibernate;
+using PolicyService.Messaging.RabbitMq;
 using PolicyService.RestClients;
 
 namespace PolicyService
@@ -32,6 +34,7 @@ namespace PolicyService
             services.AddMediatR();
             services.AddPricingRestClient();
             services.AddNHibernate(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddRabbit();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

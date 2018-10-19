@@ -16,6 +16,8 @@ using PaymentService.Infrastructure;
 using PaymentService.Init;
 using GlobalExceptionHandler.WebApi;
 using PaymentService.Configuration;
+using PolicyService.Api.Events;
+using PaymentService.Messaging.RabbitMq;
 
 namespace PaymentService
 {
@@ -42,6 +44,7 @@ namespace PaymentService
             services.AddPaymentDemoInitializer();
             services.AddMediatR();
             services.AddLogingBehaviour();
+            services.AddRabbitListeners();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +59,7 @@ namespace PaymentService
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseInitializer();
+            app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
         }
     }
 }
