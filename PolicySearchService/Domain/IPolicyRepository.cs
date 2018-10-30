@@ -7,7 +7,7 @@ namespace PolicySearchService.Domain
 {
     public interface IPolicyRepository
     {
-        void Add(Policy policy);
+        Task Add(Policy policy);
 
         Task<List<Policy>> Find(string queryText);
     }

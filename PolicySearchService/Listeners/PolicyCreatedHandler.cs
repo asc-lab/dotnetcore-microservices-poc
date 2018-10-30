@@ -18,9 +18,9 @@ namespace PolicySearchService.Listeners
             this.policis = policis;
         }
 
-        public Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
+        public async Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
         {
-            policis.Add(new Policy
+            await policis.Add(new Policy
             {
                 PolicyNumber = notification.PolicyNumber,
                 PolicyStartDate = notification.PolicyFrom,
@@ -29,8 +29,6 @@ namespace PolicySearchService.Listeners
                 PolicyHolder = $"{notification.PolicyHolder.FirstName} {notification.PolicyHolder.LastName}",
                 PremiumAmount = notification.TotalPremium,
             });
-
-            return Task.CompletedTask;
         }
     }
 }

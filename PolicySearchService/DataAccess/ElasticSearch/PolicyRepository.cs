@@ -16,9 +16,9 @@ namespace PolicySearchService.DataAccess.ElasticSearch
             this.elasticClient = elasticClient;
         }
 
-        public void Add(Policy policy)
+        public async Task Add(Policy policy)
         {
-            elasticClient.IndexDocument(policy);
+            await elasticClient.IndexDocumentAsync(policy);
         }
 
         public async Task<List<Policy>> Find(string queryText)
