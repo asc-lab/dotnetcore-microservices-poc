@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Api", "Payme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Test", "PaymentService.Test\PaymentService.Test.csproj", "{3CF089DC-942E-49CF-8A08-0C742B74CAA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicySearchService.Api", "PolicySearchService.Api\PolicySearchService.Api.csproj", "{61711E87-3DBB-42B2-BF55-A81D7C816A30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicySearchService", "PolicySearchService\PolicySearchService.csproj", "{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{3CF089DC-942E-49CF-8A08-0C742B74CAA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CF089DC-942E-49CF-8A08-0C742B74CAA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CF089DC-942E-49CF-8A08-0C742B74CAA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61711E87-3DBB-42B2-BF55-A81D7C816A30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61711E87-3DBB-42B2-BF55-A81D7C816A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61711E87-3DBB-42B2-BF55-A81D7C816A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61711E87-3DBB-42B2-BF55-A81D7C816A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
