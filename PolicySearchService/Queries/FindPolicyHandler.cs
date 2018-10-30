@@ -18,16 +18,16 @@ namespace PolicySearchService.Queries
             this.policis = policis;
         }
 
-        public Task<FindPolicyResult> Handle(FindPolicyQuery request, CancellationToken cancellationToken)
+        public async Task<FindPolicyResult> Handle(FindPolicyQuery request, CancellationToken cancellationToken)
         {
-            var searchResults = policis.Find(request.QueryText);
+            var searchResults = await policis.Find(request.QueryText);
 
             return FindPolicyResult(searchResults);
         }
 
-        private Task<FindPolicyResult> FindPolicyResult(List<Policy> searchResults)
+        private FindPolicyResult FindPolicyResult(List<Policy> searchResults)
         {
-            var result = new FindPolicyResult
+            return new FindPolicyResult
             {
                 Policies = searchResults.Select(p => new Api.Queries.Dtos.PolicyDto
                 {
@@ -40,7 +40,6 @@ namespace PolicySearchService.Queries
                 })
                 .ToList()
             };
-            return Task.FromResult(result);
         }
     }
 }

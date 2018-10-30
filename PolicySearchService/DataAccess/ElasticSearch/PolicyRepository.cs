@@ -21,10 +21,10 @@ namespace PolicySearchService.DataAccess.ElasticSearch
             elasticClient.IndexDocument(policy);
         }
 
-        public List<Policy> Find(string queryText)
+        public async Task<List<Policy>> Find(string queryText)
         {
-            return elasticClient
-                .Search<Policy>(
+            var result = await elasticClient
+                .SearchAsync<Policy>(
                     s =>
                         s.From(0)
                         .Size(10)
@@ -35,8 +35,9 @@ namespace PolicySearchService.DataAccess.ElasticSearch
                                 .Type(TextQueryType.BestFields)
                                 .Fuzziness(Fuzziness.Auto)
                             )
-                    ))
-                    .Documents.ToList();
+                    ));
+
+           return result.Documents.ToList();
         }
     }
 }

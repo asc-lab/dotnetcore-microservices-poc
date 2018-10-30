@@ -9,6 +9,6 @@ namespace PolicySearchService.Domain
     {
         void Add(Policy policy);
 
-        List<Policy> Find(string queryText);
+        Task<List<Policy>> Find(string queryText);
     }
 }
