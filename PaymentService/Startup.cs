@@ -11,11 +11,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using PaymentService.DataAccess.Marten;
 using PaymentService.Infrastructure;
 using PaymentService.Init;
 using GlobalExceptionHandler.WebApi;
 using PaymentService.Configuration;
+using PaymentService.DataAccess.EF;
+using PaymentService.Domain;
 using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
 
@@ -40,10 +41,11 @@ namespace PaymentService
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
                 });
 
-            services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddEf(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPaymentDemoInitializer();
             services.AddMediatR();
             services.AddLogingBehaviour();
+            services.AddSingleton<PolicyAccountNumberGenerator>();
             services.AddRabbitListeners();
         }
 

@@ -1,4 +1,4 @@
-﻿namespace PaymentService.Api.Dto
+﻿namespace PaymentService.Api.Queries.Dtos
 {
     public class PolicyAccountDto
     {

@@ -1,29 +1,33 @@
-﻿using PaymentService.Api.Exceptions;
+﻿using Microsoft.Extensions.Logging;
+using PaymentService.Api.Exceptions;
+using PaymentService.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PaymentService.Domain
 {
     public class BankStatementFile
     {
+        private readonly ILogger<BankStatementFile> logger;
 
-        public BankStatementFile(string path, DateTimeOffset importDate)
+        public BankStatementFile(string path, DateTimeOffset importDate, ILogger<BankStatementFile> logger)
         {
-            Path = path;
+            FilePath = path ?? throw new ArgumentNullException(nameof(path));
             FileName = ConstructFileNameFromDate(importDate);
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public string Path { get; private set; }
+        public string FilePath { get; private set; }
+
         public string FileName { get; private set; }
 
         public string FullPath
         {
             get
             {
-                return System.IO.Path.Combine(Path, FileName);
+                return Path.Combine(FilePath, FileName);
             }
         }
 
@@ -31,7 +35,7 @@ namespace PaymentService.Domain
         {
             get
             {
-                return System.IO.Path.Combine(Path, $"_processed_{FileName}");
+                return Path.Combine(FilePath, $"_processed_{FileName}");
             }
         }
 
@@ -43,24 +47,21 @@ namespace PaymentService.Domain
         public List<BankStatement> Read()
         {
             try {
-                using (var reader = new StreamReader(FullPath)) {
-                    List<BankStatement> statements = new List<BankStatement>();
-
-                    reader.ReadLine();
-                    while (!reader.EndOfStream)
-                    {
-                        statements.Add(ReadRow(reader.ReadLine()));
-                    }
-                    return statements;
-                }
+                return File.ReadAllLines(FullPath)
+                                        .Skip(1) // skip header column
+                                        //.SelectTry(x => ReadRow(x))
+                                        //.OnCaughtException(ex => { logger.LogError(ex.Message); return null; })
+                                        //.Where(x => x != null)
+                                        .Select(x => ReadRow(x))
+                                        .ToList();
             } catch (FileNotFoundException ex)
             {
-                //log.error("Bank statement file not found. Looking for  " + Path, ex);
+                logger.LogError("Bank statement file not found. Looking for  " + FilePath, ex);
                 throw new BankStatementsFileNotFound(ex);
             }
             catch (IOException ex)
             {
-                //log.error("Error while processing file " + path, ex);
+                logger.LogError("Error while processing file " + FilePath, ex);
                 throw new BankStatementsFileReadingError(ex);
             }
         }

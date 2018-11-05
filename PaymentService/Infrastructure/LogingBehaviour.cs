@@ -20,8 +20,6 @@ namespace PaymentService.Infrastructure
             logger.LogInformation("Handling {@Command}", typeof(TRequest));
             return next();
         }
-
-
     }
 
     public static class LogingBehaviourInstaller

@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PaymentService.Domain
 {
     public class PolicyAccount
     {
-        public Guid Id { get; private set; }
-        public string PolicyAccountNumber { get; private set; }
-        public string PolicyNumber { get; private set; }
-        public IList<AccountingEntry> Entries;
+        [Key]
+        public Guid Id { get; set; }
+        public string PolicyAccountNumber { get; set; }
+        public string PolicyNumber { get; set; }
+        public ICollection<AccountingEntry> Entries { get; set; }
+
+        public PolicyAccount()
+        {
+            Entries = new List<AccountingEntry>();
+        }
 
         public PolicyAccount(string policyNumber, string policyAccountNumber)
         {
@@ -34,17 +41,15 @@ namespace PaymentService.Domain
             Entries.Add(new OutPayment(this, DateTimeOffset.Now, paymentReleaseDate, amount));
         }
 
-        public decimal balanceAt(DateTimeOffset effectiveDate)
+        public decimal BalanceAt(DateTimeOffset effectiveDate)
         {
-            List<AccountingEntry> effectiveEntries = Entries.Where(x => x.IsEffectiveOn(effectiveDate))
+            List<AccountingEntry> effectiveEntries = Entries
+                .Where(x => x.IsEffectiveOn(effectiveDate))
                 .OrderBy(x => x.CreationDate)
                 .ToList();
 
             decimal balance = 0M;
-            foreach (AccountingEntry entry in effectiveEntries)
-            {
-                balance = entry.Apply(balance);
-            }
+            effectiveEntries.ForEach(x => balance = x.Apply(balance));
 
             return balance;
         }

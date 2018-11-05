@@ -5,12 +5,16 @@ namespace PaymentService.Domain
 {
     public class InPaymentRegistrationService
     {
-        private readonly IPolicyAccountRepository policyAccountRepository;
+        private readonly IUnitOfWorkProvider uowProvider;
 
-        //[Transactional]
-        public void RegisterInPayments(String directory, DateTimeOffset date)
+        public InPaymentRegistrationService(IUnitOfWorkProvider uowProvider)
         {
-            BankStatementFile fileToImport = new BankStatementFile(directory, date);
+            this.uowProvider = uowProvider;
+        }
+        
+        public void RegisterInPayments(string directory, DateTimeOffset date)
+        {
+            BankStatementFile fileToImport = new BankStatementFile(directory, date, null);
 
             if (!fileToImport.Exists())
             {
@@ -18,15 +22,18 @@ namespace PaymentService.Domain
             }
 
             List<BankStatement> bankStatements = fileToImport.Read();
-            bankStatements.ForEach(x => RegisterInPayment(x));
-            fileToImport.MarkProcessed();
-            //unitOfWork.CommitChanges();
+
+            using (var uow = uowProvider.Create())
+            {
+                bankStatements.ForEach(x => RegisterInPayment(uow.PolicyAccountRespository, x));
+                fileToImport.MarkProcessed();
+                uow.CommitChanges();
+            }
         }
 
-        public void RegisterInPayment(BankStatement bankStatement)
+        public void RegisterInPayment(IPolicyAccountRepository policyAccountRepository, BankStatement bankStatement)
         {
-            var policyAccount = policyAccountRepository
-                    .FindByNumber(bankStatement.AccountNumber);
+            var policyAccount = policyAccountRepository.FindByNumber(bankStatement.AccountNumber);
 
             if (policyAccount != null)
             {

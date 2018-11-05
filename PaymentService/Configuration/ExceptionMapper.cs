@@ -1,6 +1,5 @@
 ﻿using GlobalExceptionHandler.WebApi;
 using Newtonsoft.Json;
-using System;
 using System.Net;
 
 namespace PaymentService.Configuration

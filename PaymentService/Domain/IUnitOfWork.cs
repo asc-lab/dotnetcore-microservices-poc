@@ -8,4 +8,9 @@ namespace PaymentService.Domain
 
         void CommitChanges();
     }
+
+    public interface IUnitOfWorkProvider
+    {
+        IUnitOfWork Create();
+    }
 }

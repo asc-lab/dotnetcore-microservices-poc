@@ -4,6 +4,9 @@ namespace PaymentService.Domain
 {
     public class ExpectedPayment : AccountingEntry
     {
+        protected ExpectedPayment() : base()
+        { }
+
         public ExpectedPayment(PolicyAccount policyAccount, DateTimeOffset creationDate, DateTimeOffset effectiveDate, decimal amount) :
                 base(policyAccount, creationDate, effectiveDate, amount)
         { }
@@ -12,6 +15,5 @@ namespace PaymentService.Domain
         {
             return state - Amount;
         }
-
     }
 }
