@@ -49,9 +49,6 @@ namespace PaymentService.Domain
             try {
                 return File.ReadAllLines(FullPath)
                                         .Skip(1) // skip header column
-                                        //.SelectTry(x => ReadRow(x))
-                                        //.OnCaughtException(ex => { logger.LogError(ex.Message); return null; })
-                                        //.Where(x => x != null)
                                         .Select(x => ReadRow(x))
                                         .ToList();
             } catch (FileNotFoundException ex)

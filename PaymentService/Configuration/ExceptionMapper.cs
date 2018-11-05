@@ -1,5 +1,6 @@
 ﻿using GlobalExceptionHandler.WebApi;
 using Newtonsoft.Json;
+using PaymentService.Api.Exceptions;
 using System.Net;
 
 namespace PaymentService.Configuration
@@ -12,9 +13,8 @@ namespace PaymentService.Configuration
 
             cfg.ResponseBody(s => JsonConvert.SerializeObject(new
             {
-                Message = "An error occured whilst processing your request"
+                Message = s is BussinesExceptions ? s.Message : "An error occured whilst processing your request"
             }));
-
 
             cfg.Map<FluentValidation.ValidationException>()
                 .ToStatusCode(HttpStatusCode.BadRequest)
