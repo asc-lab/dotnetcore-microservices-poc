@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using NHibernate.Util;
 
 namespace PolicyService.Domain
 {
@@ -36,9 +37,13 @@ namespace PolicyService.Domain
             Number = Guid.NewGuid().ToString();
             ProductCode = offer.ProductCode;
             Status = PolicyStatus.Active;
-            CreateionDate = DateTimeOffset.Now;
+            CreateionDate = SysTime.CurrentTime;
             versions.Add(PolicyVersion.FromOffer(this,1,policyHolder,offer));
         }
 
+        public PolicyVersion Version(int number)
+        {
+            return Versions.First(v => v.VersionNumber == number);
+        }
     }
 }

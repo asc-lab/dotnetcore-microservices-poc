@@ -18,7 +18,6 @@ namespace PolicyService.Domain
 
         public virtual string Number { get; protected set; }
 
-        //...
         public virtual string ProductCode { get; protected set; }
 
         public virtual ValidityPeriod PolicyValidityPeriod { get; protected set; }
@@ -69,7 +68,7 @@ namespace PolicyService.Domain
             PolicyHolder = policyHolder;
             covers = price.CoverPrices.Select(c => new Cover(c.Key, c.Value)).ToList();
             Status = OfferStatus.New;
-            CreateionDate = DateTimeOffset.Now;
+            CreateionDate = SysTime.CurrentTime;
             TotalPrice = price.CoverPrices.Sum(c => c.Value);
         }
 
@@ -77,7 +76,7 @@ namespace PolicyService.Domain
 
         public virtual Policy Buy(PolicyHolder customer)
         {
-            if (IsExpired(DateTimeOffset.Now))
+            if (IsExpired(SysTime.CurrentTime))
                 throw new ApplicationException($"Offer {Number} has expired");
 
             if (Status != OfferStatus.New)
