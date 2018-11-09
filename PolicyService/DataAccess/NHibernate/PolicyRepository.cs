@@ -20,5 +20,10 @@ namespace PolicyService.DataAccess.NHibernate
         {
             session.Save(policy);
         }
+
+        public Policy WithNumber(string number)
+        {
+            return session.Query<Policy>().FirstOrDefault(p => p.Number == number);
+        }
     }
 }
