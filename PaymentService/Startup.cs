@@ -19,6 +19,7 @@ using PaymentService.DataAccess.EF;
 using PaymentService.Domain;
 using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
+using PaymentService.DataAccess.Queries;
 
 namespace PaymentService
 {
@@ -42,6 +43,7 @@ namespace PaymentService
                 });
 
             services.AddEf(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddDapperQueries(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPaymentDemoInitializer();
             services.AddMediatR();
             services.AddLogingBehaviour();
