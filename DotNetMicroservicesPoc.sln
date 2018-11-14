@@ -21,9 +21,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Api", "Payme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService.Test", "PaymentService.Test\PaymentService.Test.csproj", "{3CF089DC-942E-49CF-8A08-0C742B74CAA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicySearchService.Api", "PolicySearchService.Api\PolicySearchService.Api.csproj", "{61711E87-3DBB-42B2-BF55-A81D7C816A30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicySearchService.Api", "PolicySearchService.Api\PolicySearchService.Api.csproj", "{61711E87-3DBB-42B2-BF55-A81D7C816A30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PolicySearchService", "PolicySearchService\PolicySearchService.csproj", "{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicySearchService", "PolicySearchService\PolicySearchService.csproj", "{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService\ProductService.csproj", "{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{177B6410-E972-4FD3-B2ED-A38EB079DBB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +79,14 @@ Global
 		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
