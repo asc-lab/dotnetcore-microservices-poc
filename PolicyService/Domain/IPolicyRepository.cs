@@ -8,5 +8,7 @@ namespace PolicyService.Domain
     public interface IPolicyRepository
     {
         void Add(Policy policy);
+
+        Policy WithNumber(string number);
     }
 }

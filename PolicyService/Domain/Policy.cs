@@ -41,7 +41,7 @@ namespace PolicyService.Domain
             versions.Add(PolicyVersion.FromOffer(this,1,policyHolder,offer));
         }
 
-        public PolicyVersion Version(int number)
+        public virtual PolicyVersion Version(int number)
         {
             return Versions.First(v => v.VersionNumber == number);
         }

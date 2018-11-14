@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PolicyService.Api.Commands;
+using PolicyService.Api.Queries;
 
 namespace PolicyService.Controllers
 {
@@ -19,11 +20,19 @@ namespace PolicyService.Controllers
             this.bus = bus;
         }
 
-        // POST api/values
+        // POST 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreatePolicyCommand cmd)
         {
             var result = await bus.Send(cmd);
+            return new JsonResult(result);
+        }
+        
+        // GET 
+        [HttpGet("{policyNumber}")]
+        public async Task<ActionResult> Get(string policyNumber)
+        {
+            var result = await bus.Send(new GetPolicyDetailsQuery { PolicyNumber = policyNumber});
             return new JsonResult(result);
         }
     }
