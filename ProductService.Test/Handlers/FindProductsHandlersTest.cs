@@ -29,7 +29,7 @@ namespace ProductService.Test.Handlers
             
             productRepository.Setup(x => x.FindAll()).Returns(Task.FromResult(products));
             productRepository.Setup(x => x.FindOne(It.Is<string>(s => products.Select(p => p.Code).Contains(s)))).Returns(Task.FromResult(products.First()));
-            productRepository.Setup(x => x.FindOne(It.Is<string>(s => !products.Select(p => p.Code).Contains(s)))).Returns<ProductDto>(null);
+            productRepository.Setup(x => x.FindOne(It.Is<string>(s => !products.Select(p => p.Code).Contains(s)))).Returns(Task.FromResult<Product>(null));
         }
 
         [Fact]
