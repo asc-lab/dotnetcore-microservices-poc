@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ProductService.Api.Queries;
 using ProductService.Api.Queries.Dtos;
-using ProductService.DataAccess.EF;
+using ProductService.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,16 +12,16 @@ namespace ProductService.Queries
 {
     public class FindProductByCodeHandler : IRequestHandler<FindProductByCodeQuery, ProductDto>
     {
-        private readonly ProductDbContext productDbContext;
+        private readonly IProductRepository productRepository;
 
-        public FindProductByCodeHandler(ProductDbContext dbContext)
+        public FindProductByCodeHandler(IProductRepository productRepository)
         {
-            productDbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
-        }
+            this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+        }       
 
         public async Task<ProductDto> Handle(FindProductByCodeQuery request, CancellationToken cancellationToken)
         {
-            var result = productDbContext.Products.Include(c => c.Covers).Include("Questions.Choices").FirstOrDefault(p => p.Code.Equals(request.ProductCode, StringComparison.InvariantCultureIgnoreCase));
+            var result = await productRepository.FindOne(request.ProductCode);
 
             return result != null ? new ProductDto
             {

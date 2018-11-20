@@ -21,7 +21,7 @@ namespace ProductService.Controllers
 
         // GET api/products
         [HttpGet]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> GetAll()
         {
             var result = await mediator.Send(new FindAllProductsQuery());
             return new JsonResult(result);
@@ -29,11 +29,11 @@ namespace ProductService.Controllers
 
         // GET api/products/{code}
         [HttpGet("{code}")]
-        public async Task<ActionResult> Get([FromRoute]string code)
+        public async Task<ActionResult> GetByCode([FromRoute]string code)
         {
-            var result = await mediator.Send(new FindProductByCodeQuery{ ProductCode = code });
+            var result = await mediator.Send(new FindProductByCodeQuery{ ProductCode = code });                        
             return new JsonResult(result);
         }
         
-    }
+    }    
 }

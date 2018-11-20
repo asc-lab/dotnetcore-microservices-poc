@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicySearchService", "Poli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService\ProductService.csproj", "{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{177B6410-E972-4FD3-B2ED-A38EB079DBB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{177B6410-E972-4FD3-B2ED-A38EB079DBB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Test", "ProductService.Test\ProductService.Test.csproj", "{AC9F548D-A656-4C89-8752-90C22960E5FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{177B6410-E972-4FD3-B2ED-A38EB079DBB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC9F548D-A656-4C89-8752-90C22960E5FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC9F548D-A656-4C89-8752-90C22960E5FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC9F548D-A656-4C89-8752-90C22960E5FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC9F548D-A656-4C89-8752-90C22960E5FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

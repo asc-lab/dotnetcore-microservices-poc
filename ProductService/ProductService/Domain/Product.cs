@@ -33,13 +33,13 @@ namespace ProductService.Domain
 
         public void AddCover(string code, string name, string description, bool optional, decimal? sumInsured)
         {
-            Covers.Add(new Cover(code, name, description, optional, sumInsured)     );
+            Covers.Add(new Cover(code, name, description, optional, sumInsured));
         }
 
         public void AddQuestions(IList<Question> questions)
         {
             foreach (var q in questions)
                 Questions.Add(q);
-        }
+        }        
     }
 }

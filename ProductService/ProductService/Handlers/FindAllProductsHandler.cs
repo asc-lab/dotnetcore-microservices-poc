@@ -1,8 +1,6 @@
 ﻿using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ProductService.Api.Queries;
 using ProductService.Api.Queries.Dtos;
-using ProductService.DataAccess.EF;
 using ProductService.Domain;
 using System;
 using System.Collections.Generic;
@@ -14,16 +12,16 @@ namespace ProductService.Queries
 {
     public class FindAllProductsHandler : IRequestHandler<FindAllProductsQuery, IEnumerable<ProductDto>>
     {
-        private readonly ProductDbContext productDbContext;        
+        private readonly IProductRepository productRepository;        
 
-        public FindAllProductsHandler(ProductDbContext dbContext)
+        public FindAllProductsHandler(IProductRepository productRepository)
         {
-            productDbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));            
+            this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));            
         }
 
         public async Task<IEnumerable<ProductDto>> Handle(FindAllProductsQuery request, CancellationToken cancellationToken)
         {
-           var result = productDbContext.Products.Include(c => c.Covers).Include("Questions.Choices").ToList();
+            var result = await productRepository.FindAll();
 
             return result.Select(p => new ProductDto
             {
