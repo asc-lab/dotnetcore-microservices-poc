@@ -1,6 +1,18 @@
 # ASCLAB .NET Core PoC - LAB Insurance Sales Portal
 
-This is an example of a very simplified insurance sales system made in a microservice architecture using .NET Core 2.1, MediatR, Entity Framework Core, Marten, RestEase, RawRabbit, NHibernate, Polly, NEST, Dapper, DynamicExpresso.
+This is an example of a very simplified insurance sales system made in a microservice architecture using:
+
+* .NET Core 2.1
+* MediatR
+* Entity Framework Core
+* Marten
+* RestEase
+* RawRabbit
+* NHibernate
+* Polly
+* NEST
+* Dapper
+* DynamicExpresso
 
 ## Architecture overview
 
