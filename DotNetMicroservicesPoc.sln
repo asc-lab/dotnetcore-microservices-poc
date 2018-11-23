@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicySearchService.Api", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicySearchService", "PolicySearchService\PolicySearchService.csproj", "{9E236FCE-FB0A-4A79-AE5E-461F94292DC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService\ProductService.csproj", "{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductService\ProductService.csproj", "{F833AF9A-A0B4-40D4-BBC0-4DB9019D5D90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{177B6410-E972-4FD3-B2ED-A38EB079DBB3}"
 EndProject

@@ -13,12 +13,12 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="5.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ProductService.Api\ProductService.Api.csproj" />
+    <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
   </ItemGroup>
 
 </Project>
