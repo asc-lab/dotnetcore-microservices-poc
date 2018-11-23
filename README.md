@@ -16,10 +16,6 @@ This is an example of a very simplified insurance sales system made in a microse
 
 ## Architecture overview
 
-<p align="center">
-    <img alt="Architecture" src="https://raw.githubusercontent.com/asc-lab/dotnetcore-microservices-poc/master/readme-images/architecture.png" />
-</p>
-
 * **PaymentService** - main responsibilities: create Policy Account, show Policy Account list, register in payments from bank statement file. \
 This module is taking care of a managing policy accounts. Once the policy is created, an account is created in this service with expected money income.  PaymentService also has an implementation of a scheduled process where CSV file with payments is imported and payments are assigned to policy accounts. This component shows asynchronous communication between services using RabbitMQ and ability to create background jobs using Micronaut. It also features accessing database using Dapper.
 
@@ -35,6 +31,6 @@ For each product a tariff should be defined. The tariff is a set of rules on the
 * **ProductService** - simple insurance product catalog. \
 Information about products are stored in in-memory database. Each product has code, name, image, description, cover list and question list (affect the price defined by the tariff).
 
-* **web-vue** - SPA application built with Vue.js and Bootstrap for Vue.
+* **Web** - SPA application built with Vue.js and Bootstrap for Vue.
 
 Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations.
