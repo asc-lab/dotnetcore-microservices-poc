@@ -16,6 +16,11 @@ This is an example of a very simplified insurance sales system made in a microse
 
 ## Architecture overview
 
+<p align="center">
+    <img alt="NET Microservices Architecture" src="https://raw.githubusercontent.com/asc-lab/dotnetcore-microservices-poc/master/readme-images/dotnetcore-microservices-architecture.png" />
+</p>
+
+
 * **PaymentService** - main responsibilities: create Policy Account, show Policy Account list, register in payments from bank statement file. \
 This module is taking care of a managing policy accounts. Once the policy is created, an account is created in this service with expected money income.  PaymentService also has an implementation of a scheduled process where CSV file with payments is imported and payments are assigned to policy accounts. This component shows asynchronous communication between services using RabbitMQ and ability to create background jobs using Micronaut. It also features accessing database using Dapper.
 
