@@ -15,11 +15,10 @@ using PaymentService.Infrastructure;
 using PaymentService.Init;
 using GlobalExceptionHandler.WebApi;
 using PaymentService.Configuration;
-using PaymentService.DataAccess.EF;
+using PaymentService.DataAccess.Marten;
 using PaymentService.Domain;
 using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
-using PaymentService.DataAccess.Queries;
 
 namespace PaymentService
 {
@@ -42,8 +41,7 @@ namespace PaymentService
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
                 });
 
-            services.AddEf(Configuration.GetConnectionString("DefaultConnection"));
-            services.AddDapperQueries(Configuration.GetConnectionString("DefaultConnection"));
+            services.AddMarten(Configuration.GetConnectionString("PgConnection"));
             services.AddPaymentDemoInitializer();
             services.AddMediatR();
             services.AddLogingBehaviour();

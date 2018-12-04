@@ -5,11 +5,11 @@ namespace PaymentService.Domain
 {
     public class InPaymentRegistrationService
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
 
-        public InPaymentRegistrationService(IUnitOfWorkProvider uowProvider)
+        public InPaymentRegistrationService(IUnitOfWork uow)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
         }
         
         public void RegisterInPayments(string directory, DateTimeOffset date)
@@ -23,9 +23,9 @@ namespace PaymentService.Domain
 
             List<BankStatement> bankStatements = fileToImport.Read();
 
-            using (var uow = uowProvider.Create())
+            using (uow)
             {
-                bankStatements.ForEach(x => RegisterInPayment(uow.PolicyAccountRespository, x));
+                bankStatements.ForEach(x => RegisterInPayment(uow.PolicyAccounts, x));
                 fileToImport.MarkProcessed();
                 uow.CommitChanges();
             }
@@ -35,10 +35,7 @@ namespace PaymentService.Domain
         {
             var policyAccount = policyAccountRepository.FindByNumber(bankStatement.AccountNumber);
 
-            if (policyAccount != null)
-            {
-                policyAccount.InPayment(bankStatement.Amount, bankStatement.AccountingDate);
-            }
+            policyAccount?.InPayment(bankStatement.Amount, bankStatement.AccountingDate);
         }
     }
 }

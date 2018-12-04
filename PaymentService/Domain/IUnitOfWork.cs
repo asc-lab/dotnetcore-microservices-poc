@@ -4,13 +4,8 @@ namespace PaymentService.Domain
 {
     public interface IUnitOfWork : IDisposable
     {
-        IPolicyAccountRepository PolicyAccountRespository { get; }
+        IPolicyAccountRepository PolicyAccounts { get; }
 
         void CommitChanges();
-    }
-
-    public interface IUnitOfWorkProvider
-    {
-        IUnitOfWork Create();
     }
 }

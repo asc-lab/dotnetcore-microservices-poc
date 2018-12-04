@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PaymentService.Api.Exceptions;
-using PaymentService.Queries;
 using System.Threading.Tasks;
+using MediatR;
+using PaymentService.Api.Queries;
 
 namespace PaymentService.Controllers
 {
@@ -9,27 +9,17 @@ namespace PaymentService.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private readonly IPolicyAccountQueries policyAccountQueries;
+        private readonly IMediator bus;
 
-        public PaymentController(IPolicyAccountQueries policyAccountQueries)
+        public PaymentController(IMediator bus)
         {
-            this.policyAccountQueries = policyAccountQueries;
+            this.bus = bus;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Accounts()
+        [HttpGet("accounts/{policyNumber}")]
+        public async Task<ActionResult> AccountBalance(string policyNumber)
         {
-            var result = await policyAccountQueries.FindAll();
-            return new JsonResult(result);
-        }
-
-        [HttpGet("accounts/{accountNumber}")]
-        public async Task<ActionResult> AccountBalance(string accountNumber)
-        {
-            var result = await policyAccountQueries.FindByNumber(accountNumber);
-            if (result == null) {
-                throw new PolicyAccountNotFound(accountNumber);
-            }
+            var result = await bus.Send(new GetAccountBalanceQuery {PolicyNumber = policyNumber});
             return new JsonResult(result);
         }
     }

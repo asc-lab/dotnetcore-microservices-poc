@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos" />
+  </ItemGroup>
+
 </Project>

@@ -4,27 +4,27 @@ namespace PaymentService.Init
 {
     public class DataLoader
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
 
-        public DataLoader(IUnitOfWorkProvider uowProvider)
+        public DataLoader(IUnitOfWork uow)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
         }
 
         public void Seed()
         {
-            using (var uow = uowProvider.Create())
+            using (uow)
             {
-                DemoAccountsFactory.DemoAccounts().ForEach(x => AddIfNotExists(uow.PolicyAccountRespository, x));
+                DemoAccountsFactory.DemoAccounts().ForEach(x => AddIfNotExists(x));
                 uow.CommitChanges();
             }
         }
 
-        private void AddIfNotExists(IPolicyAccountRepository policyAccountRespository, PolicyAccount account)
+        private void AddIfNotExists(PolicyAccount account)
         {
-            if (policyAccountRespository.FindByNumber(account.PolicyAccountNumber) == null)
+            if (uow.PolicyAccounts.FindByNumber(account.PolicyNumber) == null)
             {
-                policyAccountRespository.Add(account);
+                uow.PolicyAccounts.Add(account);
             }
         }
     }

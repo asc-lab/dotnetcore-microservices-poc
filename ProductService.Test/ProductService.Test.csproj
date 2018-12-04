@@ -15,7 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductService\ProductService\ProductService.csproj" />
+    <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
+    <ProjectReference Include="..\ProductService\ProductService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
