@@ -21,8 +21,7 @@ Insurance agents will have to log in and system will present them with list of p
 
 Finally agent will be able to confirm the sale by converting offer to policy and printing pdf certificate.
 
-Portal will also give them ability to search and view offer and policies.
-
+Portal will also give them ability to search and view offer and policies. \
 Portal will also have some basic social network features like chat for agents.
 
 ## Architecture overview
