@@ -8,5 +8,5 @@ call dotnet build ./PricingService
 call dotnet build ./PolicyService
 call dotnet build ./PaymentService
 
-call yarn --cwd web-vue install
-call yarn --cwd web-vue run build
+call yarn --cwd ./Web install
+call yarn --cwd ./Web run build
