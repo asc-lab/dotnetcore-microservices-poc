@@ -16,7 +16,7 @@ namespace PolicyService.RestClients
 
     public class PricingClient : IPricingClient
     {
-        private readonly IPricingClient restEasyClient;
+        private readonly IPricingClient client;
 
         private static Policy retryPolicy = Policy
             .Handle<HttpRequestException>()
@@ -24,12 +24,12 @@ namespace PolicyService.RestClients
 
         public PricingClient(IConfiguration configuration)
         {
-            restEasyClient = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
+            client = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
         }
 
         public Task<CalculatePriceResult> CalculatePrice([Body] CalculatePriceCommand cmd)
         {
-            return retryPolicy.ExecuteAsync(async () => await this.restEasyClient.CalculatePrice(cmd));
+            return retryPolicy.ExecuteAsync(async () => await client.CalculatePrice(cmd));
         }
     }
 }

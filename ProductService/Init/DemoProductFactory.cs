@@ -1,8 +1,5 @@
 ﻿using ProductService.Domain;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProductService.DataAccess.EF.Data
 {
@@ -80,7 +77,7 @@ namespace ProductService.DataAccess.EF.Data
                     }),
                     new NumericQuestion("AREA", 2, "Area"),
                     new NumericQuestion("NUM_OF_CLAIM", 3, "Number of claims in last 5 years"),
-                    new ChoiceQuestion("FLOOD", 4, "Located in flood risk area", ChoiceQuestion.YesNoChoice())
+                    //new ChoiceQuestion("FLOOD", 4, "Located in flood risk area", ChoiceQuestion.YesNoChoice()) //FIXME problem with code duplication
             });
             return p;
         }
