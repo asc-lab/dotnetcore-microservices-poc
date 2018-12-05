@@ -14,9 +14,12 @@ using Microsoft.Extensions.Options;
 using PaymentService.Infrastructure;
 using PaymentService.Init;
 using GlobalExceptionHandler.WebApi;
+using Hangfire;
+using Hangfire.PostgreSql;
 using PaymentService.Configuration;
 using PaymentService.DataAccess.Marten;
 using PaymentService.Domain;
+using PaymentService.Jobs;
 using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
 
@@ -47,6 +50,7 @@ namespace PaymentService
             services.AddLogingBehaviour();
             services.AddSingleton<PolicyAccountNumberGenerator>();
             services.AddRabbitListeners();
+            services.AddBackgroundJobs(Configuration.GetSection("BackgroundJobs").Get<BackgroundJobsConfig>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +66,7 @@ namespace PaymentService
             app.UseMvc();
             app.UseInitializer();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
+            app.UseBackgroundJobs();
         }
     }
 }

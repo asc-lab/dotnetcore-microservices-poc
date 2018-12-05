@@ -14,6 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="GlobalExceptionHandler" Version="4.0.0-beta2" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.5.0" />
+    <PackageReference Include="Hangfire.PostgreSql.NetCore" Version="1.4.3" />
     <PackageReference Include="Marten" Version="3.2.0" />
     <PackageReference Include="MediatR" Version="5.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />

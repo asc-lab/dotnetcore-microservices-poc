@@ -14,28 +14,25 @@ namespace PaymentService.Domain
         
         public void RegisterInPayments(string directory, DateTimeOffset date)
         {
-            BankStatementFile fileToImport = new BankStatementFile(directory, date, null);
+            var fileToImport = new BankStatementFile(directory, date);
 
             if (!fileToImport.Exists())
             {
                 return;
             }
 
-            List<BankStatement> bankStatements = fileToImport.Read();
-
             using (uow)
             {
-                bankStatements.ForEach(x => RegisterInPayment(uow.PolicyAccounts, x));
+                fileToImport
+                    .Read()
+                    .ForEach(bs => uow.PolicyAccounts.FindByNumber(bs.AccountNumber)?.InPayment(bs.Amount, bs.AccountingDate));
+                
                 fileToImport.MarkProcessed();
+                
                 uow.CommitChanges();
             }
         }
 
-        public void RegisterInPayment(IPolicyAccountRepository policyAccountRepository, BankStatement bankStatement)
-        {
-            var policyAccount = policyAccountRepository.FindByNumber(bankStatement.AccountNumber);
-
-            policyAccount?.InPayment(bankStatement.Amount, bankStatement.AccountingDate);
-        }
+        
     }
 }

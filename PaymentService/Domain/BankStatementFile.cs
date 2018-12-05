@@ -10,34 +10,19 @@ namespace PaymentService.Domain
 {
     public class BankStatementFile
     {
-        private readonly ILogger<BankStatementFile> logger;
-
-        public BankStatementFile(string path, DateTimeOffset importDate, ILogger<BankStatementFile> logger)
+        public BankStatementFile(string path, DateTimeOffset importDate)
         {
             FilePath = path ?? throw new ArgumentNullException(nameof(path));
             FileName = ConstructFileNameFromDate(importDate);
-            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public string FilePath { get; private set; }
+        private string FilePath { get; }
 
-        public string FileName { get; private set; }
+        private string FileName { get; }
 
-        public string FullPath
-        {
-            get
-            {
-                return Path.Combine(FilePath, FileName);
-            }
-        }
+        private string FullPath => Path.Combine(FilePath, FileName);
 
-        public string ProcessedFullPath
-        {
-            get
-            {
-                return Path.Combine(FilePath, $"_processed_{FileName}");
-            }
-        }
+        private string ProcessedFullPath => Path.Combine(FilePath, $"_processed_{FileName}");
 
         public bool Exists()
         {
@@ -49,16 +34,15 @@ namespace PaymentService.Domain
             try {
                 return File.ReadAllLines(FullPath)
                                         .Skip(1) // skip header column
-                                        .Select(x => ReadRow(x))
+                                        .Select(ReadRow)
                                         .ToList();
-            } catch (FileNotFoundException ex)
+            } 
+            catch (FileNotFoundException ex)
             {
-                logger.LogError("Bank statement file not found. Looking for  " + FilePath, ex);
                 throw new BankStatementsFileNotFound(ex);
             }
             catch (IOException ex)
-            {
-                logger.LogError("Error while processing file " + FilePath, ex);
+            {    
                 throw new BankStatementsFileReadingError(ex);
             }
         }
@@ -68,7 +52,7 @@ namespace PaymentService.Domain
             File.Copy(FullPath, ProcessedFullPath);
         }
 
-        public BankStatement ReadRow(string row)
+        private BankStatement ReadRow(string row)
         {
             var cells = row.Split(",");
             string accountingDate = cells[2];
@@ -77,7 +61,7 @@ namespace PaymentService.Domain
             return new BankStatement(accountNumber, amountAsString, accountingDate);
         }
 
-        public string ConstructFileNameFromDate(DateTimeOffset importDate)
+        private string ConstructFileNameFromDate(DateTimeOffset importDate)
         {
             return $"bankStatements_{importDate.Year}_{importDate.Month}_{importDate.Day}.csv";
         }
