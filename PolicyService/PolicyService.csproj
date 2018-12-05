@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Domain\Offer.hbm.xml" />
     <None Remove="Domain\Policy.hbm.xml" />
   </ItemGroup>
@@ -17,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Queries\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>

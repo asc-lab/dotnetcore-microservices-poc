@@ -3,8 +3,6 @@ using Polly;
 using PricingService.Api.Commands;
 using RestEase;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -26,13 +24,12 @@ namespace PolicyService.RestClients
 
         public PricingClient(IConfiguration configuration)
         {
-            this.restEasyClient = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
+            restEasyClient = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
         }
 
         public Task<CalculatePriceResult> CalculatePrice([Body] CalculatePriceCommand cmd)
         {
             return retryPolicy.ExecuteAsync(async () => await this.restEasyClient.CalculatePrice(cmd));
-            //return this.restEasyClient.CalculatePrice(cmd);
         }
     }
 }

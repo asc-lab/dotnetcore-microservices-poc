@@ -5,13 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.0.100" />
-    <PackageReference Include="MediatR" Version="5.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+    <Compile Remove="Dtos\**" />
+    <EmbeddedResource Remove="Dtos\**" />
+    <None Remove="Dtos\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos" />
+    <PackageReference Include="FluentValidation" Version="8.0.100" />
+    <PackageReference Include="MediatR" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace ProductService.DataAccess.EF.Data
 {
@@ -17,8 +14,8 @@ namespace ProductService.DataAccess.EF.Data
 
             context.Products.Add(DemoProductFactory.Travel());
             context.Products.Add(DemoProductFactory.House());
-            //context.Products.Add(DemoProductFactory.Farm());
-            //context.Products.Add(DemoProductFactory.Car());
+            context.Products.Add(DemoProductFactory.Farm());
+            context.Products.Add(DemoProductFactory.Car());
 
             context.SaveChanges();
         }

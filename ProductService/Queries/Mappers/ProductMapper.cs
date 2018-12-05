@@ -11,7 +11,7 @@ namespace ProductService.Queries
     {
         public static IList<CoverDto> ToCoverDtoList(IList<Cover> covers)
         {
-            return covers.Select(c => ToCoverDto(c)).ToList();            
+            return covers.Select(c => ToCoverDto(c)).ToList();
         }
 
         public static IList<QuestionDto> ToQuestionDtoList(IList<Question> questions)
@@ -27,7 +27,7 @@ namespace ProductService.Queries
                 Name = cover.Name,
                 Description = cover.Description,
                 Optional = cover.Optional,
-                SumInsured = cover.SumInsured                
+                SumInsured = cover.SumInsured
             };
         }
 
@@ -44,7 +44,7 @@ namespace ProductService.Queries
                         Index = question.Index,
                         Text = question.Text,
                         Choices = ((ChoiceQuestion)question).Choices?.Select(c => new ChoiceDto { Code = c.Code, Label = c.Label }).ToList()
-                    };                    
+                    };
                 case "DateQuestion":
                     return new DateQuestionDto { QuestionCode = question.Code, Index = question.Index, Text = question.Text };
                     

@@ -1,9 +1,6 @@
 ﻿using MediatR;
 using PolicySearchService.Domain;
 using PolicyService.Api.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

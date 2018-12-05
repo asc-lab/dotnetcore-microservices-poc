@@ -12,7 +12,7 @@ namespace ProductService.Queries
 {
     public class FindAllProductsHandler : IRequestHandler<FindAllProductsQuery, IEnumerable<ProductDto>>
     {
-        private readonly IProductRepository productRepository;        
+        private readonly IProductRepository productRepository;
 
         public FindAllProductsHandler(IProductRepository productRepository)
         {
