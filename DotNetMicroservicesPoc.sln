@@ -29,9 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService", "ProductSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Api", "ProductService.Api\ProductService.Api.csproj", "{177B6410-E972-4FD3-B2ED-A38EB079DBB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductService.Test", "ProductService.Test\ProductService.Test.csproj", "{AC9F548D-A656-4C89-8752-90C22960E5FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Test", "ProductService.Test\ProductService.Test.csproj", "{AC9F548D-A656-4C89-8752-90C22960E5FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService", "AuthService\AuthService.csproj", "{D4978EBD-B128-4B45-B60E-D91EAC21873A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{D4978EBD-B128-4B45-B60E-D91EAC21873A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPortalApiGateway", "AgentPortalApiGateway\AgentPortalApiGateway.csproj", "{DDD629C8-7CB8-4829-869A-2B134C7A20FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{D4978EBD-B128-4B45-B60E-D91EAC21873A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4978EBD-B128-4B45-B60E-D91EAC21873A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4978EBD-B128-4B45-B60E-D91EAC21873A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
