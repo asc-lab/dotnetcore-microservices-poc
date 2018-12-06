@@ -4,7 +4,7 @@ namespace PolicyService.Domain
 {
     public class SysTime
     {
-        public static Func<DateTimeOffset> CurrentTimeProvider { get; set; } = () => DateTimeOffset.Now;
-        public static DateTimeOffset CurrentTime => CurrentTimeProvider();
+        public static Func<DateTime> CurrentTimeProvider { get; set; } = () => DateTime.Now;
+        public static DateTime CurrentTime => CurrentTimeProvider();
     }
 }

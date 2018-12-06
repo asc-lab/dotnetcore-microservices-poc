@@ -6,7 +6,7 @@ namespace PolicyService.Tests.Domain
 {
     public class OfferFactory
     {
-        internal static Offer NewOfferValidUntil(DateTimeOffset offerValidityEnd)
+        internal static Offer NewOfferValidUntil(DateTime offerValidityEnd)
         {
             using (var timeMachine = new TimeMachine(offerValidityEnd.AddDays(-30)))
             {
@@ -19,8 +19,8 @@ namespace PolicyService.Tests.Domain
                 var offer = Offer.ForPrice
                 (
                     "P1",
-                    DateTimeOffset.Now,
-                    DateTimeOffset.Now.AddDays(5),
+                    DateTime.Now,
+                    DateTime.Now.AddDays(5),
                     new PolicyHolder("A", "B", "1111111116"),
                     price
                 );
@@ -31,7 +31,7 @@ namespace PolicyService.Tests.Domain
 
         internal static Offer AlreadyConvertedOffer()
         {
-            var offer = NewOfferValidUntil(DateTimeOffset.Now.AddDays(5));
+            var offer = NewOfferValidUntil(DateTime.Now.AddDays(5));
             offer.Buy(new PolicyHolder("A", "B", "C"));
             return offer;
         }

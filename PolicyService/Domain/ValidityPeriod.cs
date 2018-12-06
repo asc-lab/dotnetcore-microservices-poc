@@ -7,10 +7,10 @@ namespace PolicyService.Domain
 {
     public class ValidityPeriod : ICloneable
     {
-        public virtual DateTimeOffset ValidFrom { get; protected set; }
-        public virtual DateTimeOffset ValidTo { get; protected set; }
+        public virtual DateTime ValidFrom { get; protected set; }
+        public virtual DateTime ValidTo { get; protected set; }
 
-        public ValidityPeriod(DateTimeOffset validFrom, DateTimeOffset validTo)
+        public ValidityPeriod(DateTime validFrom, DateTime validTo)
         {
             ValidFrom = validFrom;
             ValidTo = validTo;
@@ -18,7 +18,7 @@ namespace PolicyService.Domain
 
         protected ValidityPeriod() { } //NH required
 
-        public static ValidityPeriod Between(DateTimeOffset validFrom, DateTimeOffset validTo)
+        public static ValidityPeriod Between(DateTime validFrom, DateTime validTo)
             => new ValidityPeriod(validFrom, validTo);
 
         public ValidityPeriod Clone()

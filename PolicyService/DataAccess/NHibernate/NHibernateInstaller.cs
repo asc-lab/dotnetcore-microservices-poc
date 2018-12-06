@@ -20,14 +20,15 @@ namespace PolicyService.DataAccess.NHibernate
 
             cfg.DataBaseIntegration(db =>
             {
-                db.Dialect<MsSql2012Dialect>();
-                db.Driver<SqlClientDriver>();
+                db.Dialect<PostgreSQL83Dialect>();
+                db.Driver<NpgsqlDriver>();
                 db.ConnectionProvider<DriverConnectionProvider>();
                 db.BatchSize = 500;
                 db.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
                 db.LogSqlInConsole = false;
                 db.ConnectionString = cnString;
                 db.Timeout = 30;/*seconds*/
+                db.SchemaAction = SchemaAutoAction.Update;
             });
 
             cfg.Proxy(p => p.ProxyFactoryFactory<DefaultProxyFactoryFactory>());

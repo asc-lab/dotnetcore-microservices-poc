@@ -27,7 +27,7 @@ namespace PolicyService.Domain
 
         public virtual PolicyStatus Status { get; protected set; }
 
-        public virtual DateTimeOffset CreateionDate { get; protected set; }
+        public virtual DateTime CreateionDate { get; protected set; }
 
         protected Policy() { } //NH constuctor
         
