@@ -23,12 +23,14 @@ namespace PricingService.DataAccess.Marten
 
         public bool Exists(string code)
         {
-            return session.Query<Tariff>().Where(t => t.Code == code).Any();
+            return session.Query<Tariff>().Any(t => t.Code == code);
         }
 
         public Tariff WithCode(string code)
         {
             return session.Query<Tariff>().FirstOrDefault(t => t.Code == code);
         }
+
+        public Tariff this[string code] => WithCode(code);
     }
 }
