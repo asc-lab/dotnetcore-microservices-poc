@@ -5,6 +5,7 @@ using RestEase;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Steeltoe.Common.Discovery;
 
 namespace PolicyService.RestClients
 {
@@ -22,9 +23,14 @@ namespace PolicyService.RestClients
             .Handle<HttpRequestException>()
             .WaitAndRetryAsync(retryCount: 3, sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(3));
 
-        public PricingClient(IConfiguration configuration)
+        public PricingClient(IConfiguration configuration, IDiscoveryClient discoveryClient)
         {
-            client = RestClient.For<IPricingClient>(configuration.GetValue<string>("PricingServiceUri"));
+            var handler = new DiscoveryHttpClientHandler(discoveryClient);
+            var httpClient = new HttpClient(handler, false)
+            {
+                BaseAddress = new Uri(configuration.GetValue<string>("PricingServiceUri"))
+            };
+            client = RestClient.For<IPricingClient>(httpClient);
         }
 
         public Task<CalculatePriceResult> CalculatePrice([Body] CalculatePriceCommand cmd)

@@ -16,6 +16,7 @@ using PricingService.DataAccess.Marten;
 using PricingService.Init;
 using GlobalExceptionHandler.WebApi;
 using PricingService.Infrastructure;
+using Steeltoe.Discovery.Client;
 
 namespace PricingService
 {
@@ -31,6 +32,7 @@ namespace PricingService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDiscoveryClient(Configuration);
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(opt => 
@@ -56,6 +58,7 @@ namespace PricingService
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseInitializer();
+            app.UseDiscoveryClient();
         }
     }
 }
