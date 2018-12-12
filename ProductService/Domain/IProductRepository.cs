@@ -9,8 +9,10 @@ namespace ProductService.Domain
     {
         Task<Product> Add(Product product);
 
-        Task<List<Product>> FindAll();
+        Task<List<Product>> FindAllActive();
 
         Task<Product> FindOne(String productCode);
+        
+        Task<Product> FindById(Guid id);
     }
 }

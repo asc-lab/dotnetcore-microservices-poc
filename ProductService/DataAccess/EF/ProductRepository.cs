@@ -21,14 +21,29 @@ namespace ProductService.DataAccess.EF
             throw new NotImplementedException();
         }
 
-        public async Task<List<Product>> FindAll()
+        public async Task<List<Product>> FindAllActive()
         {
-           return await productDbContext.Products.Include(c => c.Covers).Include("Questions.Choices").ToListAsync();
+           return await productDbContext
+               .Products
+               .Include(c => c.Covers)
+               .Include("Questions.Choices")
+               .Where(p => p.Status == ProductStatus.Active)
+               .ToListAsync();
         }
 
         public async Task<Product> FindOne(string productCode)
         {
-            return await productDbContext.Products.Include(c => c.Covers).Include("Questions.Choices").FirstOrDefaultAsync(p => p.Code.Equals(productCode, StringComparison.InvariantCultureIgnoreCase));
+            return await productDbContext
+                .Products
+                .Include(c => c.Covers)
+                .Include("Questions.Choices")
+                .FirstOrDefaultAsync(p => p.Code.Equals(productCode, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        public async Task<Product> FindById(Guid id)
+        {
+            return await productDbContext.Products.Include(c => c.Covers).Include("Questions.Choices")
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

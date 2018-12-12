@@ -21,7 +21,7 @@ namespace ProductService.Queries
 
         public async Task<IEnumerable<ProductDto>> Handle(FindAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var result = await productRepository.FindAll();
+            var result = await productRepository.FindAllActive();
 
             return result.Select(p => new ProductDto
             {

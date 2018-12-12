@@ -24,14 +24,15 @@ namespace ProductService.Test.Domain
                     "/static/travel.jpg",
                     "Travel insurance",
                     10)]
-        public void ProductIsCreated(string code, string name, string image, string description, int maxNumberOfInsured)
+        public void ProductDraftIsCreated(string code, string name, string image, string description, int maxNumberOfInsured)
         {
-            var product = new Product(code, name, image, description, maxNumberOfInsured);
+            var product = Product.CreateDraft(code, name, image, description, maxNumberOfInsured);
 
             Assert.NotEqual(Guid.Empty, product.Id);
             Assert.NotNull(product.Questions);
             Assert.Empty(product.Questions);
             Assert.NotNull(product.Covers);
+            Assert.Equal(product.Status, ProductStatus.Draft);
             Assert.Empty(product.Covers);
         }
 
