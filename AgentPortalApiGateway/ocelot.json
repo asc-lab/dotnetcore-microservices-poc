@@ -6,8 +6,29 @@
       "UpstreamPathTemplate": "/Products/{everything}",
       "ServiceName": "ProductService",
       "UpstreamHttpMethod": [ "Get" ],
-
-      "FileCacheOptions": { "TtlSeconds": 15 }
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Products",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Products",
+      "ServiceName": "ProductService",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
     }
   ],
   "GlobalConfiguration": {
