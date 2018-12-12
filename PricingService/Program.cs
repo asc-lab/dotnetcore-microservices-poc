@@ -27,7 +27,9 @@ namespace PricingService
             try
             {
                 Log.Information("Starting web host");
-                CreateWebHostBuilder(args).Run();
+                CreateWebHostBuilder(args)
+                    .Build()
+                    .Run();
             }
             catch (Exception ex)
             {
@@ -39,7 +41,7 @@ namespace PricingService
             }
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args)
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -47,13 +49,12 @@ namespace PricingService
                 .AddJsonFile("appsettings.json", optional: true)
                 .AddCommandLine(args)
                 .Build();
-            
+
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(config)
                 .UseStartup<Startup>()
-                .UseSerilog()
-                .Build();
-            
+                .UseSerilog();
+
             //return WebHost.CreateDefaultBuilder(args)
             //    .UseConfiguration(config)
             //    .UseStartup<Startup>()
