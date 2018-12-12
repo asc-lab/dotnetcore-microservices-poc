@@ -1,34 +1,36 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Moq;
 using ProductService.Api.Queries;
 using ProductService.Api.Queries.Dtos;
 using ProductService.Controllers;
 using ProductService.Test.TestData;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using static Xunit.Assert;
 
 namespace ProductService.Test.Controllers
 {
-    public class ProductsControllerTest
-    {      
+    public class ProductsControllerTest : IClassFixture<WebApplicationFactory<Startup>>
+    {
+        private readonly WebApplicationFactory<Startup> factory;
+
+        public ProductsControllerTest(WebApplicationFactory<Startup> factory)
+        {
+            this.factory = factory;
+        }
+
         [Fact]
         public async Task GetAll_ReturnsJsonResult_WithListofProducts()
-        {            
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<FindAllProductsQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(new List<ProductDto> { TestProductDtoFactory.Travel() } );
+        {
+            var client = factory.CreateClient();
 
-            var controller = new ProductsController(mockMediator.Object);
+            var response = await client.DoGetAsync<List<ProductDto>>("/api/Product");
 
-            var result = await controller.GetAll();
-
-            var jsonResult = Assert.IsType<JsonResult>(result);
-            var items = Assert.IsType<List<ProductDto>>(jsonResult.Value);
-            Assert.Single(items);            
+            True(response.Count > 1);
         }
 
 

@@ -1,12 +1,10 @@
 ﻿using Moq;
-using ProductService.Api.Queries.Dtos;
 using ProductService.Domain;
 using ProductService.Queries;
 using ProductService.Test.TestData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -14,7 +12,7 @@ namespace ProductService.Test.Handlers
 {
     public class FindProductsHandlersTest
     {
-        private Mock<IProductRepository> productRepository;        
+        private Mock<IProductRepository> productRepository;
 
         private List<Product> products = new List<Product>
         {

@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PricingService.Test.Controllers
+namespace ProductService.Test.Controllers
 {
     static class HttpClientExtensions
     {

@@ -3,7 +3,6 @@ using PricingService.Api.Commands;
 using PricingService.Api.Commands.Dto;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using static Xunit.Assert;
 
