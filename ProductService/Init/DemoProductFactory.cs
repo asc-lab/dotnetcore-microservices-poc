@@ -7,7 +7,7 @@ namespace ProductService.DataAccess.EF.Data
     {
         internal static Product Travel()
         {
-            Product p = new Product(
+            Product p = Product.CreateDraft(
                     "TRI",
                     "Safe Traveller",
                     "/static/travel.jpg",
@@ -26,13 +26,14 @@ namespace ProductService.DataAccess.EF.Data
                     new NumericQuestion("NUM_OF_ADULTS", 2, "Number of adults"),
                     new NumericQuestion("NUM_OF_CHILDREN", 3, "Number of children")
             });
+            p.Activate();
             return p;
         }
 
 
         internal static Product House()
         {
-            Product p = new Product(
+            Product p = Product.CreateDraft(
                     "HSI",
                     "Happy House",
                     "/static/house.jpg",
@@ -53,12 +54,13 @@ namespace ProductService.DataAccess.EF.Data
                     new NumericQuestion("NUM_OF_CLAIM", 3, "Number of claims in last 5 years"),
                     new ChoiceQuestion("FLOOD", 4, "Located in flood risk area", ChoiceQuestion.YesNoChoice())
             });
+            p.Activate();
             return p;
         }
 
         internal static Product Farm()
         {
-            Product p = new Product(
+            Product p = Product.CreateDraft(
                     "FAI",
                     "Happy farm",
                     "/static/farm.jpg",
@@ -79,12 +81,13 @@ namespace ProductService.DataAccess.EF.Data
                     new NumericQuestion("NUM_OF_CLAIM", 3, "Number of claims in last 5 years"),
                     //new ChoiceQuestion("FLOOD", 4, "Located in flood risk area", ChoiceQuestion.YesNoChoice()) //FIXME problem with code duplication
             });
+            p.Activate();
             return p;
         }
 
         internal static Product Car()
         {
-            Product p = new Product(
+            Product p = Product.CreateDraft(
                     "CAR",
                     "Happy Driver",
                     "/static/car.jpg",
@@ -95,7 +98,7 @@ namespace ProductService.DataAccess.EF.Data
             p.AddQuestions(new List<Question> {
                     new NumericQuestion("NUM_OF_CLAIM", 3, "Number of claims in last 5 years")
             });
-
+            p.Activate();
             return p;
         }
     }

@@ -5,9 +5,9 @@ namespace PolicyService.Tests.Domain
 {
     public class TimeMachine : IDisposable
     {
-        private readonly Func<DateTimeOffset> oldTimeProvider;
+        private readonly Func<DateTime> oldTimeProvider;
         
-        public TimeMachine(DateTimeOffset newNow)
+        public TimeMachine(DateTime newNow)
         {
             oldTimeProvider = SysTime.CurrentTimeProvider;
             SysTime.CurrentTimeProvider = () => newNow;

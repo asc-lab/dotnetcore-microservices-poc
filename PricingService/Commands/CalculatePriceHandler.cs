@@ -12,19 +12,19 @@ namespace PricingService.Commands
 {
     public class CalculatePriceHandler : IRequestHandler<CalculatePriceCommand, CalculatePriceResult>
     {
-        private IUnitOfWork unitOfWork;
-        private CalculatePriceCommandValidator commandValidator = new CalculatePriceCommandValidator(); 
+        private readonly IDataStore dataStore;
+        private readonly CalculatePriceCommandValidator commandValidator = new CalculatePriceCommandValidator(); 
 
-        public CalculatePriceHandler(IUnitOfWork unitOfWork)
+        public CalculatePriceHandler(IDataStore dataStore)
         {
-            this.unitOfWork = unitOfWork;
+            this.dataStore = dataStore;
         }
 
         public async Task<CalculatePriceResult> Handle(CalculatePriceCommand cmd, CancellationToken cancellationToken)
         {
             commandValidator.ValidateAndThrow(cmd);
 
-            Tariff tariff = unitOfWork.Tariffs.WithCode(cmd.ProductCode);
+            var tariff = dataStore.Tariffs[cmd.ProductCode];
 
             var calculation = tariff.CalculatePrice(ToCalculation(cmd));
 

@@ -32,15 +32,15 @@ namespace PolicyService.Domain
         
         public virtual OfferStatus Status { get; protected set; }
 
-        public virtual DateTimeOffset CreateionDate { get; protected set; }
+        public virtual DateTime CreateionDate { get; protected set; }
 
 
         public virtual IReadOnlyCollection<Cover> Covers => new ReadOnlyCollection<Cover>(covers);
 
         public static Offer ForPrice(
             String productCode,
-            DateTimeOffset policyFrom,
-            DateTimeOffset policyTo,
+            DateTime policyFrom,
+            DateTime policyTo,
             PolicyHolder policyHolder,
             Price price)
         {
@@ -56,8 +56,8 @@ namespace PolicyService.Domain
 
         public Offer(
             String productCode,
-            DateTimeOffset policyFrom,
-            DateTimeOffset policyTo,
+            DateTime policyFrom,
+            DateTime policyTo,
             PolicyHolder policyHolder,
             Price price)
         {
@@ -87,7 +87,7 @@ namespace PolicyService.Domain
             return new Policy(customer, this);
         }
 
-        public virtual bool IsExpired(DateTimeOffset theDate)
+        public virtual bool IsExpired(DateTime theDate)
         {
             return this.CreateionDate.AddDays(30) < theDate;
         }

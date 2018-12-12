@@ -15,8 +15,8 @@ namespace PolicyService.Domain
     public class PricingParams
     {
         public string ProductCode { get; set; }
-        public DateTimeOffset PolicyFrom { get; set; }
-        public DateTimeOffset PolicyTo { get; set; }
+        public DateTime PolicyFrom { get; set; }
+        public DateTime PolicyTo { get; set; }
         public List<string> SelectedCovers { get; set; }
         public List<Answer> Answers { get; set; }
     }

@@ -15,16 +15,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
-    <PackageReference Include="Polly" Version="6.1.0" />
-    <PackageReference Include="RestEase" Version="1.4.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PaymentService.Api\PaymentService.Api.csproj" />
-    <ProjectReference Include="..\PolicySearchService.Api\PolicySearchService.Api.csproj" />
-    <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
-    <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj" />
-    <ProjectReference Include="..\ProductService.Api\ProductService.Api.csproj" />
+    <PackageReference Include="Ocelot" Version="12.0.1" />
+    <PackageReference Include="Ocelot.Provider.Eureka" Version="0.1.2" />
   </ItemGroup>
 
 </Project>

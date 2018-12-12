@@ -14,10 +14,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ensure.That" Version="8.1.0" />
     <PackageReference Include="MediatR" Version="5.1.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.1.4" />
+    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -26,6 +26,8 @@ namespace ProductService.DataAccess.EF
                     options.UseSqlServer(configuration.GetConnectionString("Products"));
                 }
             });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
             return services;
         }       
     }

@@ -18,7 +18,7 @@ namespace PricingService.DataAccess.Marten
             //services.AddScoped<IDocumentSession>(sp => {
             //    return sp.GetService<IDocumentStore>().OpenSession();
             //});
-            services.AddScoped<Domain.IUnitOfWork, MartenUnitOfWork>();
+            services.AddScoped<Domain.IDataStore, MartenDataStore>();
         }
 
         private static IDocumentStore CreateDocumentStore(string cn)

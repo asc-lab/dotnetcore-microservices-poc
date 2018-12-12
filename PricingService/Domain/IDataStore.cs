@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PricingService.Domain
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IDataStore : IDisposable
     {
         ITariffRepository Tariffs { get; }
 

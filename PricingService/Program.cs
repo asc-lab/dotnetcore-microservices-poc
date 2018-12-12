@@ -39,10 +39,26 @@ namespace PricingService
             }
         }
 
-        public static IWebHost CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost CreateWebHostBuilder(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("hosting.json", optional: true)
+                .AddJsonFile("appsettings.json", optional: true)
+                .AddCommandLine(args)
+                .Build();
+            
+            return WebHost.CreateDefaultBuilder(args)
+                .UseConfiguration(config)
                 .UseStartup<Startup>()
                 .UseSerilog()
                 .Build();
+            
+            //return WebHost.CreateDefaultBuilder(args)
+            //    .UseConfiguration(config)
+            //    .UseStartup<Startup>()
+            //    .UseSerilog()
+            //    .Build();
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ProductService.Api.Commands;
 using ProductService.Api.Queries;
 
 namespace ProductService.Controllers
@@ -32,6 +33,30 @@ namespace ProductService.Controllers
         public async Task<ActionResult> GetByCode([FromRoute]string code)
         {
             var result = await mediator.Send(new FindProductByCodeQuery{ ProductCode = code });                        
+            return new JsonResult(result);
+        }
+        
+        // POST api/products
+        [HttpPost]
+        public async Task<ActionResult> PostDraft([FromBody] CreateProductDraftCommand request)
+        {
+            var result = await mediator.Send(request);
+            return new JsonResult(result);
+        }
+        
+        // POST api/products/activate
+        [HttpPost("/activate")]
+        public async Task<ActionResult> Activate([FromBody] ActivateProductCommand request)
+        {
+            var result = await mediator.Send(request);
+            return new JsonResult(result);
+        }
+        
+        // POST api/products/discontinue
+        [HttpPost("/discontinue")]
+        public async Task<ActionResult> Activate([FromBody] DiscontinueProductCommand request)
+        {
+            var result = await mediator.Send(request);
             return new JsonResult(result);
         }
         

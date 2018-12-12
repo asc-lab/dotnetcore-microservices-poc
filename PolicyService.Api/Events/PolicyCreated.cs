@@ -10,8 +10,8 @@ namespace PolicyService.Api.Events
     {
         public string PolicyNumber { get; set; }
         public string ProductCode { get; set; }
-        public DateTimeOffset PolicyFrom { get; set; }
-        public DateTimeOffset PolicyTo { get; set; }
+        public DateTime PolicyFrom { get; set; }
+        public DateTime PolicyTo { get; set; }
         public PersonDto PolicyHolder { get; set; }
         public decimal TotalPremium { get; set; }
     }

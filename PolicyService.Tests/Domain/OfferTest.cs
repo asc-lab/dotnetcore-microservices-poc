@@ -21,8 +21,8 @@ namespace PolicyService.Tests.Domain
             var offer = Offer.ForPrice
             (
                 "P1",
-                DateTimeOffset.Now,
-                DateTimeOffset.Now.AddDays(5),
+                DateTime.Now,
+                DateTime.Now.AddDays(5),
                 null,
                 price
             );
@@ -35,7 +35,7 @@ namespace PolicyService.Tests.Domain
         [Fact]
         public void CanBuyNewNonExpiredOffer()
         {
-            var offer = OfferFactory.NewOfferValidUntil(DateTimeOffset.Now.AddDays(5));
+            var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
 
             var policy = offer.Buy(PolicyHolderFactory.Abc());
             
@@ -55,7 +55,7 @@ namespace PolicyService.Tests.Domain
         [Fact]
         public void CannotBuyExpiredOffer()
         {
-            var offer = OfferFactory.NewOfferValidUntil(DateTimeOffset.Now.AddDays(-5));
+            var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(-5));
             Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
             Equal($"Offer {offer.Number} has expired", ex.Message);
         }

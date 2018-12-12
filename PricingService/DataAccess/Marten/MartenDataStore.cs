@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace PricingService.DataAccess.Marten
 {
-    public class MartenUnitOfWork : IUnitOfWork
+    public class MartenDataStore : IDataStore
     {
         private readonly IDocumentSession session;
         private readonly ITariffRepository tariffs;
 
-        public MartenUnitOfWork(IDocumentStore documentStore)
+        public MartenDataStore(IDocumentStore documentStore)
         {
             session = documentStore.LightweightSession();
             tariffs = new MartenTariffRepository(session);
