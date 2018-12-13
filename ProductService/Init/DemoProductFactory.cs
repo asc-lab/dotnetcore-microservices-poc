@@ -1,7 +1,7 @@
 ﻿using ProductService.Domain;
 using System.Collections.Generic;
 
-namespace ProductService.DataAccess.EF.Data
+namespace ProductService.Init
 {
     internal static class DemoProductFactory
     {
@@ -21,8 +21,7 @@ namespace ProductService.DataAccess.EF.Data
                             new Choice("EUR", "Europe"),
                             new Choice("WORLD", "World"),
                             new Choice("PL", "Poland")
-            })
-                    ,
+            }),
                     new NumericQuestion("NUM_OF_ADULTS", 2, "Number of adults"),
                     new NumericQuestion("NUM_OF_CHILDREN", 3, "Number of children")
             });

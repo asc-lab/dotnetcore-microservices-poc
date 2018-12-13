@@ -1,13 +1,7 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Moq;
-using ProductService.Api.Queries;
 using ProductService.Api.Queries.Dtos;
-using ProductService.Controllers;
 using ProductService.Test.TestData;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using static Xunit.Assert;
@@ -24,12 +18,12 @@ namespace ProductService.Test.Controllers
         }
 
         [Fact]
-        public async Task GetAll_ReturnsJsonResult_WithListofProducts()
+        public async Task GetAll_ReturnsJsonResult_WithListOfProducts()
         {
             var client = factory.CreateClient();
 
-            var response = await client.DoGetAsync<List<ProductDto>>("/api/Product");
-
+            var response = await client.DoGetAsync<List<ProductDto>>("/api/Products");
+            
             True(response.Count > 1);
         }
 
@@ -37,18 +31,15 @@ namespace ProductService.Test.Controllers
         [Fact]
         public async Task GetByCode_ReturnsJsonResult_WithOneProductOfCorrectType()
         {
-            var paramProductCode = TestProductDtoFactory.Travel().Code;
+            var productTravel = TestProductDtoFactory.Travel();
 
-            var mockMediator = new Mock<IMediator>();
-            mockMediator.Setup(x => x.Send(It.IsAny<FindProductByCodeQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(TestProductDtoFactory.Travel());
+            var client = factory.CreateClient();
 
-            var controller = new ProductsController(mockMediator.Object);
+            var response = await client.DoGetAsync<ProductDto>("/api/Products/" + productTravel.Code);
 
-            var result = await controller.GetByCode(paramProductCode);
-
-            var jsonResult = Assert.IsType<JsonResult>(result);
-            var item = Assert.IsType<ProductDto>(jsonResult.Value);
-            Assert.Equal(paramProductCode, item.Code);
+            Equal(productTravel.Code, response.Code);
+            Equal(productTravel.Name, response.Name);
+            Equal(productTravel.Description, response.Description);
         }
 
 

@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PricingService.Api.Converters;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PricingService.Api.Commands.Dto
 {

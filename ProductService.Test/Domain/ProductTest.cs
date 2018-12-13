@@ -1,8 +1,6 @@
-using ProductService.DataAccess.EF.Data;
 using ProductService.Domain;
 using ProductService.Test.TestData;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -15,7 +13,7 @@ namespace ProductService.Test.Domain
         new List<object[]>
         {
             new object[] { "C2", "Illness", "", false, 5000.0M },
-            new object[] { "C3", "Assistance", "", true, null }            
+            new object[] { "C3", "Assistance", "", true, null }
         };
 
         [Theory]
@@ -32,7 +30,7 @@ namespace ProductService.Test.Domain
             Assert.NotNull(product.Questions);
             Assert.Empty(product.Questions);
             Assert.NotNull(product.Covers);
-            Assert.Equal(product.Status, ProductStatus.Draft);
+            Assert.Equal(ProductStatus.Draft, product.Status);
             Assert.Empty(product.Covers);
         }
 

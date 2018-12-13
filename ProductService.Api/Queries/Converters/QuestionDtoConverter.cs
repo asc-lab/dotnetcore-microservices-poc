@@ -1,15 +1,15 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using PricingService.Api.Commands.Dto;
+using ProductService.Api.Queries.Dtos;
 using System;
 
-namespace PricingService.Api.Converters
+namespace ProductService.Api.Queries.Converters
 {
-    class QuestionAnswerConverter : JsonConverter
+    class QuestionDtoConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType.IsAssignableFrom(typeof(QuestionAnswer));
+            return objectType.IsAssignableFrom(typeof(QuestionDto));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -22,44 +22,45 @@ namespace PricingService.Api.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var questionAnswer = value as QuestionAnswer;
-            if (questionAnswer!=null)
+            var questionAnswer = value as QuestionDto;
+            if (questionAnswer != null)
             {
                 writer.WriteStartObject();
+                writer.WritePropertyName("index");
+                serializer.Serialize(writer, questionAnswer.Index);
                 writer.WritePropertyName("questionCode");
                 serializer.Serialize(writer, questionAnswer.QuestionCode);
                 writer.WritePropertyName("questionType");
                 serializer.Serialize(writer, questionAnswer.QuestionType);
-                writer.WritePropertyName("answer");
-                serializer.Serialize(writer, questionAnswer.GetAnswer());
+                writer.WritePropertyName("text");
+                serializer.Serialize(writer, questionAnswer.Text);
                 writer.WriteEndObject();
             }
-            
         }
 
-        QuestionAnswer Create(Type objectType, JObject jsonObject)
+        QuestionDto Create(Type objectType, JObject jsonObject)
         {
             // examine the $type value
             var typeName = Enum.Parse<QuestionType>(jsonObject["questionType"].ToString());
             switch (typeName)
             {
-                case QuestionType.Text:
-                    return new TextQuestionAnswer
+                case QuestionType.Date:
+                    return new DateQuestionDto
                     {
                         QuestionCode = jsonObject["questionCode"].ToString(),
-                        Answer = jsonObject["answer"].ToString()
+                        Text = jsonObject["text"].ToString()
                     };
-                case QuestionType.Number:
-                    return new NumericQuestionAnswer
+                case QuestionType.Numeric:
+                    return new NumericQuestionDto
                     {
                         QuestionCode = jsonObject["questionCode"].ToString(),
-                        Answer = jsonObject["answer"].Value<decimal>()
+                        Text = jsonObject["text"].ToString()
                     };
                 case QuestionType.Choice:
-                    return new ChoiceQuestionAnswer
+                    return new ChoiceQuestionDto
                     {
                         QuestionCode = jsonObject["questionCode"].ToString(),
-                        Answer = jsonObject["answer"].ToString()
+                        Text = jsonObject["text"].ToString()
                     };
                 default:
                     throw new ApplicationException($"Unexpected question type {typeName}");
