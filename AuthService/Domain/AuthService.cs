@@ -37,7 +37,8 @@ namespace AuthService.Domain
                     new Claim(ClaimTypes.Name, agent.Login),
                     new Claim(ClaimTypes.Role, "SALESMAN"),
                     new Claim(ClaimTypes.Role, "USER"),
-                    new Claim("avatar", agent.Avatar) 
+                    new Claim("avatar", agent.Avatar),
+                    new Claim("userType", "SALESMAN"), 
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
