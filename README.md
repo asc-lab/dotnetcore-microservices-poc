@@ -6,6 +6,9 @@ This is an example of a very simplified insurance sales system made in a microse
 * MediatR
 * Entity Framework Core
 * Marten
+* Eureka
+* Ocelot
+* JWT Tokens
 * RestEase
 * RawRabbit
 * NHibernate
@@ -57,3 +60,24 @@ It provides basic information about each insurance product and its parameters th
 
 
 Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations.
+
+## Prerequisites
+
+You must install Maven and run Eureka:
+```
+git clone https://github.com/spring-cloud-samples/eureka.git
+cd eureka
+mvn spring-boot:run
+```
+
+## Build
+
+Build all projects from command line without test:
+```
+build-without-tests.bat
+```
+
+Build all projects from command with test:
+```
+build.bat
+```
