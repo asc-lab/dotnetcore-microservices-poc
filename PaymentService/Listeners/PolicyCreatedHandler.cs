@@ -8,12 +8,12 @@ namespace PaymentService.Listeners
 {
     public class PolicyCreatedHandler : INotificationHandler<PolicyCreated>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IDataStore dataStore;
         private readonly PolicyAccountNumberGenerator policyAccountNumberGenerator;
 
-        public PolicyCreatedHandler(IUnitOfWork unitOfWork, PolicyAccountNumberGenerator policyAccountNumberGenerator)
+        public PolicyCreatedHandler(IDataStore dataStore, PolicyAccountNumberGenerator policyAccountNumberGenerator)
         {
-            this.unitOfWork = unitOfWork;
+            this.dataStore = dataStore;
             this.policyAccountNumberGenerator = policyAccountNumberGenerator;
         }
 
@@ -21,10 +21,10 @@ namespace PaymentService.Listeners
         {
             var policy = new PolicyAccount(notification.PolicyNumber, policyAccountNumberGenerator.Generate());
 
-            using (unitOfWork)
+            using (dataStore)
             {
-                unitOfWork.PolicyAccounts.Add(policy);
-                unitOfWork.CommitChanges();
+                dataStore.PolicyAccounts.Add(policy);
+                dataStore.CommitChanges();
             }
         }
     }

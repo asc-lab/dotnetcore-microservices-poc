@@ -6,10 +6,10 @@ namespace PaymentService.Jobs
 {
     public class InPaymentRegistrationJob
     {
-        private readonly IUnitOfWork uow;
+        private readonly IDataStore uow;
         private readonly BackgroundJobsConfig jobConfig;
 
-        public InPaymentRegistrationJob(IUnitOfWork uow, BackgroundJobsConfig jobConfig)
+        public InPaymentRegistrationJob(IDataStore uow, BackgroundJobsConfig jobConfig)
         {
             this.uow = uow;
             this.jobConfig = jobConfig;

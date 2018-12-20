@@ -11,7 +11,7 @@ namespace PaymentService.DataAccess.Marten
         {
             services.AddSingleton<IDocumentStore>(CreateDocumentStore(cnnString));
 
-            services.AddScoped<Domain.IUnitOfWork, MartenUnitOfWork>();
+            services.AddScoped<Domain.IDataStore, MartenDataStore>();
         }
 
         private static IDocumentStore CreateDocumentStore(string cn)

@@ -11,16 +11,16 @@ namespace PaymentService.Queries
 {
     public class GetAccountBalanceHandler : IRequestHandler<GetAccountBalanceQuery, GetAccountBalanceQueryResult>
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IDataStore dataStore;
 
-        public GetAccountBalanceHandler(IUnitOfWork unitOfWork)
+        public GetAccountBalanceHandler(IDataStore dataStore)
         {
-            this.unitOfWork = unitOfWork;
+            this.dataStore = dataStore;
         }
 
         public async Task<GetAccountBalanceQueryResult> Handle(GetAccountBalanceQuery request, CancellationToken cancellationToken)
         {
-            var policyAccount = unitOfWork.PolicyAccounts.FindByNumber(request.PolicyNumber);
+            var policyAccount = dataStore.PolicyAccounts.FindByNumber(request.PolicyNumber);
             
             if (policyAccount == null)
             {

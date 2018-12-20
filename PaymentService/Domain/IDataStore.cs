@@ -2,7 +2,7 @@
 
 namespace PaymentService.Domain
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IDataStore : IDisposable
     {
         IPolicyAccountRepository PolicyAccounts { get; }
 

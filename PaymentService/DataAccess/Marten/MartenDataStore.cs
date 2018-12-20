@@ -4,11 +4,11 @@ using PaymentService.Domain;
 
 namespace PaymentService.DataAccess.Marten
 {
-    public class MartenUnitOfWork : IUnitOfWork
+    public class MartenDataStore : IDataStore
     {
         private readonly IDocumentSession session;
 
-        public MartenUnitOfWork(IDocumentStore documentStore)
+        public MartenDataStore(IDocumentStore documentStore)
         {
             session = documentStore.LightweightSession();
             PolicyAccounts = new MartenPolicyAccountRepository(session);

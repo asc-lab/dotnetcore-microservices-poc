@@ -5,11 +5,11 @@ namespace PaymentService.Domain
 {
     public class InPaymentRegistrationService
     {
-        private readonly IUnitOfWork uow;
+        private readonly IDataStore dataStore;
 
-        public InPaymentRegistrationService(IUnitOfWork uow)
+        public InPaymentRegistrationService(IDataStore dataStore)
         {
-            this.uow = uow;
+            this.dataStore = dataStore;
         }
         
         public void RegisterInPayments(string directory, DateTimeOffset date)
@@ -21,15 +21,15 @@ namespace PaymentService.Domain
                 return;
             }
 
-            using (uow)
+            using (dataStore)
             {
                 fileToImport
                     .Read()
-                    .ForEach(bs => uow.PolicyAccounts.FindByNumber(bs.AccountNumber)?.InPayment(bs.Amount, bs.AccountingDate));
+                    .ForEach(bs => dataStore.PolicyAccounts.FindByNumber(bs.AccountNumber)?.InPayment(bs.Amount, bs.AccountingDate));
                 
                 fileToImport.MarkProcessed();
                 
-                uow.CommitChanges();
+                dataStore.CommitChanges();
             }
         }
 
