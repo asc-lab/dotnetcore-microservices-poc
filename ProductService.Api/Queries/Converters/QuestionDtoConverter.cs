@@ -34,6 +34,11 @@ namespace ProductService.Api.Queries.Converters
                 serializer.Serialize(writer, questionAnswer.QuestionType);
                 writer.WritePropertyName("text");
                 serializer.Serialize(writer, questionAnswer.Text);
+                if (questionAnswer is ChoiceQuestionDto choiceQuestion)
+                {
+                    writer.WritePropertyName("choices");
+                    serializer.Serialize(writer, choiceQuestion.Choices);
+                }
                 writer.WriteEndObject();
             }
         }

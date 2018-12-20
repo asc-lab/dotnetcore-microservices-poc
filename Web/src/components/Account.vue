@@ -56,7 +56,7 @@
         methods: {
             login() {
                 const credentials = {
-                    username: this.credentials.username,
+                    login: this.credentials.username,
                     password: this.credentials.password
                 };
                 auth.login(this, credentials).then(() => {

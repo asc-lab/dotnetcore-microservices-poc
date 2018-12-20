@@ -25,6 +25,7 @@ namespace ProductService
             services.AddDiscoveryClient(Configuration);
             services.AddEFConfiguration(Configuration);
             services.AddMvc()
+                .AddJsonOptions(JsonOptions)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR();
             services.AddProductDemoInitializer();
@@ -46,6 +47,12 @@ namespace ProductService
             app.UseMvc();
             app.UseInitializer();
             app.UseDiscoveryClient();
+        }
+        
+        private void JsonOptions(MvcJsonOptions options)
+        {
+            options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
         }
     }
 }

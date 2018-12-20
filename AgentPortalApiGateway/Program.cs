@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,7 @@ namespace AgentPortalApiGateway
                 })
                 .ConfigureServices(s =>
                 {
+                    s.AddCors();
                     s.AddAuthentication(x =>
                     {
                         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,7 +64,18 @@ namespace AgentPortalApiGateway
                     });
                     s.AddOcelot().AddEureka();
                 })
-                .Configure(a => { a.UseOcelot().Wait(); })
+                .Configure(a =>
+                {
+                    a.UseCors
+                    (b => b
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                    );
+                    a.UseOcelot().Wait(); 
+                    
+                })
                 .Build();
         }
     }

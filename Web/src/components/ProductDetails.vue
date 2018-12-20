@@ -42,12 +42,12 @@
                             <div v-for="a in answers" class="form-group row" :key="a.id">
                                 <label class="col-sm-3 col-form-label">{{a.question.text}} </label>
 
-                                <div class="col-sm-9" v-if="a.question.type==='numeric'">
+                                <div class="col-sm-9" v-if="a.question.questionType==='Numeric'">
                                     <input required type="number" class="form-control" v-model="a.answer"
                                            :disabled="'VIEW' === mode"/>
                                 </div>
 
-                                <div class="col-sm-9" v-if="a.question.type==='choice'">
+                                <div class="col-sm-9" v-if="a.question.questionType==='Choice'">
                                     <select required class="form-control" v-model="a.answer" :disabled="'VIEW' === mode">
                                         <option v-for="option in a.question.choices" v-bind:value="option.code"
                                                 :key="option.code">
@@ -162,7 +162,7 @@
                 for (let j = 0; j < this.answers.length; j++) {
                     request.answers.push({
                         'questionCode': this.answers[j].question.code,
-                        'type': this.answers[j].question.type,
+                        'type': this.answers[j].question.questionType,
                         'answer': this.answers[j].answer
                     });
                 }

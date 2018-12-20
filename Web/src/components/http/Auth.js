@@ -1,5 +1,5 @@
 const API_URL = (process.env.VUE_APP_AUTH_URL ? process.env.VUE_APP_AUTH_URL : "/");
-const LOGIN_URL = API_URL + 'login';
+const LOGIN_URL = API_URL + 'api/User';
 
 export const TOKEN_KEY = "jwt";
 export const DETAILS_KEY = "auth-details";
@@ -11,7 +11,7 @@ export default {
         return context.$http.post(LOGIN_URL, credentials)
             .then(
                 (response) => {
-                    localStorage.setItem(TOKEN_KEY, response.body.access_token);
+                    localStorage.setItem(TOKEN_KEY, response.body.token);
                     localStorage.setItem(DETAILS_KEY, JSON.stringify(response.body));
                 },
                 (error) => {
