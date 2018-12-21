@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PolicyService" namespace="PolicyService.Domain">
   <typedef name="PolicyStatus" class="NHibernate.Type.EnumStringType`1[[PolicyService.Domain.PolicyStatus, PolicyService]], NHibernate" />
 
-  <class  name="Policy" table="dbo.policies">
+  <class  name="Policy" table="policies">
     <id name="Id" column="id">
       <generator class="guid.comb" />
     </id>
@@ -10,13 +10,13 @@
     <property name="ProductCode" column="product_code"/>
     <property name="Status" column="status" type="PolicyStatus"/>
     <property name="CreateionDate" column="creation_date"/>
-    <bag name="Versions" table="dbo.policy_versions" lazy="true" inverse="true" cascade="all-delete-orphan" access="field.camelcase">
+    <bag name="Versions" table="policy_versions" lazy="true" inverse="true" cascade="all-delete-orphan" access="field.camelcase">
       <key column="policy_id"/>
       <one-to-many class="PolicyVersion"/>
     </bag>
   </class>
 
-  <class  name="PolicyVersion" table="dbo.policy_versions">
+  <class  name="PolicyVersion" table="policy_versions">
     <id name="Id" column="id">
       <generator class="guid.comb" />
     </id>
@@ -36,7 +36,7 @@
       <property name="Pesel" column="holder_tax_id"/>
     </component>
     <property name="TotalPremiumAmount" column="total_premium"/>
-    <bag name="Covers" access="field.camelcase" table="dbo.policy_covers" lazy="true">
+    <bag name="Covers" access="field.camelcase" table="policy_covers" lazy="true">
       <key>
         <column name="policy_version_id" />
       </key>

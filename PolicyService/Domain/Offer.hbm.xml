@@ -2,7 +2,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PolicyService" namespace="PolicyService.Domain">
   <typedef name="OfferStatus" class="NHibernate.Type.EnumStringType`1[[PolicyService.Domain.OfferStatus, PolicyService]], NHibernate" />
 
-  <class  name="Offer" table="dbo.offers">
+  <class  name="Offer" table="offers">
     <id name="Id" column="id">
       <generator class="guid.comb" />
     </id>
@@ -20,7 +20,7 @@
     <property name="TotalPrice" column="total_price"/>
     <property name="Status" column="status"/>
     <property name="CreateionDate" column="creation_date"/>
-    <bag name="Covers" access="field.camelcase" table="dbo.offer_covers" lazy="true">
+    <bag name="Covers" access="field.camelcase" table="offer_covers" lazy="true">
       <key>
         <column name="offer_id" />
       </key>
