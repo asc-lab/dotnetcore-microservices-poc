@@ -63,21 +63,38 @@ Each business microservice has also **.Api project** (`PaymentService.Api`, `Pol
 
 ## Prerequisites
 
-You must install Maven and run Eureka:
-```
+You must install [Maven](https://maven.apache.org/download.cgi) and run Eureka:
+
+```bash
 git clone https://github.com/spring-cloud-samples/eureka.git
 cd eureka
 mvn spring-boot:run
 ```
 
+## Init databases
+
+```bash
+cd DbScripts
+"PATH_TO_PSQL.EXE" --host "localhost" --port EXAMPLE_PORT --username "EXAMPLE_USER" --file "createdatabases.sql"
+```
+
+In my case this command looks like:
+
+```bash
+cd DbScripts
+"C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
+```
+
 ## Build
 
 Build all projects from command line without test:
-```
+
+```bash
 build-without-tests.bat
 ```
 
 Build all projects from command with test:
-```
+
+```bash
 build.bat
 ```
