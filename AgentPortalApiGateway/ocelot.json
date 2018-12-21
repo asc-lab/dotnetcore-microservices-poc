@@ -77,6 +77,22 @@
       "RouteClaimsRequirement": {
         "userType" : "SALESMAN"
       }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/PolicySearch",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/PolicySearch",
+      "ServiceName": "PolicySearchService",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
     }
   ],
   "GlobalConfiguration": {

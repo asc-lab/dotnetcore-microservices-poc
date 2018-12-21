@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using PolicySearchService.DataAccess.ElasticSearch;
 using PolicySearchService.Messaging.RabbitMq;
 using PolicyService.Api.Events;
+using Steeltoe.Discovery.Client;
 
 namespace PolicySearchService
 {
@@ -29,6 +30,7 @@ namespace PolicySearchService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDiscoveryClient(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR();
             services.AddElasticSearch("http://localhost:9200");
@@ -50,6 +52,7 @@ namespace PolicySearchService
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
+            app.UseDiscoveryClient();
         }
     }
 }

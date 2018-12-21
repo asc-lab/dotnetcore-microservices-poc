@@ -26,9 +26,9 @@
         data() {
             return {
                 fields: [
-                    {key: 'number'},
-                    {key: 'dateFrom'},
-                    {key: 'dateTo'},
+                    {key: 'policyNumber'},
+                    {key: 'policyStartDate'},
+                    {key: 'policyEndDate'},
                     {key: 'policyHolder'}
                 ],
                 policies: [],
@@ -53,7 +53,7 @@
                 this.runSearch(this.formatQueryString(queryString));
             },
             runSearch(queryString = '') {
-                HTTP.get('policies' + queryString).then(response => {
+                HTTP.get('PolicySearch' + queryString).then(response => {
                     this.policies = response.data.policies;
                 });
             },
