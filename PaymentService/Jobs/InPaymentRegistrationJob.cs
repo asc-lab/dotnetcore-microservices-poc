@@ -6,12 +6,12 @@ namespace PaymentService.Jobs
 {
     public class InPaymentRegistrationJob
     {
-        private readonly IDataStore uow;
+        private readonly IDataStore dataStore;
         private readonly BackgroundJobsConfig jobConfig;
 
-        public InPaymentRegistrationJob(IDataStore uow, BackgroundJobsConfig jobConfig)
+        public InPaymentRegistrationJob(IDataStore dataStore, BackgroundJobsConfig jobConfig)
         {
-            this.uow = uow;
+            this.dataStore = dataStore;
             this.jobConfig = jobConfig;
         }
 
@@ -19,7 +19,7 @@ namespace PaymentService.Jobs
         {
             Console.WriteLine($"InPayment import started. Looking for file in {jobConfig.InPaymentFileFolder}");
 
-            var importService = new InPaymentRegistrationService(uow);
+            var importService = new InPaymentRegistrationService(dataStore);
             importService.RegisterInPayments(jobConfig.InPaymentFileFolder, DateTimeOffset.Now);
             
             Console.WriteLine("InPayment import finished.");
