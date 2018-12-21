@@ -67,7 +67,7 @@
                     policyHolder: this.policyHolder
                 };
 
-                HTTP.post('policies/create', request).then(response => {
+                HTTP.post('policies', request).then(response => {
                     this.$router.push({name: 'policyDetails', params: {policyNumber: response.data.policyNumber}});
                 })
             }

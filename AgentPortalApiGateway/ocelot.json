@@ -45,6 +45,38 @@
       "RouteClaimsRequirement": {
         "userType" : "SALESMAN"
       }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Policy",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Policies",
+      "ServiceName": "PolicyService",
+      "UpstreamHttpMethod": [ "Post" ],
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Policy/{number}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/Policies/{number}",
+      "ServiceName": "PolicyService",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
     }
   ],
   "GlobalConfiguration": {
