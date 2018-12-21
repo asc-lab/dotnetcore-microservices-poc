@@ -18,7 +18,7 @@ namespace PolicyService.Api.Commands.Dtos
     public enum QuestionType
     {
         Text,
-        Number,
+        Numeric,
         Choice
     }
 
@@ -37,7 +37,7 @@ namespace PolicyService.Api.Commands.Dtos
 
     public class NumericQuestionAnswer : QuestionAnswer<decimal>
     {
-        public override QuestionType QuestionType => QuestionType.Number;
+        public override QuestionType QuestionType => QuestionType.Numeric;
     }
 
     public class ChoiceQuestionAnswer : QuestionAnswer<string>

@@ -161,8 +161,8 @@
 
                 for (let j = 0; j < this.answers.length; j++) {
                     request.answers.push({
-                        'questionCode': this.answers[j].question.code,
-                        'type': this.answers[j].question.questionType,
+                        'questionCode': this.answers[j].question.questionCode,
+                        'questionType': this.answers[j].question.questionType,
                         'answer': this.answers[j].answer
                     });
                 }

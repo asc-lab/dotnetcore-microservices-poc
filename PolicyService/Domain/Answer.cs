@@ -20,7 +20,7 @@ namespace PolicyService.Domain
                     return new TextAnswer(questionCode, (string)answerValue);
                 case PolicyService.Api.Commands.Dtos.QuestionType.Choice:
                     return new ChoiceAnswer(questionCode, (string)answerValue);
-                case PolicyService.Api.Commands.Dtos.QuestionType.Number:
+                case PolicyService.Api.Commands.Dtos.QuestionType.Numeric:
                     return new NumericAnswer(questionCode, (decimal)answerValue);
                 default:
                     throw new ArgumentException();

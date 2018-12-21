@@ -51,7 +51,7 @@ namespace PolicyService.Api.Converters
                         QuestionCode = jsonObject["questionCode"].ToString(),
                         Answer = jsonObject["answer"].ToString()
                     };
-                case QuestionType.Number:
+                case QuestionType.Numeric:
                     return new NumericQuestionAnswer
                     {
                         QuestionCode = jsonObject["questionCode"].ToString(),
