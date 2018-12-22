@@ -33,7 +33,7 @@ namespace PolicySearchService
             services.AddDiscoveryClient(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMediatR();
-            services.AddElasticSearch("http://localhost:9200");
+            services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
             services.AddRabbitListeners();
         }
 
