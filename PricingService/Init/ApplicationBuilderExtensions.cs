@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace PricingService.Init
 {
     public static class ApplicationBuilderExtensions
     {
-        public static void UseInitializer(this IApplicationBuilder app)
+        public static async Task UseInitializer(this IApplicationBuilder app)
         {
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 var initializer = scope.ServiceProvider.GetService<Init.DataLoader>();
-                initializer.Seed();
+                await initializer.Seed();
             }
         }
     }

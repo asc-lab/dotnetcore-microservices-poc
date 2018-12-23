@@ -9,6 +9,6 @@ namespace PricingService.Domain
     {
         ITariffRepository Tariffs { get; }
 
-        void CommitChanges();
+        Task CommitChanges();
     }
 }

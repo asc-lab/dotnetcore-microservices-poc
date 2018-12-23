@@ -20,9 +20,9 @@ namespace PricingService.DataAccess.Marten
 
         public ITariffRepository Tariffs => tariffs;
 
-        public void CommitChanges()
+        public async Task CommitChanges()
         {
-            session.SaveChanges();
+            await session.SaveChangesAsync();
         }
 
         public void Dispose()

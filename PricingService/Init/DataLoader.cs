@@ -1,27 +1,48 @@
-﻿using PricingService.Domain;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using PricingService.Domain;
 
 namespace PricingService.Init
 {
     public class DataLoader
     {
-        private IDataStore _dataStore;
+        private readonly IDataStore dataStore;
+        private readonly IDictionary<string, Func<Tariff>> builders = new Dictionary<string, Func<Tariff>>
+        {
+            {"TRI", DemoTariffFactory.Travel },
+            {"HSI", DemoTariffFactory.House },
+            {"FAI", DemoTariffFactory.Farm },
+            {"CAR", DemoTariffFactory.Car }
+        };
 
         public DataLoader(IDataStore dataStore)
         {
-            this._dataStore = dataStore;
+            this.dataStore = dataStore;
         }
 
-        public void Seed()
+        public async Task Seed()
         {
-            if (!_dataStore.Tariffs.Exists("TRI")) _dataStore.Tariffs.Add(DemoTariffFactory.Travel());
+            await AddTariffIfNotExists("TRI");
 
-            if (!_dataStore.Tariffs.Exists("HSI")) _dataStore.Tariffs.Add(DemoTariffFactory.House());
+            await AddTariffIfNotExists("HSI");
 
-            if (!_dataStore.Tariffs.Exists("FAI")) _dataStore.Tariffs.Add(DemoTariffFactory.Farm());
+            await AddTariffIfNotExists("FAI");
 
-            if (!_dataStore.Tariffs.Exists("CAR")) _dataStore.Tariffs.Add(DemoTariffFactory.Car());
+            await AddTariffIfNotExists("CAR");
 
-            _dataStore.CommitChanges();
+            await dataStore.CommitChanges();
+        }
+
+        private async Task AddTariffIfNotExists(string code)
+        {
+            var alreadyExists = await dataStore.Tariffs.Exists(code);
+
+            if (!alreadyExists)
+            {
+                dataStore.Tariffs.Add(builders[code]());
+            }
         }
     }
 }

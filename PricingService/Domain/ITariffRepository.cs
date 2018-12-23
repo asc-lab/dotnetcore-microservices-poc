@@ -7,12 +7,12 @@ namespace PricingService.Domain
 {
     public interface ITariffRepository
     {
-        Tariff WithCode(string code);
+        Task<Tariff> WithCode(string code);
         
-        Tariff this[string code] { get; }
+        Task<Tariff> this[string code] { get; }
 
         void Add(Tariff tariff);
         
-        bool Exists(string code);
+        Task<bool> Exists(string code);
     }
 }

@@ -24,7 +24,7 @@ namespace PricingService.Commands
         {
             commandValidator.ValidateAndThrow(cmd);
 
-            var tariff = dataStore.Tariffs[cmd.ProductCode];
+            var tariff = await dataStore.Tariffs[cmd.ProductCode];
 
             var calculation = tariff.CalculatePrice(ToCalculation(cmd));
 
