@@ -63,13 +63,11 @@ Each business microservice has also **.Api project** (`PaymentService.Api`, `Pol
 
 ## Prerequisites
 
-You must install [Maven](https://maven.apache.org/download.cgi) and run Eureka:
+Install [PostgreSQL](https://www.postgresql.org/) version >= 10.0.
 
-```bash
-git clone https://github.com/spring-cloud-samples/eureka.git
-cd eureka
-mvn spring-boot:run
-```
+Install [RabbitMQ](https://www.rabbitmq.com/).
+
+Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka:
 
 ## Init databases
 
@@ -84,6 +82,18 @@ In my case this command looks like:
 cd DbScripts
 "C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
 ```
+This script should create lab_user user and the following databases: lab_netmicro_payments, lab_netmicro_jobs, lab_netmicro_policy and lab_netmicro_pricing.
+
+## Run Eureka
+Service registry and discovery tool for our project is Eureka. It is included in the project. 
+In order to start it open terminal / command prompt. 
+
+```bash
+cd eureka
+mvn spring-boot:run
+```
+
+This should start Euraka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
 
 ## Build
 
