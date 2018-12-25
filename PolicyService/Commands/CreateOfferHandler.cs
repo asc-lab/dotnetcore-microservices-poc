@@ -45,7 +45,7 @@ namespace PolicyService.Commands
             using (var uow = uowProvider.Create())
             {
                 uow.Offers.Add(o);
-                uow.CommitChanges();
+                await uow.CommitChanges();
 
                 //return result
                 return ConstructResult(o);

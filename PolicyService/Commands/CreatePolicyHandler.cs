@@ -28,7 +28,7 @@ namespace PolicyService.Commands
         {
             using (var uow = uowProvider.Create())
             {
-                var offer = uow.Offers.WithNumber(request.OfferNumber);
+                var offer = await uow.Offers.WithNumber(request.OfferNumber);
                 var customer = new PolicyHolder(
                     request.PolicyHolder.FirstName,
                     request.PolicyHolder.LastName,
@@ -37,7 +37,7 @@ namespace PolicyService.Commands
 
                 uow.Policies.Add(policy);
 
-                uow.CommitChanges();
+                await uow.CommitChanges();
 
                 await eventPublisher.PublishMessage(PolicyCreated(policy));
 

@@ -12,7 +12,7 @@ namespace PolicyService.Domain
 
         IPolicyRepository Policies { get; }
 
-        void CommitChanges();
+        Task CommitChanges();
     }
 
     public interface IUnitOfWorkProvider

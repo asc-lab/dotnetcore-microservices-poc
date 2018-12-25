@@ -9,6 +9,6 @@ namespace PolicyService.Domain
     {
         void Add(Policy policy);
 
-        Policy WithNumber(string number);
+        Task<Policy> WithNumber(string number);
     }
 }

@@ -22,7 +22,7 @@ namespace PolicyService.Queries
         {
             using (var uow = uowProvider.Create())
             {
-                var policy = uow.Policies.WithNumber(request.PolicyNumber);
+                var policy = await uow.Policies.WithNumber(request.PolicyNumber);
                 if (policy == null)
                 {
                     throw new ApplicationException($"Policy {request.PolicyNumber} not found!");

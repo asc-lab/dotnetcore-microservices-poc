@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NHibernate.Linq;
 
 namespace PolicyService.DataAccess.NHibernate
 {
@@ -21,10 +22,10 @@ namespace PolicyService.DataAccess.NHibernate
             session.Save(offer);
         }
 
-        public Offer WithNumber(string number)
+        public async Task<Offer> WithNumber(string number)
         {
-            return session.Query<Offer>()
-                .FirstOrDefault(o => o.Number == number);
+            return await session.Query<Offer>()
+                .FirstOrDefaultAsync(o => o.Number == number);
         }
     }
 }

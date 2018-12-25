@@ -27,9 +27,9 @@ namespace PolicyService.DataAccess.NHibernate
             policyRepository = new PolicyRepository(session);
         }
 
-        public void CommitChanges()
+        public async Task CommitChanges()
         {
-            tx.Commit();
+            await tx.CommitAsync();
         }
 
         public void Dispose()
