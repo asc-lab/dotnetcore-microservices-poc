@@ -67,7 +67,9 @@ Install [PostgreSQL](https://www.postgresql.org/) version >= 10.0.
 
 Install [RabbitMQ](https://www.rabbitmq.com/).
 
-Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka:
+Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) version >= 6. 
+
+Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka.
 
 ## Init databases
 

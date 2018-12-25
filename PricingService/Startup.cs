@@ -57,7 +57,7 @@ namespace PricingService
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseInitializer();
+            app.UseInitializer();oot:run
             app.UseDiscoveryClient();
         }
     }
