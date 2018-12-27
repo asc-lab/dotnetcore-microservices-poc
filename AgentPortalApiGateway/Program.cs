@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Eureka;
@@ -62,7 +63,7 @@ namespace AgentPortalApiGateway
                         };
 
                     });
-                    s.AddOcelot().AddEureka();
+                    s.AddOcelot().AddEureka().AddCacheManager(x => x.WithDictionaryHandle());
                 })
                 .Configure(a =>
                 {

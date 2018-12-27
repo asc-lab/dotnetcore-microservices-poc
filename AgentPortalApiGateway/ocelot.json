@@ -37,7 +37,6 @@
       "UpstreamPathTemplate": "/Offers",
       "ServiceName": "PolicyService",
       "UpstreamHttpMethod": [ "Post" ],
-      "FileCacheOptions": { "TtlSeconds": 15 },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ApiSecurity",
         "AllowedScopes": []
@@ -53,7 +52,6 @@
       "UpstreamPathTemplate": "/Policies",
       "ServiceName": "PolicyService",
       "UpstreamHttpMethod": [ "Post" ],
-      "FileCacheOptions": { "TtlSeconds": 15 },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ApiSecurity",
         "AllowedScopes": []
@@ -85,7 +83,6 @@
       "UpstreamPathTemplate": "/PolicySearch",
       "ServiceName": "PolicySearchService",
       "UpstreamHttpMethod": [ "Get" ],
-      "FileCacheOptions": { "TtlSeconds": 15 },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ApiSecurity",
         "AllowedScopes": []
