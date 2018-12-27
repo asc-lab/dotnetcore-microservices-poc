@@ -24,7 +24,7 @@ namespace PaymentService.Listeners
             using (dataStore)
             {
                 dataStore.PolicyAccounts.Add(policy);
-                dataStore.CommitChanges();
+                await dataStore.CommitChanges();
             }
         }
     }

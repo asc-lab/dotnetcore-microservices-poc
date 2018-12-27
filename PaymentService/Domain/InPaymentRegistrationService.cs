@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PaymentService.Domain
 {
@@ -12,7 +13,7 @@ namespace PaymentService.Domain
             this.dataStore = dataStore;
         }
         
-        public void RegisterInPayments(string directory, DateTimeOffset date)
+        public async Task RegisterInPayments(string directory, DateTimeOffset date)
         {
             var fileToImport = new BankStatementFile(directory, date);
 
@@ -23,13 +24,15 @@ namespace PaymentService.Domain
 
             using (dataStore)
             {
-                fileToImport
-                    .Read()
-                    .ForEach(bs => dataStore.PolicyAccounts.FindByNumber(bs.AccountNumber)?.InPayment(bs.Amount, bs.AccountingDate));
+                foreach (var txLine in fileToImport.Read())
+                {
+                    var account = await dataStore.PolicyAccounts.FindByNumber(txLine.AccountNumber);
+                    account?.InPayment(txLine.Amount, txLine.AccountingDate);
+                }
                 
                 fileToImport.MarkProcessed();
                 
-                dataStore.CommitChanges();
+                await dataStore.CommitChanges();
             }
         }
 

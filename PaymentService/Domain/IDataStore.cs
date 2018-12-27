@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace PaymentService.Domain
 {
@@ -6,6 +7,6 @@ namespace PaymentService.Domain
     {
         IPolicyAccountRepository PolicyAccounts { get; }
 
-        void CommitChanges();
+        Task CommitChanges();
     }
 }

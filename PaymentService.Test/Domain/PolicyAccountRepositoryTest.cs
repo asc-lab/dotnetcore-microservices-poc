@@ -27,9 +27,9 @@ namespace PaymentService.Test.Domain
             return list.Values;
         }
 
-        public PolicyAccount FindByNumber(string accountNumber)
+        public Task<PolicyAccount> FindByNumber(string accountNumber)
         {
-            return list.Values.FirstOrDefault(x => x.PolicyAccountNumber == accountNumber);
+            return Task.FromResult(list.Values.FirstOrDefault(x => x.PolicyAccountNumber == accountNumber));
         }
 
         public PolicyAccount FindForPolicy(string policyNumber)

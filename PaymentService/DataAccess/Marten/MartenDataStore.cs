@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Marten;
 using PaymentService.Domain;
 
@@ -16,9 +17,9 @@ namespace PaymentService.DataAccess.Marten
 
         public IPolicyAccountRepository PolicyAccounts { get; }
 
-        public void CommitChanges()
+        public async Task CommitChanges()
         {
-            session.SaveChanges();
+            await session.SaveChangesAsync();
         }
         
         public void Dispose()

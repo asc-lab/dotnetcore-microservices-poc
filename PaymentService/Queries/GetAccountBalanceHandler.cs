@@ -20,7 +20,7 @@ namespace PaymentService.Queries
 
         public async Task<GetAccountBalanceQueryResult> Handle(GetAccountBalanceQuery request, CancellationToken cancellationToken)
         {
-            var policyAccount = dataStore.PolicyAccounts.FindByNumber(request.PolicyNumber);
+            var policyAccount = await dataStore.PolicyAccounts.FindByNumber(request.PolicyNumber);
             
             if (policyAccount == null)
             {

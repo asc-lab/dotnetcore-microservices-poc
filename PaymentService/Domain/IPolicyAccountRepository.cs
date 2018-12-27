@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PaymentService.Domain
 {
@@ -6,6 +7,6 @@ namespace PaymentService.Domain
     {
         void Add(PolicyAccount policyAccount);
 
-        PolicyAccount FindByNumber(string accountNumber);
+        Task<PolicyAccount> FindByNumber(string accountNumber);
     }
 }
