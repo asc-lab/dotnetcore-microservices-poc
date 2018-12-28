@@ -41,9 +41,34 @@ namespace PolicyService.Domain
             versions.Add(PolicyVersion.FromOffer(this,1,policyHolder,offer));
         }
 
-        public virtual PolicyVersion Version(int number)
+        public virtual PolicyVersion Terminate(DateTime terminationDate)
         {
-            return Versions.First(v => v.VersionNumber == number);
+            //ensure is not already terminated
+            if (Status != PolicyStatus.Active)
+                throw new ApplicationException($"Policy {Number} is already terminated");
+
+            //get version valid at term date
+            var versionAtTerminationDate = versions.EffectiveOn(terminationDate);
+            
+            if (versionAtTerminationDate==null)
+                throw new ApplicationException($"No valid policy {Number} version exists at {terminationDate}. Policy cannot be terminated.");
+
+            if (!versionAtTerminationDate.CoverPeriod.Contains(terminationDate))
+                throw new ApplicationException($"Policy {Number} does not cover {terminationDate}. Policy cannot be terminated at this date.");
+            
+            //create terminal version
+            versions.Add(versionAtTerminationDate.EndOn(terminationDate));
+            
+            //change status
+            Status = PolicyStatus.Terminated;
+            
+            //return term version
+            return versions.LastVersion();
+        }
+
+        public virtual int NextVersionNumber()
+        {
+            return versions.Max(v => v.VersionNumber) + 1;
         }
     }
 }

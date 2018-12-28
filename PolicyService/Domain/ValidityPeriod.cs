@@ -26,9 +26,28 @@ namespace PolicyService.Domain
             return new ValidityPeriod(ValidFrom, ValidTo);
         }
 
+        public bool Contains(DateTime theDate)
+        {
+            if (theDate > ValidTo)
+                return false;
+
+            if (theDate < ValidFrom)
+                return false;
+            
+            return true;
+        }
+
+        public ValidityPeriod EndOn(DateTime endDate)
+        {
+            return new ValidityPeriod(ValidFrom, endDate);
+        }
+
+        public int Days => ValidTo.Subtract(ValidFrom).Days;
+        
         object ICloneable.Clone()
         {
             return Clone();
         }
+
     }
 }

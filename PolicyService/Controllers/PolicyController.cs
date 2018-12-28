@@ -35,5 +35,13 @@ namespace PolicyService.Controllers
             var result = await bus.Send(new GetPolicyDetailsQuery { PolicyNumber = policyNumber});
             return new JsonResult(result);
         }
+        
+        // DELETE
+        [HttpDelete("/terminate")]
+        public async Task<ActionResult> Post([FromBody] TerminatePolicyCommand cmd)
+        {
+            var result = await bus.Send(cmd);
+            return new JsonResult(result);
+        }
     }
 }

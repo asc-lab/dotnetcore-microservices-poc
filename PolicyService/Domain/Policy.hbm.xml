@@ -40,9 +40,13 @@
       <key>
         <column name="policy_version_id" />
       </key>
-      <composite-element class="PolicyService.Domain.Cover, PolicyService">
+      <composite-element class="PolicyService.Domain.PolicyCover, PolicyService">
         <property name="Code" column="cover_code"/>
-        <property name="Price" column="price"/>
+        <property name="Premium" column="premium"/>
+        <nested-composite-element name="CoverPeriod" class="PolicyService.Domain.ValidityPeriod, PolicyService">
+          <property name="ValidFrom" column="valid_from"/>
+          <property name="ValidTo" column="valid_to"/>
+        </nested-composite-element>
       </composite-element>
     </bag>
   </class>

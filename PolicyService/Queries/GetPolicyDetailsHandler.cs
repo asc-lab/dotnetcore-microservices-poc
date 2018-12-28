@@ -34,7 +34,7 @@ namespace PolicyService.Queries
 
         private GetPolicyDetailsQueryResult ConstructResult(Policy policy)
         {
-            var effectiveVersion = policy.Version(1);
+            var effectiveVersion = policy.Versions.FirstVersion();
             
             return new GetPolicyDetailsQueryResult
             {

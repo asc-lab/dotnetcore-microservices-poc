@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PolicyService.Domain
 {
@@ -20,9 +19,9 @@ namespace PolicyService.Domain
 
         public virtual ValidityPeriod VersionValidityPeriod { get; protected set; }
 
-        protected IList<Cover> covers = new List<Cover>();
+        protected IList<PolicyCover> covers = new List<PolicyCover>();
 
-        public virtual IReadOnlyCollection<Cover> Covers => new ReadOnlyCollection<Cover>(covers);
+        public virtual IReadOnlyCollection<PolicyCover> Covers => new ReadOnlyCollection<PolicyCover>(covers);
 
         public virtual decimal TotalPremiumAmount { get; protected set; }
 
@@ -37,6 +36,28 @@ namespace PolicyService.Domain
             return new PolicyVersion(policy,version,policyHolder,offer);
         }
 
+        public virtual bool IsEffectiveOn(DateTime theDate)
+        {
+            return VersionValidityPeriod.Contains(theDate);
+        }
+
+        public virtual PolicyVersion EndOn(DateTime endDate)
+        {
+            var endedCovers = this.covers.Select(c => c.EndOn(endDate)).ToList();
+            
+            var termVersion = new PolicyVersion
+            {
+                Policy = this.Policy,
+                VersionNumber = this.Policy.NextVersionNumber(),
+                PolicyHolder = new PolicyHolder(PolicyHolder.FirstName, PolicyHolder.LastName, PolicyHolder.Pesel),
+                CoverPeriod = CoverPeriod.EndOn(endDate),
+                VersionValidityPeriod = ValidityPeriod.Between(endDate.AddDays(1), VersionValidityPeriod.ValidTo),
+                covers = endedCovers,
+                TotalPremiumAmount = endedCovers.Sum(c => c.Premium)
+            };
+            return termVersion;
+        }
+
         private PolicyVersion(
             Policy policy,
             int version,
@@ -48,8 +69,8 @@ namespace PolicyService.Domain
             PolicyHolder = policyHolder;
             CoverPeriod = offer.PolicyValidityPeriod.Clone();
             VersionValidityPeriod = offer.PolicyValidityPeriod.Clone();
-            covers = offer.Covers.Select(c => c.Clone()).ToList();
-            TotalPremiumAmount = covers.Sum(c => c.Price);
+            covers = offer.Covers.Select(c => new PolicyCover(c, offer.PolicyValidityPeriod.Clone())).ToList();
+            TotalPremiumAmount = covers.Sum(c => c.Premium);
         }
     }
 }

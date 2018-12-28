@@ -40,7 +40,7 @@ namespace PolicyService.Tests.Domain
             var policy = offer.Buy(PolicyHolderFactory.Abc());
             
             Equal(OfferStatus.Converted, offer.Status);
-            Equal(offer.TotalPrice, policy.Version(1).TotalPremiumAmount);
+            Equal(offer.TotalPrice, policy.Versions.FirstVersion().TotalPremiumAmount);
         }
 
         [Fact]
