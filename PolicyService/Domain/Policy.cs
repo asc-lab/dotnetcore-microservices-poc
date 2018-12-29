@@ -41,7 +41,7 @@ namespace PolicyService.Domain
             versions.Add(PolicyVersion.FromOffer(this,1,policyHolder,offer));
         }
 
-        public virtual PolicyVersion Terminate(DateTime terminationDate)
+        public virtual PolicyTerminationResult Terminate(DateTime terminationDate)
         {
             //ensure is not already terminated
             if (Status != PolicyStatus.Active)
@@ -63,12 +63,10 @@ namespace PolicyService.Domain
             Status = PolicyStatus.Terminated;
             
             //return term version
-            return versions.LastVersion();
+            var terminalVersion = versions.LastVersion();
+            return new PolicyTerminationResult(terminalVersion, versionAtTerminationDate.TotalPremiumAmount - terminalVersion.TotalPremiumAmount);
         }
 
-        public virtual int NextVersionNumber()
-        {
-            return versions.Max(v => v.VersionNumber) + 1;
-        }
+        public virtual int NextVersionNumber() => versions.Count == 0 ? 1 : versions.LastVersion().VersionNumber + 1;
     }
 }

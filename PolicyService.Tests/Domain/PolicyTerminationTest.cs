@@ -14,12 +14,11 @@ namespace PolicyService.Tests.Domain
 
             var policy = offer.Buy(PolicyHolderFactory.Abc());
 
-            policy.Terminate(DateTime.Now.AddDays(3));
-
-            var termVersion = policy.Versions.LastVersion();
+            var terminationResult = policy.Terminate(DateTime.Now.AddDays(3));
             
             Equal(PolicyStatus.Terminated, policy.Status);     
-            Equal(180M, termVersion.TotalPremiumAmount);
+            Equal(180M, terminationResult.TerminalVersion.TotalPremiumAmount);
+            Equal(120M, terminationResult.AmountToReturn);
 
         }
     }
