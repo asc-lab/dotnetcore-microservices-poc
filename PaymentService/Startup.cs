@@ -65,7 +65,7 @@ namespace PaymentService
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseInitializer();
-            app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
+            app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated), typeof(PolicyTerminated) });
             app.UseBackgroundJobs();
         }
     }
