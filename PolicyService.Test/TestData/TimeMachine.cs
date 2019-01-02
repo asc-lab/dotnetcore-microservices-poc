@@ -1,7 +1,7 @@
 using System;
 using PolicyService.Domain;
 
-namespace PolicyService.Tests.Domain
+namespace PolicyService.Test.Domain
 {
     public class TimeMachine : IDisposable
     {

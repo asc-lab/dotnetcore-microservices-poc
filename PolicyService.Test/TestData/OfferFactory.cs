@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using PolicyService.Domain;
 
-namespace PolicyService.Tests.Domain
+namespace PolicyService.Test.Domain
 {
     public class OfferFactory
     {

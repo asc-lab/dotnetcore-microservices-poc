@@ -5,7 +5,7 @@ using PolicyService.Domain;
 using Xunit;
 using static Xunit.Assert;
 
-namespace PolicyService.Tests.Domain
+namespace PolicyService.Test.Domain
 {
     public class OfferTest
     {

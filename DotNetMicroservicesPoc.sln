@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyService.Api", "Policy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyService", "PolicyService\PolicyService.csproj", "{36EC8F58-0207-4E6D-B574-C2CD24DE023C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyService.Tests", "PolicyService.Tests\PolicyService.Tests.csproj", "{3D15ED2D-92CD-46C4-9321-D32263809143}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PolicyService.Test", "PolicyService.Test\PolicyService.Test.csproj", "{3D15ED2D-92CD-46C4-9321-D32263809143}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService", "PaymentService\PaymentService.csproj", "{01CDAB83-768A-4595-B1BC-94F1A5537A6D}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductService.Test", "Prod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\AuthService.csproj", "{D4978EBD-B128-4B45-B60E-D91EAC21873A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentPortalApiGateway", "AgentPortalApiGateway\AgentPortalApiGateway.csproj", "{DDD629C8-7CB8-4829-869A-2B134C7A20FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgentPortalApiGateway", "AgentPortalApiGateway\AgentPortalApiGateway.csproj", "{DDD629C8-7CB8-4829-869A-2B134C7A20FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

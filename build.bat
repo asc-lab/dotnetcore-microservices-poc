@@ -14,11 +14,11 @@ call dotnet build ./PolicySearchService
 
 call dotnet build ./ProductService.Test
 call dotnet build ./PricingService.Test
-call dotnet build ./PolicyService.Tests
+call dotnet build ./PolicyService.Test
 call dotnet build ./PaymentService.Test
 
 call dotnet test ./ProductService.Test
 call dotnet test ./PricingService.Test
-call dotnet test ./PolicyService.Tests
+call dotnet test ./PolicyService.Test
 call dotnet test ./PaymentService.Test
 
