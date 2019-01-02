@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +52,7 @@ namespace ProductService.Controllers
         
         // POST api/products/discontinue
         [HttpPost("/discontinue")]
-        public async Task<ActionResult> Activate([FromBody] DiscontinueProductCommand request)
+        public async Task<ActionResult> Discontinue([FromBody] DiscontinueProductCommand request)
         {
             var result = await mediator.Send(request);
             return new JsonResult(result);
