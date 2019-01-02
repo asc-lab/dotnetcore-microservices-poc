@@ -17,10 +17,18 @@ namespace PolicyService.Test.Domain
 
             var terminationResult = policy.Terminate(DateTime.Now.AddDays(3));
             
-            Equal(PolicyStatus.Terminated, policy.Status);     
+            Equal(PolicyStatus.Terminated, policy.Status);
             Equal(180M, terminationResult.TerminalVersion.TotalPremiumAmount);
             Equal(120M, terminationResult.AmountToReturn);
+        }
 
+        [Fact]
+        public void CannotTerminateTerminatedPolicy()
+        {
+            var policy = PolicyFactory.AlreadyTerminatedPolicy();
+
+            Exception ex = Throws<ApplicationException>(() => policy.Terminate(DateTime.Now));
+            Equal($"Policy {policy.Number} is already terminated", ex.Message);
         }
     }
 }
