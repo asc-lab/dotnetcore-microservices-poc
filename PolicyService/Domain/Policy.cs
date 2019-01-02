@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using NHibernate.Util;
 
 namespace PolicyService.Domain
 {
@@ -27,18 +24,18 @@ namespace PolicyService.Domain
 
         public virtual PolicyStatus Status { get; protected set; }
 
-        public virtual DateTime CreateionDate { get; protected set; }
+        public virtual DateTime CreationDate { get; protected set; }
 
         protected Policy() { } //NH constuctor
-        
+
         public Policy(PolicyHolder policyHolder, Offer offer)
         {
             Id = null;
             Number = Guid.NewGuid().ToString();
             ProductCode = offer.ProductCode;
             Status = PolicyStatus.Active;
-            CreateionDate = SysTime.CurrentTime;
-            versions.Add(PolicyVersion.FromOffer(this,1,policyHolder,offer));
+            CreationDate = SysTime.CurrentTime;
+            versions.Add(PolicyVersion.FromOffer(this, 1, policyHolder, offer));
         }
 
         public virtual PolicyTerminationResult Terminate(DateTime terminationDate)
@@ -49,19 +46,19 @@ namespace PolicyService.Domain
 
             //get version valid at term date
             var versionAtTerminationDate = versions.EffectiveOn(terminationDate);
-            
-            if (versionAtTerminationDate==null)
+
+            if (versionAtTerminationDate == null)
                 throw new ApplicationException($"No valid policy {Number} version exists at {terminationDate}. Policy cannot be terminated.");
 
             if (!versionAtTerminationDate.CoverPeriod.Contains(terminationDate))
                 throw new ApplicationException($"Policy {Number} does not cover {terminationDate}. Policy cannot be terminated at this date.");
-            
+
             //create terminal version
             versions.Add(versionAtTerminationDate.EndOn(terminationDate));
-            
+
             //change status
             Status = PolicyStatus.Terminated;
-            
+
             //return term version
             var terminalVersion = versions.LastVersion();
             return new PolicyTerminationResult(terminalVersion, versionAtTerminationDate.TotalPremiumAmount - terminalVersion.TotalPremiumAmount);

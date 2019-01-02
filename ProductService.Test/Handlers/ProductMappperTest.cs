@@ -17,7 +17,7 @@ namespace ProductService.Test.Handlers
             var cover = new Cover("C1", "Crops", "", false, 200000);
             IList<Cover> covers = new List<Cover>
             {
-                cover,    
+                cover,
                 new Cover("C2", "Flood", "", false, 100000),
                 new Cover("C3", "Fire", "", false, 50000),
                 new Cover("C4", "Equipment", "", true, 300000)
@@ -46,7 +46,7 @@ namespace ProductService.Test.Handlers
             var questions = new List<Question> {
                    choiceQuestion,
                    numricQuestion,
-                   dateQuestion                    
+                   dateQuestion
             };
 
             var result = ProductMapper.ToQuestionDtoList(questions);
@@ -63,7 +63,7 @@ namespace ProductService.Test.Handlers
             Assert.NotNull(resultNumericQuestion);
             Assert.IsType<NumericQuestionDto>(resultNumericQuestion);
             Assert.NotNull(resultDateQuestion);
-            Assert.IsType<DateQuestionDto>(resultDateQuestion);            
+            Assert.IsType<DateQuestionDto>(resultDateQuestion);
         }
 
         [Fact]
@@ -72,21 +72,21 @@ namespace ProductService.Test.Handlers
             var choiceQuestion = TestQuestionFactory.ChoiceQuestion();
 
             var questions = new List<Question> {
-                   choiceQuestion                   
+                   choiceQuestion
             };
 
             var result = ProductMapper.ToQuestionDtoList(questions);
             var resultQuestion = result?.First(r => r.QuestionCode == choiceQuestion.Code) as ChoiceQuestionDto;
 
             Assert.NotNull(result);
-            Assert.NotEmpty(result);            
+            Assert.NotEmpty(result);
             Assert.NotNull(resultQuestion);
 
-            
+
             Assert.Equal(choiceQuestion.Index, resultQuestion.Index);
             Assert.Equal(choiceQuestion.Text, resultQuestion.Text);
             Assert.NotNull(resultQuestion.Choices);
-            Assert.Equal(choiceQuestion.Choices.Count, resultQuestion.Choices.Count);            
+            Assert.Equal(choiceQuestion.Choices.Count, resultQuestion.Choices.Count);
         }
     }
 }

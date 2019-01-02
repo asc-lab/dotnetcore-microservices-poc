@@ -23,8 +23,8 @@ namespace ProductService.Test.Handlers
         public FindProductsHandlersTest()
         {
             productRepository = new Mock<IProductRepository>();
-                       
-            
+
+
             productRepository.Setup(x => x.FindAllActive()).Returns(Task.FromResult(products));
             productRepository.Setup(x => x.FindOne(It.Is<string>(s => products.Select(p => p.Code).Contains(s)))).Returns(Task.FromResult(products.First()));
             productRepository.Setup(x => x.FindOne(It.Is<string>(s => !products.Select(p => p.Code).Contains(s)))).Returns(Task.FromResult<Product>(null));
@@ -45,10 +45,10 @@ namespace ProductService.Test.Handlers
         public async Task FindProductByCodeHandler_ReturnsOneProduct()
         {
             var findProductByCodeHandler = new FindProductByCodeHandler(productRepository.Object);
-            
-            var result = await findProductByCodeHandler.Handle(new Api.Queries.FindProductByCodeQuery { ProductCode = TestProductFactory.Travel().Code}, new System.Threading.CancellationToken());
 
-            Assert.NotNull(result);            
+            var result = await findProductByCodeHandler.Handle(new Api.Queries.FindProductByCodeQuery { ProductCode = TestProductFactory.Travel().Code }, new System.Threading.CancellationToken());
+
+            Assert.NotNull(result);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace ProductService.Test.Handlers
 
             var result = await findProductByCodeHandler.Handle(new Api.Queries.FindProductByCodeQuery { ProductCode = "ASDASD" }, new System.Threading.CancellationToken());
 
-            Assert.Null(result);            
+            Assert.Null(result);
         }
     }
 }

@@ -19,7 +19,7 @@
     </component>
     <property name="TotalPrice" column="total_price"/>
     <property name="Status" column="status"/>
-    <property name="CreateionDate" column="creation_date"/>
+    <property name="CreationDate" column="creation_date"/>
     <bag name="Covers" access="field.camelcase" table="offer_covers" lazy="true">
       <key>
         <column name="offer_id" />

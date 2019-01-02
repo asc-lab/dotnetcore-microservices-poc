@@ -1,7 +1,5 @@
 ﻿using ProductService.Api.Queries.Dtos;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ProductService.Test.TestData
 {
@@ -9,7 +7,8 @@ namespace ProductService.Test.TestData
     {
         internal static ProductDto Travel()
         {
-            return new ProductDto {
+            return new ProductDto
+            {
                 Code = "TRI",
                 Name = "Safe Traveller",
                 Description = "Travel insurance",

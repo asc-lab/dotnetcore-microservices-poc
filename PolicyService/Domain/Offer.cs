@@ -28,11 +28,9 @@ namespace PolicyService.Domain
 
         public virtual decimal TotalPrice { get; protected set; }
 
-        //private Map<String, String> answers;
-        
         public virtual OfferStatus Status { get; protected set; }
 
-        public virtual DateTime CreateionDate { get; protected set; }
+        public virtual DateTime CreationDate { get; protected set; }
 
 
         public virtual IReadOnlyCollection<Cover> Covers => new ReadOnlyCollection<Cover>(covers);
@@ -68,7 +66,7 @@ namespace PolicyService.Domain
             PolicyHolder = policyHolder;
             covers = price.CoverPrices.Select(c => new Cover(c.Key, c.Value)).ToList();
             Status = OfferStatus.New;
-            CreateionDate = SysTime.CurrentTime;
+            CreationDate = SysTime.CurrentTime;
             TotalPrice = price.CoverPrices.Sum(c => c.Value);
         }
 
@@ -89,7 +87,7 @@ namespace PolicyService.Domain
 
         public virtual bool IsExpired(DateTime theDate)
         {
-            return this.CreateionDate.AddDays(30) < theDate;
+            return this.CreationDate.AddDays(30) < theDate;
         }
     }
 }

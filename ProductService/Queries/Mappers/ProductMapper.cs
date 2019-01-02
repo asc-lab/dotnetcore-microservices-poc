@@ -3,7 +3,6 @@ using ProductService.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProductService.Queries
 {
@@ -11,7 +10,7 @@ namespace ProductService.Queries
     {
         public static IList<CoverDto> ToCoverDtoList(IList<Cover> covers)
         {
-            return covers.Select(c => ToCoverDto(c)).ToList();
+            return covers?.Select(c => ToCoverDto(c)).ToList();
         }
 
         public static IList<QuestionDto> ToQuestionDtoList(IList<Question> questions)
