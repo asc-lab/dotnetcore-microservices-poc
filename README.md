@@ -3,8 +3,8 @@
 This is an example of a very simplified insurance sales system made in a microservice architecture using:
 
 * .NET Core 2.1
-* MediatR
 * Entity Framework Core
+* MediatR
 * Marten
 * Eureka
 * Ocelot
@@ -13,13 +13,13 @@ This is an example of a very simplified insurance sales system made in a microse
 * RawRabbit
 * NHibernate
 * Polly
-* NEST
+* NEST (ElasticSearch client)
 * Dapper
 * DynamicExpresso
 
 ## Business Case
 
-We are going to build very simplified system for insurance agents to sell various kind of insurance products. 
+We are going to build very simplified system for insurance agents to sell various kind of insurance products.
 Insurance agents will have to log in and system will present them with list of products they can sell. Agents will be able to view products and find a product appropriate for their customers. Then they can create an offer and system will calculate a price based on provided parameters. \
 Finally agent will be able to confirm the sale by converting offer to policy and printing pdf certificate. \
 Portal will also give them ability to search and view offer and policies. \
@@ -31,7 +31,7 @@ Portal will also have some basic social network features like chat for agents.
     <img alt="NET Microservices Architecture" src="https://raw.githubusercontent.com/asc-lab/dotnetcore-microservices-poc/master/readme-images/dotnetcore-microservices-architecture.png" />
 </p>
 
-* **Web** - a VueJS Single Page Application that provides insurance agents ability to select appropriate product for their customers, calculate price, create an offer and conclude the sales process by converting offer to policy. This application also provides search and view functions for policies and offers. Frontend talks to backend services via `api-gateway`.
+* **Web** - a VueJS Single Page Application that provides insurance agents ability to select appropriate product for their customers, calculate price, create an offer and conclude the sales process by converting offer to policy. This application also provides search and view functions for policies and offers. Frontend talks to backend services via `agent-portal-gateway`.
 
 * **Agent Portal API Gateway** - is a special microservice whose main purpose it to hide complexity of the underlying back office services structure from client application. Usually we create a dedicated API gateway for each client app. In case in the future we add a Xamarin mobile app to our system, we will need to build a dedicated API gateway for it. API gateway provides also security barrier and does not allow unauthenticated request to be passed to backend services. Another popular usage of API gateways is content aggregation from multiple services.
 
@@ -56,10 +56,7 @@ It provides basic information about each insurance product and its parameters th
 
 * **Document Service** - this service uses JS Report to generate pdf certificates.
 
-
-
-
-Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations.
+Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations and **.Test project** (`PaymentService.Test`, `PolicyService.Test`) with unit and integration tests.
 
 ## Prerequisites
 
@@ -67,7 +64,7 @@ Install [PostgreSQL](https://www.postgresql.org/) version >= 10.0.
 
 Install [RabbitMQ](https://www.rabbitmq.com/).
 
-Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) version >= 6. 
+Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) version >= 6.
 
 Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka.
 
@@ -84,18 +81,20 @@ In my case this command looks like:
 cd DbScripts
 "C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
 ```
-This script should create lab_user user and the following databases: lab_netmicro_payments, lab_netmicro_jobs, lab_netmicro_policy and lab_netmicro_pricing.
+
+This script should create `lab_user` user and the following databases: `lab_netmicro_payments`, `lab_netmicro_jobs`, `lab_netmicro_policy` and `lab_netmicro_pricing`.
 
 ## Run Eureka
-Service registry and discovery tool for our project is Eureka. It is included in the project. 
-In order to start it open terminal / command prompt. 
+
+Service registry and discovery tool for our project is Eureka. It is included in the project.
+In order to start it open terminal / command prompt.
 
 ```bash
 cd eureka
 mvn spring-boot:run
 ```
 
-This should start Euraka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
+This should start Eureka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
 
 ## Build
 
