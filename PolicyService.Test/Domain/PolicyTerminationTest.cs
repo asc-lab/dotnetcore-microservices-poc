@@ -16,10 +16,16 @@ namespace PolicyService.Test.Domain
             var policy = offer.Buy(PolicyHolderFactory.Abc());
 
             var terminationResult = policy.Terminate(DateTime.Now.AddDays(3));
-            
-            Equal(PolicyStatus.Terminated, policy.Status);
-            Equal(180M, terminationResult.TerminalVersion.TotalPremiumAmount);
-            Equal(120M, terminationResult.AmountToReturn);
+
+            PolicyAssert
+                .AssertThat(policy)
+                .HasVersions(2)
+                .HasVersion(2)
+                .StatusIsTerminated();
+
+            PolicyVersionAssert
+                .AssertThat(terminationResult.TerminalVersion)
+                .TotalPremiumIs(180M);
         }
 
         [Fact]

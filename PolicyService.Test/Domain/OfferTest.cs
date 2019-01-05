@@ -27,9 +27,11 @@ namespace PolicyService.Test.Domain
                 price
             );
 
-            Equal("P1", offer.ProductCode);
-            Equal(OfferStatus.New, offer.Status);     
-            Equal(300M, offer.TotalPrice);
+            OfferAssert
+                .AssertThat(offer)
+                .ProductCodeIs("P1")
+                .StatusIsNew()
+                .PriceIs(300M);
         }
 
         [Fact]
@@ -38,9 +40,20 @@ namespace PolicyService.Test.Domain
             var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
 
             var policy = offer.Buy(PolicyHolderFactory.Abc());
-            
-            Equal(OfferStatus.Converted, offer.Status);
-            Equal(offer.TotalPrice, policy.Versions.FirstVersion().TotalPremiumAmount);
+
+            OfferAssert
+                .AssertThat(offer)
+                .StatusIsConverted();
+
+            PolicyAssert
+                .AssertThat(policy)
+                .StatusIsActive()
+                .HasVersions(1)
+                .HasVersion(1);
+
+            PolicyVersionAssert
+                .AssertThat(policy.Versions.WithNumber(1))
+                .TotalPremiumIs(offer.TotalPrice);
         }
 
         [Fact]
