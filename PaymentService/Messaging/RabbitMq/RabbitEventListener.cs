@@ -52,7 +52,7 @@ namespace PaymentService.Messaging.RabbitMq
                         .WithName("lab-dotnet-micro")
                         .WithType(RawRabbit.Configuration.Exchange.ExchangeType.Topic)
                         .WithArgument("key", typeof(T).Name.ToLower()))
-                    .FromDeclaredQueue(q => q.WithName("lab-payments-servce-" + typeof(T).Name)))
+                    .FromDeclaredQueue(q => q.WithName("lab-payments-service-" + typeof(T).Name)))
                 );
         }
     }
