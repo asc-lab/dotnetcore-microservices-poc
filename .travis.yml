@@ -1,0 +1,17 @@
+sudo: required
+language: ruby
+env:
+  global:
+    - BUILD_NUMBER=${TRAVIS_BUILD_NUMBER}
+addons:
+  apt:
+    packages:
+      - docker-ce
+  ssh_known_hosts: ec2-35-158-221-148.eu-central-1.compute.amazonaws.com
+services:
+  - docker
+
+script:
+  - docker build -f ProductService/Dockerfile -t dotnetcore-microservices-poc-product-service:${BUILD_NUMBER} .
+  - docker build -f PaymentService/Dockerfile -t dotnetcore-microservices-poc-payment-service:${BUILD_NUMBER} .
+  - docker build -f PricingService/Dockerfile -t dotnetcore-microservices-poc-pricing-service:${BUILD_NUMBER} .
