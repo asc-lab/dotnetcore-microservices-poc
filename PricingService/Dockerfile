@@ -1,20 +1,31 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+
+COPY PricingService.Api/*.csproj ./PricingService.Api/
+COPY PricingService/*.csproj ./PricingService/
+RUN  cd PricingService && dotnet restore
+
+COPY PricingService.Api ./PricingService.Api/
+COPY PricingService ./PricingService/
+RUN cd PricingService && dotnet build
+
+COPY PricingService.Test/*.csproj ./PricingService.Test/
+RUN cd PricingService.Test && dotnet restore
+
+COPY PricingService.Test ./PricingService.Test/
+RUN cd PricingService.Test && dotnet build
+
+FROM build AS test
+WORKDIR /src/PricingService.Test
+RUN dotnet test --verbosity:normal
+
+FROM build AS publish
+WORKDIR /src/PricingService
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
 WORKDIR /app
 EXPOSE 55269
 EXPOSE 44392
-
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["PricingService/PricingService.csproj", "PricingService/"]
-RUN dotnet restore "PricingService/PricingService.csproj"
-COPY . .
-WORKDIR "/src/PricingService"
-RUN dotnet build "PricingService.csproj" -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish "PricingService.csproj" -c Release -o /app
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
+COPY --from=publish /src/PricingService/out ./
 ENTRYPOINT ["dotnet", "PricingService.dll"]

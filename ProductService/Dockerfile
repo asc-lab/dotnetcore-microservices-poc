@@ -1,20 +1,31 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime-nanoserver-sac2016 AS base
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+
+COPY ProductService.Api/*.csproj ./ProductService.Api/
+COPY ProductService/*.csproj ./ProductService/
+RUN  cd ProductService && dotnet restore
+
+COPY ProductService.Api ./ProductService.Api/
+COPY ProductService ./ProductService/
+RUN cd ProductService && dotnet build
+
+COPY ProductService.Test/*.csproj ./ProductService.Test/
+RUN cd ProductService.Test && dotnet restore
+
+COPY ProductService.Test ./ProductService.Test/
+RUN cd ProductService.Test && dotnet build
+
+FROM build AS test
+WORKDIR /src/ProductService.Test
+RUN dotnet test --verbosity:normal
+
+FROM build AS publish
+WORKDIR /src/ProductService
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
 WORKDIR /app
 EXPOSE 63720
 EXPOSE 44398
-
-FROM microsoft/dotnet:2.1-sdk-nanoserver-sac2016 AS build
-WORKDIR /src
-COPY ProductService/ProductService/ProductService.csproj ProductService/ProductService/
-RUN dotnet restore ProductService/ProductService/ProductService.csproj
-COPY . .
-WORKDIR /src/ProductService/ProductService
-RUN dotnet build ProductService.csproj -c Release -o /app
-
-FROM build AS publish
-RUN dotnet publish ProductService.csproj -c Release -o /app
-
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
+COPY --from=publish /src/ProductService/out ./
 ENTRYPOINT ["dotnet", "ProductService.dll"]
