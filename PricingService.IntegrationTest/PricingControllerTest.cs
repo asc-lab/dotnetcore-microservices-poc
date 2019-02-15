@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Testing;
 using PricingService.Api.Commands;
 using PricingService.Api.Commands.Dto;
-using System;
-using System.Collections.Generic;
 using Xunit;
 using static Xunit.Assert;
 
-namespace PricingService.Test.Controllers
+namespace PricingService.IntegrationTest
 {
     public class PricingControllerTest : IClassFixture<WebApplicationFactory<Startup>>
     {
@@ -37,7 +37,7 @@ namespace PricingService.Test.Controllers
             });
 
             True(response.Success);
-            Equal(98M, response.Data.TotalPrice);
+            Assert.Equal(98M, response.Data.TotalPrice);
         }
 
         [Fact]

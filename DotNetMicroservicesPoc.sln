@@ -35,6 +35,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgentPortalApiGateway", "AgentPortalApiGateway\AgentPortalApiGateway.csproj", "{DDD629C8-7CB8-4829-869A-2B134C7A20FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService.IntegrationTest", "PricingService.IntegrationTest\PricingService.IntegrationTest.csproj", "{B5FF5E4B-8184-4B2A-A905-D445A09362FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDD629C8-7CB8-4829-869A-2B134C7A20FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5FF5E4B-8184-4B2A-A905-D445A09362FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5FF5E4B-8184-4B2A-A905-D445A09362FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5FF5E4B-8184-4B2A-A905-D445A09362FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5FF5E4B-8184-4B2A-A905-D445A09362FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
