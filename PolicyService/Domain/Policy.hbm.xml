@@ -9,6 +9,7 @@
     <property name="Number" column="number"/>
     <property name="ProductCode" column="product_code"/>
     <property name="Status" column="status" type="PolicyStatus"/>
+    <property name="AgentLogin" column="agent_login"/>
     <property name="CreationDate" column="creation_date"/>
     <bag name="Versions" table="policy_versions" lazy="true" inverse="true" cascade="all-delete-orphan" access="field.camelcase">
       <key column="policy_id"/>

@@ -34,6 +34,7 @@ namespace AuthService.Domain
             {
                 Subject = new ClaimsIdentity(new Claim[] 
                 {
+                    new Claim("sub", agent.Login), 
                     new Claim(ClaimTypes.Name, agent.Login),
                     new Claim(ClaimTypes.Role, "SALESMAN"),
                     new Claim(ClaimTypes.Role, "USER"),

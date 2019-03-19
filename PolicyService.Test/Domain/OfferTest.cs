@@ -31,7 +31,35 @@ namespace PolicyService.Test.Domain
                 .AssertThat(offer)
                 .ProductCodeIs("P1")
                 .StatusIsNew()
-                .PriceIs(300M);
+                .PriceIs(300M)
+                .AgentIs(null);
+        }
+        
+        [Fact]
+        public void CanCreateOfferOnBehalfOfAgentBasedOnPrice()
+        {
+            var price = new Price(new Dictionary<string, decimal>()
+            {
+                ["C1"] = 100M,
+                ["C2"] = 200M
+            });
+
+            var offer = Offer.ForPriceAndAgent
+            (
+                "P1",
+                DateTime.Now,
+                DateTime.Now.AddDays(5),
+                null,
+                price,
+                "jimmy.son"
+            );
+
+            OfferAssert
+                .AssertThat(offer)
+                .ProductCodeIs("P1")
+                .StatusIsNew()
+                .PriceIs(300M)
+                .AgentIs("jimmy.son");
         }
 
         [Fact]
@@ -44,6 +72,30 @@ namespace PolicyService.Test.Domain
             OfferAssert
                 .AssertThat(offer)
                 .StatusIsConverted();
+
+            PolicyAssert
+                .AssertThat(policy)
+                .StatusIsActive()
+                .HasVersions(1)
+                .HasVersion(1)
+                .AgentIs(null);
+
+            PolicyVersionAssert
+                .AssertThat(policy.Versions.WithNumber(1))
+                .TotalPremiumIs(offer.TotalPrice);
+        }
+        
+        [Fact]
+        public void CanBuyNewNonExpiredOfferFromAgent()
+        {
+            var offer = OfferFactory.NewOfferValidUntilForAgent(DateTime.Now.AddDays(5),"jimmy.young");
+
+            var policy = offer.Buy(PolicyHolderFactory.Abc());
+
+            OfferAssert
+                .AssertThat(offer)
+                .StatusIsConverted()
+                .AgentIs("jimmy.young");
 
             PolicyAssert
                 .AssertThat(policy)

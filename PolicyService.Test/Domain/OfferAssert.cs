@@ -40,5 +40,11 @@ namespace PolicyService.Test.Domain
             Assert.Equal(expectedProductCode, sut.ProductCode);
             return this;
         }
+
+        public OfferAssert AgentIs(string expectedAgent)
+        {
+            Assert.Equal(expectedAgent, sut.AgentLogin);
+            return this;
+        }
     }
 }

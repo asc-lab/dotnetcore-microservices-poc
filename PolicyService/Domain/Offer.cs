@@ -34,6 +34,8 @@ namespace PolicyService.Domain
 
 
         public virtual IReadOnlyCollection<Cover> Covers => new ReadOnlyCollection<Cover>(covers);
+        
+        public virtual String AgentLogin { get; protected set; }
 
         public static Offer ForPrice(
             String productCode,
@@ -48,16 +50,37 @@ namespace PolicyService.Domain
                 policyFrom,
                 policyTo,
                 policyHolder,
-                price
+                price,
+                null
             );
         }
-
-        public Offer(
-            String productCode,
+        
+        public static Offer ForPriceAndAgent(
+            string productCode,
             DateTime policyFrom,
             DateTime policyTo,
             PolicyHolder policyHolder,
-            Price price)
+            Price price,
+            string agent)
+        {
+            return new Offer
+            (
+                productCode,
+                policyFrom,
+                policyTo,
+                policyHolder,
+                price,
+                agent
+            );
+        }
+
+        protected Offer(
+            string productCode,
+            DateTime policyFrom,
+            DateTime policyTo,
+            PolicyHolder policyHolder,
+            Price price,
+            string agentLogin)
         {
             Id = null;
             Number = Guid.NewGuid().ToString();
@@ -68,6 +91,8 @@ namespace PolicyService.Domain
             Status = OfferStatus.New;
             CreationDate = SysTime.CurrentTime;
             TotalPrice = price.CoverPrices.Sum(c => c.Value);
+            AgentLogin = agentLogin;
+
         }
 
         protected Offer() { } //NH required
@@ -82,7 +107,7 @@ namespace PolicyService.Domain
 
             Status = OfferStatus.Converted;
 
-            return new Policy(customer, this);
+            return Policy.FromOffer(customer, this);
         }
 
         public virtual bool IsExpired(DateTime theDate)

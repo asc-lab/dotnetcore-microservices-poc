@@ -43,6 +43,9 @@
       },
       "RouteClaimsRequirement": {
         "userType" : "SALESMAN"
+      },
+      "AddHeadersToRequest": {
+        "AgentLogin" : "Claims[http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier] > value[0] > |"
       }
     },
 

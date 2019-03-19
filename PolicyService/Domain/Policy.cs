@@ -25,16 +25,24 @@ namespace PolicyService.Domain
         public virtual PolicyStatus Status { get; protected set; }
 
         public virtual DateTime CreationDate { get; protected set; }
+        
+        public virtual String AgentLogin { get; protected set; }
 
         protected Policy() { } //NH constuctor
 
-        public Policy(PolicyHolder policyHolder, Offer offer)
+        public static Policy FromOffer(PolicyHolder policyHolder, Offer offer)
+        {
+            return new Policy(policyHolder,offer);
+        }
+        
+        protected Policy(PolicyHolder policyHolder, Offer offer)
         {
             Id = null;
             Number = Guid.NewGuid().ToString();
             ProductCode = offer.ProductCode;
             Status = PolicyStatus.Active;
             CreationDate = SysTime.CurrentTime;
+            AgentLogin = offer.AgentLogin;
             versions.Add(PolicyVersion.FromOffer(this, 1, policyHolder, offer));
         }
 

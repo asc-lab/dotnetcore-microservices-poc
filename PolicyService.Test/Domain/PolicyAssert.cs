@@ -42,6 +42,12 @@ namespace PolicyService.Test.Domain
             Assert.Equal(PolicyStatus.Terminated, sut.Status);
             return this;
         }
+        
+        public PolicyAssert AgentIs(string agent)
+        {
+            Assert.Equal(agent, sut.AgentLogin);
+            return this;
+        }
     }
 
 

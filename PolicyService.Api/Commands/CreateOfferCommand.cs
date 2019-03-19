@@ -15,4 +15,19 @@ namespace PolicyService.Api.Commands
         public List<string> SelectedCovers { get; set; }
         public List<QuestionAnswer> Answers { get; set; }
     }
+
+    public class CreateOfferByAgentCommand : CreateOfferCommand, IRequest<CreateOfferResult>
+    {
+        public string AgentLogin { get; set; }
+
+        public CreateOfferByAgentCommand(string agentLogin, CreateOfferCommand baseCmd)
+        {
+            AgentLogin = agentLogin;
+            ProductCode = baseCmd.ProductCode;
+            PolicyFrom = baseCmd.PolicyFrom;
+            PolicyTo = baseCmd.PolicyTo;
+            SelectedCovers = baseCmd.SelectedCovers;
+            Answers = baseCmd.Answers;
+        }
+    }
 }

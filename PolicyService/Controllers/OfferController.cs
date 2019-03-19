@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PolicyService.Api.Commands;
+using static System.String;
 
 namespace PolicyService.Controllers
 {
@@ -21,9 +22,9 @@ namespace PolicyService.Controllers
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CreateOfferCommand cmd)
+        public async Task<ActionResult> Post([FromBody] CreateOfferCommand cmd, [FromHeader] string AgentLogin)
         {
-            var result = await bus.Send(cmd);
+            var result = IsNullOrWhiteSpace(AgentLogin) ? await bus.Send(cmd) : await  bus.Send(new CreateOfferByAgentCommand(AgentLogin, cmd));
             return new JsonResult(result);
         }
     }
