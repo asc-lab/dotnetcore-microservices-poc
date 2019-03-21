@@ -49,7 +49,7 @@ namespace PolicyService.Domain
             {
                 Policy = this.Policy,
                 VersionNumber = this.Policy.NextVersionNumber(),
-                PolicyHolder = new PolicyHolder(PolicyHolder.FirstName, PolicyHolder.LastName, PolicyHolder.Pesel),
+                PolicyHolder = new PolicyHolder(PolicyHolder.FirstName, PolicyHolder.LastName, PolicyHolder.Pesel, PolicyHolder.Address),
                 CoverPeriod = CoverPeriod.EndOn(endDate),
                 VersionValidityPeriod = ValidityPeriod.Between(endDate.AddDays(1), VersionValidityPeriod.ValidTo),
                 covers = endedCovers,

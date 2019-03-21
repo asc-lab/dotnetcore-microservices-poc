@@ -29,10 +29,19 @@ namespace PolicyService.Commands
             using (var uow = uowProvider.Create())
             {
                 var offer = await uow.Offers.WithNumber(request.OfferNumber);
-                var customer = new PolicyHolder(
+                var customer = new PolicyHolder
+                (
                     request.PolicyHolder.FirstName,
                     request.PolicyHolder.LastName,
-                    request.PolicyHolder.TaxId);
+                    request.PolicyHolder.TaxId,
+                    Address.Of
+                    (
+                        request.PolicyHolderAddress.Country,
+                        request.PolicyHolderAddress.ZipCode,
+                        request.PolicyHolderAddress.City,
+                        request.PolicyHolderAddress.Street
+                    )
+                );
                 var policy = offer.Buy(customer);
 
                 uow.Policies.Add(policy);

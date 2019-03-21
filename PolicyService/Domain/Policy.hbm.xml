@@ -35,6 +35,12 @@
       <property name="FirstName" column="holder_first_name"/>
       <property name="LastName" column="holder_last_name"/>
       <property name="Pesel" column="holder_tax_id"/>
+      <component name="Address">
+        <property name="Country" column="holder_country"/>
+        <property name="ZipCode" column="holder_zip_code"/>
+        <property name="City" column="holder_city"/>
+        <property name="Street" column="street"/>
+      </component>
     </component>
     <property name="TotalPremiumAmount" column="total_premium"/>
     <bag name="Covers" access="field.camelcase" table="policy_covers" lazy="true">

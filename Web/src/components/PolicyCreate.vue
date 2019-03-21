@@ -35,6 +35,50 @@
                 </b-form-input>
             </b-form-group>
 
+            <b-form-group id="countryGroup"
+                          label="Country:"
+                          label-for="country">
+
+                <select required class="form-control" v-model="policyAddress.country">
+                    <option v-for="c in countries" v-bind:key="c" >
+                        {{ c }}
+                    </option>
+                </select>
+            </b-form-group>
+
+            <b-form-group id="zipCodeGroup"
+                          label="Zip Code:"
+                          label-for="zipCode">
+                <b-form-input id="zipCode"
+                              type="text"
+                              v-model="policyAddress.zipCode"
+                              required
+                              placeholder="Enter zip code">
+                </b-form-input>
+            </b-form-group>
+
+            <b-form-group id="cityGroup"
+                          label="City:"
+                          label-for="city">
+                <b-form-input id="city"
+                              type="text"
+                              v-model="policyAddress.city"
+                              required
+                              placeholder="Enter city">
+                </b-form-input>
+            </b-form-group>
+
+            <b-form-group id="streetGroup"
+                          label="Street:"
+                          label-for="street">
+                <b-form-input id="street"
+                              type="text"
+                              v-model="policyAddress.street"
+                              required
+                              placeholder="Enter street">
+                </b-form-input>
+            </b-form-group>
+
             <b-button type="submit" variant="primary">Confirm</b-button>
         </b-form>
 
@@ -55,7 +99,18 @@
                     firstName: '',
                     lastName: '',
                     taxId: ''
-                }
+                },
+                policyAddress: {
+                    country: 'Poland',
+                    zipCode: '',
+                    city: '',
+                    street: ''
+                },
+                countries: [
+                    'Poland',
+                    'France',
+                    'Germany'
+                ]
             }
         },
         methods: {
@@ -64,7 +119,8 @@
 
                 const request = {
                     offerNumber: this.offerNumber,
-                    policyHolder: this.policyHolder
+                    policyHolder: this.policyHolder,
+                    policyHolderAddress: this.policyAddress
                 };
 
                 HTTP.post('policies', request).then(response => {

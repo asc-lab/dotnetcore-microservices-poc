@@ -21,7 +21,7 @@ namespace PolicyService.Test.Domain
                     "P1",
                     DateTime.Now,
                     DateTime.Now.AddDays(5),
-                    new PolicyHolder("A", "B", "1111111116"),
+                    PolicyHolderFactory.Abc(),
                     price,
                     agent
                 );
@@ -45,7 +45,7 @@ namespace PolicyService.Test.Domain
                     "P1",
                     DateTime.Now,
                     DateTime.Now.AddDays(5),
-                    new PolicyHolder("A", "B", "1111111116"),
+                    PolicyHolderFactory.Abc(),
                     price
                 );
 
@@ -56,7 +56,7 @@ namespace PolicyService.Test.Domain
         internal static Offer AlreadyConvertedOffer()
         {
             var offer = NewOfferValidUntil(DateTime.Now.AddDays(5));
-            offer.Buy(new PolicyHolder("A", "B", "C"));
+            offer.Buy(PolicyHolderFactory.Abc());
             return offer;
         }
     }
