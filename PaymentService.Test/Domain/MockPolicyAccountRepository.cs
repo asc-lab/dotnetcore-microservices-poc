@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PaymentService.Test.Domain
 {
-    public class PolicyAccountRepositoryTest : IPolicyAccountRepository
+    public class MockPolicyAccountRepository : IPolicyAccountRepository
     {
         private readonly Dictionary<string, PolicyAccount> list = new Dictionary<string, PolicyAccount>();
 
-        public PolicyAccountRepositoryTest()
+        public MockPolicyAccountRepository()
         {
             list.Add("PA1", new PolicyAccount("POLICY_1", "231232132131", "Ann","Smith"));
             list.Add("PA2", new PolicyAccount("POLICY_2", "389hfswjfrh2032r", "Jimmy","Morrison"));
@@ -20,6 +20,11 @@ namespace PaymentService.Test.Domain
         public void Add(PolicyAccount policyAccount)
         {
             list.Add(policyAccount.PolicyNumber, policyAccount);
+        }
+
+        public void Update(PolicyAccount policyAccount)
+        {
+            
         }
 
         public ICollection<PolicyAccount> FindAll()

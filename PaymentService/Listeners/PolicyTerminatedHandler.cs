@@ -21,7 +21,7 @@ namespace PaymentService.Listeners
             
             policyAccount.OutPayment(notification.AmountToReturn, notification.PolicyTo);
             
-            //TODO: mark account for saving
+            dataStore.PolicyAccounts.Update(policyAccount);
 
             await dataStore.CommitChanges();
         }

@@ -20,6 +20,11 @@ namespace PaymentService.DataAccess.Marten
             this.documentSession.Insert(policyAccount);
         }
 
+        public void Update(PolicyAccount policyAccount)
+        {
+            this.documentSession.Update(policyAccount);
+        }
+
         public async Task<PolicyAccount> FindByNumber(string accountNumber)
         {
             return await this.documentSession

@@ -7,6 +7,8 @@ namespace PaymentService.Domain
     {
         void Add(PolicyAccount policyAccount);
 
+        void Update(PolicyAccount policyAccount);
+
         Task<PolicyAccount> FindByNumber(string accountNumber);
     }
 }
