@@ -7,22 +7,24 @@ namespace PaymentService.Domain
 {
     public class PolicyAccount
     {
-        [Key]
-        public Guid Id { get; set; }
-        public string PolicyAccountNumber { get; set; }
-        public string PolicyNumber { get; set; }
-        public ICollection<AccountingEntry> Entries { get; set; }
+        public Guid Id { get; protected set; }
+        public string PolicyAccountNumber { get; protected set; }
+        public string PolicyNumber { get; protected set; }
+        public Owner Owner { get; protected set; }
+        
+        public ICollection<AccountingEntry> Entries { get; protected set; }
 
         public PolicyAccount()
         {
             Entries = new List<AccountingEntry>();
         }
 
-        public PolicyAccount(string policyNumber, string policyAccountNumber)
+        public PolicyAccount(string policyNumber, string policyAccountNumber, string ownerFirstName, string ownerLastLastName)
         {
             Id = Guid.NewGuid();
             PolicyNumber = policyNumber;
             PolicyAccountNumber = policyAccountNumber;
+            Owner = new Owner(ownerFirstName,ownerLastLastName);
             Entries = new List<AccountingEntry>();
         }
 
@@ -52,6 +54,22 @@ namespace PaymentService.Domain
             effectiveEntries.ForEach(x => balance = x.Apply(balance));
 
             return balance;
+        }
+    }
+
+    public class Owner
+    {
+        public string FirstName { get;  protected set; }
+        public string LastName { get;  protected set; }
+
+        protected Owner()
+        {
+        }
+
+        public Owner(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }

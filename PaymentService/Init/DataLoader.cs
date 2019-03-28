@@ -1,4 +1,5 @@
-﻿using PaymentService.Domain;
+﻿using System.Threading.Tasks;
+using PaymentService.Domain;
 
 namespace PaymentService.Init
 {
@@ -11,18 +12,22 @@ namespace PaymentService.Init
             this.dataStore = dataStore;
         }
 
-        public void Seed()
+        public async Task Seed()
         {
             using (dataStore)
             {
-                DemoAccountsFactory.DemoAccounts().ForEach(x => AddIfNotExists(x));
-                dataStore.CommitChanges();
+                foreach (var demoAccount in DemoAccountsFactory.DemoAccounts())
+                {
+                    await AddIfNotExists(demoAccount);
+                }
+                
+                await dataStore.CommitChanges();
             }
         }
 
-        private void AddIfNotExists(PolicyAccount account)
+        private async Task AddIfNotExists(PolicyAccount account)
         {
-            if (dataStore.PolicyAccounts.FindByNumber(account.PolicyNumber) == null)
+            if (await dataStore.PolicyAccounts.FindByNumber(account.PolicyNumber) == null)
             {
                 dataStore.PolicyAccounts.Add(account);
             }

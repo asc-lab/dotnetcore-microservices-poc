@@ -11,7 +11,7 @@ namespace PaymentService.Tests.Domain
         public void CanRegisterInPayment()
         {
             var incomeDate = new DateTimeOffset(new DateTime(2018, 1, 1));
-            var account = new PolicyAccount("A", "A");
+            var account = new PolicyAccount("A", "A", "C", "C");
             account.InPayment(10M, incomeDate);
 
             Equal(1, account.Entries.Count);
@@ -22,7 +22,7 @@ namespace PaymentService.Tests.Domain
         public void CanRegisterOutpayment()
         {
             var paymentReleaseDate = new DateTimeOffset(new DateTime(2018, 1, 1));
-            var account = new PolicyAccount("B", "B");
+            var account = new PolicyAccount("B", "B", "D", "D");
             account.OutPayment(10M, paymentReleaseDate);
 
             Equal(1, account.Entries.Count);
@@ -33,7 +33,7 @@ namespace PaymentService.Tests.Domain
         public void CanRegisterExpectdPayment()
         {
             var dueDate = new DateTimeOffset(new DateTime(2018, 1, 1));
-            var account = new PolicyAccount("C", "C");
+            var account = new PolicyAccount("C", "C", "E", "E");
             account.ExpectedPayment(10M, dueDate);
 
             Equal(1, account.Entries.Count);
@@ -47,7 +47,7 @@ namespace PaymentService.Tests.Domain
             var dueDate2 = new DateTimeOffset(new DateTime(2018, 10, 1));
             var incomeDate = new DateTimeOffset(new DateTime(2018, 5, 1));
 
-            var account = new PolicyAccount("D", "D");
+            var account = new PolicyAccount("D", "D", "F", "F");
             account.ExpectedPayment(10M, dueDate1);
             account.ExpectedPayment(15M, dueDate2);
             account.InPayment(25M, incomeDate);

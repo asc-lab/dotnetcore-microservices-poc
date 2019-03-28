@@ -19,7 +19,13 @@ namespace PaymentService.Listeners
 
         public async Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
         {
-            var policy = new PolicyAccount(notification.PolicyNumber, policyAccountNumberGenerator.Generate());
+            var policy = new PolicyAccount
+            (
+                notification.PolicyNumber, 
+                policyAccountNumberGenerator.Generate(),
+                notification.PolicyHolder.FirstName,
+                notification.PolicyHolder.LastName
+            );
 
             using (dataStore)
             {

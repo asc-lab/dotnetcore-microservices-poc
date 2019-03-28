@@ -28,6 +28,8 @@ namespace PaymentService.Domain
                 {
                     var account = await dataStore.PolicyAccounts.FindByNumber(txLine.AccountNumber);
                     account?.InPayment(txLine.Amount, txLine.AccountingDate);
+                    
+                    //TODO: mark dirty
                 }
                 
                 fileToImport.MarkProcessed();

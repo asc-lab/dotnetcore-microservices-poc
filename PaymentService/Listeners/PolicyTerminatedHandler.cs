@@ -20,6 +20,8 @@ namespace PaymentService.Listeners
             var policyAccount = await dataStore.PolicyAccounts.FindByNumber(notification.PolicyNumber);
             
             policyAccount.OutPayment(notification.AmountToReturn, notification.PolicyTo);
+            
+            //TODO: mark account for saving
 
             await dataStore.CommitChanges();
         }

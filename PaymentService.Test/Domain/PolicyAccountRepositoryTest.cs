@@ -12,9 +12,9 @@ namespace PaymentService.Test.Domain
 
         public PolicyAccountRepositoryTest()
         {
-            list.Add("PA1", new PolicyAccount("POLICY_1", "231232132131"));
-            list.Add("PA2", new PolicyAccount("POLICY_2", "389hfswjfrh2032r"));
-            list.Add("PA3", new PolicyAccount("POLICY_3", "0rju130fhj20"));
+            list.Add("PA1", new PolicyAccount("POLICY_1", "231232132131", "Ann","Smith"));
+            list.Add("PA2", new PolicyAccount("POLICY_2", "389hfswjfrh2032r", "Jimmy","Morrison"));
+            list.Add("PA3", new PolicyAccount("POLICY_3", "0rju130fhj20", "Patrick","Jones"));
         }
 
         public void Add(PolicyAccount policyAccount)
