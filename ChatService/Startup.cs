@@ -40,7 +40,7 @@ namespace ChatService
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
-                        .WithOrigins("http://localhost:8080");
+                        .WithOrigins(appSettingsSection.Get<AppSettings>().AllowedChatOrigins);
                 }));
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
