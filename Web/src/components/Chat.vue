@@ -15,14 +15,15 @@
 
 <script>
     import auth from './http/Auth'
-    import ws from './http/WebSocket'
+    
+    import chat from './http/WebSocket'
 
     export default {
         name: "Chat",
         data() {
             return {
                 user: {},
-                webSocket: {},
+                hubConnection: {},
                 chat: '',
                 message: ''
             }
@@ -33,26 +34,29 @@
         },
         created() {
             this.user = auth.getAuthDetails();
-            this.webSocket = ws.create(this.user.username);
 
-            this.webSocket.onmessage = event => {
-                console.log('Hello from websocket onmessage. Event: ' + event.data);
-                this.appendToChat(event.data);
-            };
+            this.hubConnection = chat.createHub();
 
-            this.webSocket.onclose = () => {
-                console.error("WebSocket connection closed");
-            };
+            this.hubConnection
+                .start()
+                .then(()=>console.info("connected to hub"))
+                .catch(err => console.error(err));
+            
+            this.hubConnection.on("ReceiveMessage",(usr,msg) =>{
+                console.log('Hello from websocket onmessage. Event: ' + msg);
+                this.appendToChat(usr,msg);
+            });
         },
         methods: {
             send () {
-                const htmlMsg = '<p class="msg"><img class="avatar" src="' + this.user.avatar + '"/> [' + this.user.username + '] ' + this.message + '</p>';
-                this.webSocket.send(htmlMsg);
-                this.chat += htmlMsg.replace('<p class="msg">', '<p class="msg my-messages">');
+                
+                this.hubConnection.invoke("SendMessage", this.message);
                 this.message = '';
             },
-            appendToChat(text) {
-                this.chat += text;
+            appendToChat(usr, msg) {
+                const htmlMsg = '<p class="msg"> [' + usr + '] ' + msg + '</p>';
+                
+                this.chat += htmlMsg;
             }
         }
     }
