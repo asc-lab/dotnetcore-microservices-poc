@@ -42,9 +42,12 @@
                 .then(()=>console.info("connected to hub"))
                 .catch(err => console.error(err));
             
-            this.hubConnection.on("ReceiveMessage",(usr,msg) =>{
-                console.log('Hello from websocket onmessage. Event: ' + msg);
-                this.appendToChat(usr,msg);
+            this.hubConnection.on("ReceiveMessage",(usr, avatar,msg) =>{
+                this.appendMsgToChat(usr,avatar,msg);
+            });
+
+            this.hubConnection.on("ReceiveNotification", msg => {
+                this.appendAlertToChat(msg);
             });
         },
         methods: {
@@ -53,9 +56,12 @@
                 this.hubConnection.invoke("SendMessage", this.message);
                 this.message = '';
             },
-            appendToChat(usr, msg) {
-                const htmlMsg = '<p class="msg"> [' + usr + '] ' + msg + '</p>';
-                
+            appendMsgToChat(usr, avatar, msg) {
+                const htmlMsg = '<p class="msg"><img class="avatar" src="' + avatar + '"/> [' + usr + '] ' + msg + '</p>';
+                this.chat += htmlMsg;
+            },
+            appendAlertToChat(msg) {
+                const htmlMsg = '<p class="msg">' + msg + '</p>';
                 this.chat += htmlMsg;
             }
         }
