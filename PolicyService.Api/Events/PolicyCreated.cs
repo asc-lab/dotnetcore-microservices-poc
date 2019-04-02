@@ -14,5 +14,6 @@ namespace PolicyService.Api.Events
         public DateTime PolicyTo { get; set; }
         public PersonDto PolicyHolder { get; set; }
         public decimal TotalPremium { get; set; }
+        public string AgentLogin { get; set; }
     }
 }

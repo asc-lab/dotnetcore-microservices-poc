@@ -74,7 +74,8 @@ namespace PolicyService.Commands
                     FirstName = version.PolicyHolder.FirstName,
                     LastName = version.PolicyHolder.LastName,
                     TaxId = version.PolicyHolder.Pesel
-                }
+                },
+                AgentLogin = policy.AgentLogin
             };
         }
     }

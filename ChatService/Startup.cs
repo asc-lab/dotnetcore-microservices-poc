@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChatService.Hubs;
+using ChatService.Messaging.RabbitMq;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PolicyService.Api.Events;
 
 namespace ChatService
 {
@@ -32,6 +35,8 @@ namespace ChatService
         {
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+            
+            services.AddMediatR();
             
             services.AddCors(opt => opt.AddPolicy("CorsPolicy",
                 builder =>
@@ -84,6 +89,8 @@ namespace ChatService
             services.AddSignalR();
             
             services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
+            
+            services.AddRabbitListeners();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +114,8 @@ namespace ChatService
             app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseRabbitListeners(new List<Type> {typeof(PolicyCreated)});
         }
     }
 }

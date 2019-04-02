@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -10,6 +11,7 @@ namespace ChatService.Hubs
     {
         public async Task SendMessage(string message)
         {
+            var avatar = Context.User?.Claims?.FirstOrDefault(c=>c.Type=="avatar")?.Value;
             await Clients.All.SendAsync("ReceiveMessage", Context.User?.Identity?.Name, message);
         }
     }
