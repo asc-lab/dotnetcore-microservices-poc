@@ -60,7 +60,7 @@ In this service we demonstrated usage of CQRS pattern for better read/write oper
 * **Policy Search Service** - provides insurance policy search. \
 This module listens for events from RabbitMQ, converts received DTOs to “read model” and indexes given model in ElasticSearch to provide advanced search capabilities.
 
-* **Pricing Service** - a service responsible for calculation of price for given insurance product based on its parametrization.. \
+* **Pricing Service** - a service responsible for calculation of price for given insurance product based on its parametrization. \
 For each product a tariff should be defined. The tariff is a set of rules on the basis of which the price is calculated. DynamicExpresso was used to parse the rules. During the policy purchase process, the `PolicyService` connects with this service to calculate a price. Price is calculated based on user’s answers for defined questions.
 
 * **Product Service** - simple insurance product catalog. \
@@ -78,9 +78,11 @@ Install [RabbitMQ](https://www.rabbitmq.com/).
 
 Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) version >= 6.
 
-Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka.
+Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka or use Maven wrapper.
 
 ## Init databases
+
+### Windows
 
 ```bash
 cd DbScripts
@@ -92,6 +94,13 @@ In my case this command looks like:
 ```bash
 cd DbScripts
 "C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
+```
+
+### Linux
+
+```bash
+sudo -i -u postgres
+psql --host "localhost" --port 5432 --username "postgres" --file "PATH_TO_FILE/createdatabases.sql"
 ```
 
 This script should create `lab_user` user and the following databases: `lab_netmicro_payments`, `lab_netmicro_jobs`, `lab_netmicro_policy` and `lab_netmicro_pricing`.
@@ -112,12 +121,31 @@ This should start Eureka and you should be able to go to http://localhost:8761/ 
 
 Build all projects from command line without test:
 
+### Windows
+
 ```bash
+cd scripts
 build-without-tests.bat
+```
+
+### Linux
+```bash
+cd scripts
+./build-without-tests.sh
 ```
 
 Build all projects from command with test:
 
+### Windows
+
 ```bash
+cd scripts
 build.bat
+```
+
+### Linux
+
+```bash
+cd scripts
+./build.sh
 ```
