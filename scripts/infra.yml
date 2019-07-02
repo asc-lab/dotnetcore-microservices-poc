@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  eureka:
+    image: netflixoss/eureka:1.3.1
+    container_name: eureka
+    hostname: eureka
+    ports:
+      - 8761:8761
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    container_name: elasticsearch
+    environment:
+    - cluster.name=docker-cluster
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+    - 9200:9200
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbit
+    hostname: rabbit
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      NAME: rabbitmq
+    volumes:
+      - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
