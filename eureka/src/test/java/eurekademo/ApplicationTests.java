@@ -28,11 +28,11 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 	}
 
-	@Test
-	public void adminLoads() {
-		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> entity = testRestTemplate.getForEntity("/env", Map.class);
-		assertEquals(HttpStatus.OK, entity.getStatusCode());
-	}
+	// @Test
+	// public void adminLoads() {
+	// 	@SuppressWarnings("rawtypes")
+	// 	ResponseEntity<Map> entity = testRestTemplate.getForEntity("/env", Map.class);
+	// 	assertEquals(HttpStatus.OK, entity.getStatusCode());
+	// }
 
 }
