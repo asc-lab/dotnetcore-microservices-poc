@@ -58,11 +58,11 @@
             },
             appendMsgToChat(usr, avatar, msg) {
                 const htmlMsg = '<p class="msg"><img class="avatar" src="' + avatar + '"/> [' + usr + '] ' + msg + '</p>';
-                this.chat += htmlMsg;
+                this.chat = htmlMsg + this.chat;
             },
             appendAlertToChat(msg) {
                 const htmlMsg = '<p class="msg">' + msg + '</p>';
-                this.chat += htmlMsg;
+                this.chat = htmlMsg + this.chat;
             }
         }
     }

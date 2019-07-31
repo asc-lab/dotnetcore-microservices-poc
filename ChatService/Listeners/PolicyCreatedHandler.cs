@@ -18,7 +18,7 @@ namespace ChatService.Listeners
 
         public async Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
         {
-            await chatHubContext.Clients.All.SendAsync("ReceiveMessage", "system", $"{notification.AgentLogin} just sold policy for {notification.ProductCode}!!!");
+            await chatHubContext.Clients.All.SendAsync("ReceiveNotification", $"{notification.AgentLogin} just sold policy for {notification.ProductCode}!!!");
         }
     }
 }
