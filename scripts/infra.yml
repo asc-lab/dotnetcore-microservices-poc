@@ -1,12 +1,22 @@
-version: '2'
+version: '3'
 
 services:
   eureka:
-    image: netflixoss/eureka:1.3.1
-    container_name: eureka
-    hostname: eureka
+    build: ../eureka-server
+    image: eureka-server
+    container_name: eureka-server
     ports:
       - 8761:8761
+
+  postgres:
+    build: ../postgres
+    image: postgres
+    container_name: postgres
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
     container_name: elasticsearch
@@ -20,10 +30,10 @@ services:
         hard: -1
     ports:
     - 9200:9200
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbit
-    hostname: rabbit
     ports:
       - 15672:15672
       - 5672:5672

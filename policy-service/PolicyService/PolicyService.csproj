@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>0a1d70d5-102b-4bdc-9526-438b3daef0b5</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="wwwroot\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Domain\Offer.hbm.xml" />
+    <None Remove="Domain\Policy.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Domain\Policy.hbm.xml" />
+    <EmbeddedResource Include="Domain\Offer.hbm.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="NHibernate" Version="5.1.3" />
+    <PackageReference Include="Npgsql" Version="4.0.3" />
+    <PackageReference Include="Polly" Version="6.1.0" />
+    <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5" />
+    <PackageReference Include="RawRabbit.Operations.Tools" Version="2.0.0-rc5" />
+    <PackageReference Include="RestEase" Version="1.4.7" />
+    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
+    <ProjectReference Include="..\..\pricing-service\PricingService.Api\PricingService.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Steeltoe.Common, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\home\wsuwala\.nuget\packages\steeltoe.common\2.1.1\lib\netstandard2.0\Steeltoe.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Steeltoe.Common.Http, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\home\wsuwala\.nuget\packages\steeltoe.common.http\2.1.1\lib\netstandard2.0\Steeltoe.Common.Http.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
