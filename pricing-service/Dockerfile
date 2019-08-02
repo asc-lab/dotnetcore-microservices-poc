@@ -28,4 +28,5 @@ WORKDIR /app
 EXPOSE 55269
 EXPOSE 44392
 COPY --from=publish /src/pricing-service/PricingService/out ./
+ENV ASPNETCORE_URLS=http://+:5040
 ENTRYPOINT ["dotnet", "PricingService.dll"]

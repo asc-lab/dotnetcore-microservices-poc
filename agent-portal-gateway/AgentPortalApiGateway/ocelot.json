@@ -3,7 +3,7 @@
     {
       "DownstreamPathTemplate": "/api/Products/{everything}",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/Products/{everything}",
+      "UpstreamPathTemplate": "/api/Products/{everything}",
       "ServiceName": "ProductService",
       "UpstreamHttpMethod": [ "Get" ],
       "FileCacheOptions": { "TtlSeconds": 15 },
@@ -18,7 +18,7 @@
     {
       "DownstreamPathTemplate": "/api/Products",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/Products",
+      "UpstreamPathTemplate": "/api/Products",
       "ServiceName": "ProductService",
       "UpstreamHttpMethod": [ "Get" ],
       "FileCacheOptions": { "TtlSeconds": 15 },
@@ -34,7 +34,7 @@
     {
       "DownstreamPathTemplate": "/api/Offer",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/Offers",
+      "UpstreamPathTemplate": "/api/Offers",
       "ServiceName": "PolicyService",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
@@ -52,7 +52,7 @@
     {
       "DownstreamPathTemplate": "/api/Policy",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/Policies",
+      "UpstreamPathTemplate": "/api/Policies",
       "ServiceName": "PolicyService",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
@@ -67,7 +67,7 @@
     {
       "DownstreamPathTemplate": "/api/Policy/{number}",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/Policies/{number}",
+      "UpstreamPathTemplate": "/api/Policies/{number}",
       "ServiceName": "PolicyService",
       "UpstreamHttpMethod": [ "Get" ],
       "FileCacheOptions": { "TtlSeconds": 15 },
@@ -83,7 +83,7 @@
     {
       "DownstreamPathTemplate": "/api/PolicySearch",
       "DownstreamScheme": "http",
-      "UpstreamPathTemplate": "/PolicySearch",
+      "UpstreamPathTemplate": "/api/PolicySearch",
       "ServiceName": "PolicySearchService",
       "UpstreamHttpMethod": [ "Get" ],
       "AuthenticationOptions": {

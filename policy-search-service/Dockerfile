@@ -17,7 +17,6 @@ RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
 WORKDIR /app
-EXPOSE 63720
-EXPOSE 44398
+ENV ASPNETCORE_URLS=http://+:5060
 COPY --from=publish /src/policy-search-service/PolicySearchService/out ./
 ENTRYPOINT ["dotnet", "PolicySearchService.dll"]

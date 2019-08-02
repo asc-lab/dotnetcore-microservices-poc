@@ -25,7 +25,6 @@ RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
 WORKDIR /app
-EXPOSE 63720
-EXPOSE 44398
+ENV ASPNETCORE_URLS=http://+:5030
 COPY --from=publish /src/product-service/ProductService/out ./
 ENTRYPOINT ["dotnet", "ProductService.dll"]

@@ -27,7 +27,6 @@ RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
 WORKDIR /app
-EXPOSE 53050
-EXPOSE 44360
+ENV ASPNETCORE_URLS=http://+:5070
 COPY --from=publish /src/payment-service/PaymentService/out ./
 ENTRYPOINT ["dotnet", "PaymentService.dll"]

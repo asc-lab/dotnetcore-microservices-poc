@@ -9,6 +9,7 @@
     <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="wwwroot\**" />
     <None Remove="wwwroot\**" />
+    <None Include="hosting.json" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>

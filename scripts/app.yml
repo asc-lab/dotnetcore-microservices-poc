@@ -8,6 +8,7 @@ services:
     image: dotnet-product-service
     container_name: dotnet-product-service
     network_mode: host
+
   dotnet-pricing-service:
     build: 
       context: ../
@@ -15,6 +16,7 @@ services:
     image: dotnet-pricing-service
     container_name: dotnet-pricing-service
     network_mode: host
+
   dotnet-payment-service:
     build: 
       context: ../
@@ -22,6 +24,7 @@ services:
     image: dotnet-payment-service
     container_name: dotnet-payment-service
     network_mode: host
+
   dotnet-policy-service:
     build: 
       context: ../
@@ -29,6 +32,7 @@ services:
     image: dotnet-policy-service
     container_name: dotnet-policy-service
     network_mode: host
+
   dotnet-policy-search-service:
     build: 
       context: ../
@@ -36,6 +40,7 @@ services:
     image: dotnet-policy-search-service
     container_name: dotnet-policy-search-service
     network_mode: host
+
   dotnet-auth-service:
     build: 
       context: ../
@@ -43,6 +48,7 @@ services:
     image: dotnet-auth-service
     container_name: dotnet-auth-service
     network_mode: host
+
   dotnet-chat-service:
     build: 
       context: ../
@@ -50,6 +56,7 @@ services:
     image: dotnet-chat-service
     container_name: dotnet-chat-service
     network_mode: host
+
   dotnet-agent-portal-gateway:
     build: 
       context: ../
@@ -57,11 +64,9 @@ services:
     image: dotnet-agent-portal-gateway
     container_name: dotnet-agent-portal-gateway
     network_mode: host
+
   dotnet-web-vue:
     build: ../Web
     image: dotnet-web-vue
     container_name: dotnet-web-vue
     network_mode: host
-    environment:
-        GATEWAY_URL: "http://localhost:8081"
-        AUTH_URL: "http://localhost:8090"

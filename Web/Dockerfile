@@ -8,13 +8,8 @@ COPY . .
 RUN npm run build
 
 FROM nginx:1.12-alpine
-
-ENV \
-    GATEWAY_URL=${GATEWAY_URL:-http://localhost:8081} \
-    AUTH_URL=${AUTH_URL:-http://localhost:8090}
-
-COPY nginx-app.conf /etc/nginx/conf.d/default.tmpl
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY entrypoint.sh .
-
-ENTRYPOINT ["/entrypoint.sh"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -17,7 +17,6 @@ RUN dotnet publish -c Release -o out
 
 FROM microsoft/dotnet:2.2-aspnetcore-runtime AS final
 WORKDIR /app
-EXPOSE 63720
-EXPOSE 44398
+ENV ASPNETCORE_URLS=http://+:4099
 COPY --from=publish /src/chat-service/ChatService/out ./
 ENTRYPOINT ["dotnet", "ChatService.dll"]
