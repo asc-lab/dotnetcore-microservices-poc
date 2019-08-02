@@ -154,3 +154,7 @@ build.bat
 cd scripts
 ./build.sh
 ```
+
+## Run
+
+Go to folder with specific service (`PolicyService`, `ProductService` etc) and use `dotnet run` command.
