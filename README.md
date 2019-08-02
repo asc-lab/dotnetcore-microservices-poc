@@ -28,7 +28,6 @@ This is an example of a very simplified insurance sales system made in a microse
 - [Part 4 Building API Gateways With Ocelot](https://altkomsoftware.pl/en/blog/building-api-gateways-with-ocelot/)
 - [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://altkomsoftware.pl/en/blog/building-microservices-domain-aggregates/)
 
-
 ## Business Case
 
 We are going to build very simplified system for insurance agents to sell various kind of insurance products.
@@ -70,7 +69,13 @@ It provides basic information about each insurance product and its parameters th
 
 Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations and **.Test project** (`PaymentService.Test`, `PolicyService.Test`) with unit and integration tests.
 
-## Prerequisites
+## Running with Docker
+
+Check branch [docker-compose](https://github.com/asc-lab/dotnetcore-microservices-poc/tree/docker-compose). On this branch you can find version that you can run with one command using Docker and Docker Compose.
+
+## Manual running
+
+### Prerequisites
 
 Install [PostgreSQL](https://www.postgresql.org/) version >= 10.0.
 
@@ -80,9 +85,9 @@ Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/
 
 Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka or use Maven wrapper.
 
-## Init databases
+### Init databases
 
-### Windows
+#### Windows
 
 ```bash
 cd DbScripts
@@ -96,7 +101,7 @@ cd DbScripts
 "C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
 ```
 
-### Linux
+#### Linux
 
 ```bash
 sudo -i -u postgres
@@ -105,7 +110,7 @@ psql --host "localhost" --port 5432 --username "postgres" --file "PATH_TO_FILE/c
 
 This script should create `lab_user` user and the following databases: `lab_netmicro_payments`, `lab_netmicro_jobs`, `lab_netmicro_policy` and `lab_netmicro_pricing`.
 
-## Run Eureka
+### Run Eureka
 
 Service registry and discovery tool for our project is Eureka. It is included in the project.
 In order to start it open terminal / command prompt.
@@ -117,18 +122,18 @@ mvn spring-boot:run
 
 This should start Eureka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
 
-## Build
+### Build
 
 Build all projects from command line without test:
 
-### Windows
+#### Windows
 
 ```bash
 cd scripts
 build-without-tests.bat
 ```
 
-### Linux
+#### Linux
 ```bash
 cd scripts
 ./build-without-tests.sh
@@ -136,14 +141,14 @@ cd scripts
 
 Build all projects from command with test:
 
-### Windows
+#### Windows
 
 ```bash
 cd scripts
 build.bat
 ```
 
-### Linux
+#### Linux
 
 ```bash
 cd scripts
