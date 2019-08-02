@@ -12,6 +12,4 @@ services:
   - docker
 
 script:
-  - docker build -f ProductService/Dockerfile -t dotnetcore-microservices-poc-product-service:${BUILD_NUMBER} .
-  - docker build -f PaymentService/Dockerfile -t dotnetcore-microservices-poc-payment-service:${BUILD_NUMBER} .
-  - docker build -f PricingService/Dockerfile -t dotnetcore-microservices-poc-pricing-service:${BUILD_NUMBER} .
+  - docker-compose -f scripts/app.yml build
