@@ -4,7 +4,7 @@ SPA application built with Vue.js and Bootstrap for Vue.
 
 ## Prerequisites
 
-You must add file ```.env.local``` based on ```.env-example``` .
+You must add file ```.env``` based on ```.env-example``` .
 
 ## Project setup
 ```
