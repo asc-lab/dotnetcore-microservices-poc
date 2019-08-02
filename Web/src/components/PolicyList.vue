@@ -43,7 +43,7 @@
         },
         methods: {
             showDetails(record) {
-                this.$router.push({name: 'policyDetails', params: {policyNumber: record.number}});
+                this.$router.push({name: 'policyDetails', params: {policyNumber: record.policyNumber}});
             },
             search() {
                 let queryString = '';
