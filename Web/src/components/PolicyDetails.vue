@@ -23,12 +23,12 @@
             <div class="row">
                 <span><strong>Covers:</strong> {{ policy.covers | join }}</span>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <button type="submit"
                         class="btn btn-primary"
                         v-on:click.stop.prevent="documents">Documents
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
