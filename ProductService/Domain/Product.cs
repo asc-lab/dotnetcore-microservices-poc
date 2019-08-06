@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EnsureThat;
 
 namespace ProductService.Domain
  {
@@ -21,7 +18,7 @@ namespace ProductService.Domain
         private Product()
         { }
 
-        protected Product(string code, string name, string image, string description, int maxNumberOfInsured)
+        private Product(string code, string name, string image, string description, int maxNumberOfInsured)
         {
             Id = Guid.NewGuid();
             Code = code;
@@ -41,7 +38,7 @@ namespace ProductService.Domain
 
          public void Activate()
          {
-             Ensure.That(Status).Equals(ProductStatus.Draft);
+             EnsureIsDraft();
              Status = ProductStatus.Active;
          }
 
@@ -52,16 +49,24 @@ namespace ProductService.Domain
 
          public void AddCover(string code, string name, string description, bool optional, decimal? sumInsured)
          {
-             Ensure.That(Status).Equals(ProductStatus.Draft);
+             EnsureIsDraft();
              Covers.Add(new Cover(code, name, description, optional, sumInsured));
          }
         
-        public void AddQuestions(IList<Question> questions)
+        public void AddQuestions(IEnumerable<Question> questions)
         {
-            Ensure.That(Status).Equals(ProductStatus.Draft);
+            EnsureIsDraft();
             foreach (var q in questions)
                 Questions.Add(q);
-        }        
+        }
+
+        private void EnsureIsDraft()
+        {
+            if (Status != ProductStatus.Draft)
+            {
+                throw new ApplicationException("Only draft version can be modified and activated");
+            }
+        }
     }
 
     public enum ProductStatus

@@ -1,24 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProductService.Domain;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ProductService.Domain;
 
 namespace ProductService.DataAccess.EF
 {
     public class ProductRepository : IProductRepository
     {
-        private ProductDbContext productDbContext;
+        private readonly ProductDbContext productDbContext;
 
         public ProductRepository(ProductDbContext productDbContext)
         {
             this.productDbContext = productDbContext ?? throw new ArgumentNullException(nameof(productDbContext));
         }
 
-        public Task<Product> Add(Product product)
+        public async Task<Product> Add(Product product)
         {
-            throw new NotImplementedException();
+            await productDbContext.Products.AddAsync(product);
+            return product;
         }
 
         public async Task<List<Product>> FindAllActive()

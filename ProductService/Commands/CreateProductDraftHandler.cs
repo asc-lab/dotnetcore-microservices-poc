@@ -34,7 +34,7 @@ namespace ProductService.Commands
                 draft.AddCover(cover.Code, cover.Name, cover.Description, cover.Optional, cover.SumInsured);
             }
 
-            var questions = new List<Question> { };
+            var questions = new List<Question>();
             foreach (var question in request.ProductDraft.Questions)
             {
                 switch (question)

@@ -1,5 +1,5 @@
-﻿using ProductService.Domain;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ProductService.Domain;
 
 namespace ProductService.Init
 {
@@ -7,7 +7,7 @@ namespace ProductService.Init
     {
         internal static Product Travel()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "TRI",
                     "Safe Traveller",
                     "/static/travel.jpg",
@@ -32,7 +32,7 @@ namespace ProductService.Init
 
         internal static Product House()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "HSI",
                     "Happy House",
                     "/static/house.jpg",
@@ -59,7 +59,7 @@ namespace ProductService.Init
 
         internal static Product Farm()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "FAI",
                     "Happy farm",
                     "/static/farm.jpg",
@@ -86,7 +86,7 @@ namespace ProductService.Init
 
         internal static Product Car()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "CAR",
                     "Happy Driver",
                     "/static/car.jpg",

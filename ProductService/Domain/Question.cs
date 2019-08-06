@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProductService.Domain
 {
@@ -17,7 +15,7 @@ namespace ProductService.Domain
         public Question()
         { }
 
-        public Question(string code, int index, string text)
+        protected Question(string code, int index, string text)
         {
             Id = Guid.NewGuid();
             Code = code;
