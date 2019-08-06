@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductService.Api.Queries.Dtos
+﻿namespace ProductService.Api.Queries.Dtos
 {
     public class CoverDto
     {

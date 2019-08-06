@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProductService.Api.Queries.Dtos;
-using System;
 
 namespace ProductService.Api.Queries.Converters
 {
@@ -15,15 +15,14 @@ namespace ProductService.Api.Queries.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var jsonObject = JObject.Load(reader);
-            var target = Create(objectType, jsonObject);
+            var target = Create(jsonObject);
             serializer.Populate(jsonObject.CreateReader(), target);
             return target;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var questionAnswer = value as QuestionDto;
-            if (questionAnswer != null)
+            if (value is QuestionDto questionAnswer)
             {
                 writer.WriteStartObject();
                 writer.WritePropertyName("index");
@@ -43,7 +42,7 @@ namespace ProductService.Api.Queries.Converters
             }
         }
 
-        QuestionDto Create(Type objectType, JObject jsonObject)
+        private static QuestionDto Create(JObject jsonObject)
         {
             // examine the $type value
             var typeName = Enum.Parse<QuestionType>(jsonObject["questionType"].ToString());
