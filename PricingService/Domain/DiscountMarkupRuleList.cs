@@ -1,14 +1,12 @@
-﻿using PricingService.Extensions;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using PricingService.Extensions;
 
 namespace PricingService.Domain
 {
     public class DiscountMarkupRuleList
     {
-        private List<DiscountMarkupRule> rules;
+        private readonly List<DiscountMarkupRule> rules;
 
         public DiscountMarkupRuleList(List<DiscountMarkupRule> rules)
         {

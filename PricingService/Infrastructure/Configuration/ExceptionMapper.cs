@@ -1,7 +1,6 @@
-﻿using GlobalExceptionHandler.WebApi;
+﻿using System.Net;
+using GlobalExceptionHandler.WebApi;
 using Newtonsoft.Json;
-using System;
-using System.Net;
 
 namespace PricingService.Configuration
 {

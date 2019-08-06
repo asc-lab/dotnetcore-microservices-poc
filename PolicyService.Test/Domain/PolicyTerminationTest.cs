@@ -1,5 +1,4 @@
 using System;
-using PolicyService.Domain;
 using PolicyService.Test.TestData;
 using Xunit;
 using static Xunit.Assert;

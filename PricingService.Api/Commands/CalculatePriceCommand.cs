@@ -1,9 +1,8 @@
-﻿using FluentValidation;
+﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
 using MediatR;
 using PricingService.Api.Commands.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PricingService.Api.Commands
 {

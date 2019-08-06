@@ -1,19 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Reflection;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 
 namespace PricingService.DataAccess.Marten
 {
     public class ProtectedSettersContractResolver : DefaultContractResolver
     {
-        public ProtectedSettersContractResolver()
-        {
-        }
-
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             var prop = base.CreateProperty(member, memberSerialization);

@@ -1,9 +1,8 @@
-﻿using DynamicExpresso;
-using PricingService.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using DynamicExpresso;
+using PricingService.Extensions;
 
 namespace PricingService.Domain
 {
@@ -33,7 +32,7 @@ namespace PricingService.Domain
             PolicyFrom = policyFrom;
             PolicyTo = policyTo;
             TotalPremium = 0M;
-            selectedCovers.ForEach(c => ZeroPrice(c));
+            selectedCovers.ForEach(ZeroPrice);
             Subject = subject;
         }
 

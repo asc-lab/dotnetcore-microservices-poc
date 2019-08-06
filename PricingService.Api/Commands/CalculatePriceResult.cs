@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PricingService.Api.Commands
 {
@@ -9,6 +7,6 @@ namespace PricingService.Api.Commands
         public decimal TotalPrice { get; set; }
         public Dictionary<string,decimal> CoverPrices { get; set; }
 
-        public static CalculatePriceResult Empty() => new CalculatePriceResult { TotalPrice = 0M, CoverPrices = new Dictionary<string, decimal> { } };
+        public static CalculatePriceResult Empty() => new CalculatePriceResult { TotalPrice = 0M, CoverPrices = new Dictionary<string, decimal>() };
     }
 }

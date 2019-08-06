@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PricingService.Api.Converters;
-using System;
 
 namespace PricingService.Api.Commands.Dto
 {
@@ -9,7 +8,7 @@ namespace PricingService.Api.Commands.Dto
     {
         public string QuestionCode { get; set; }
         public abstract QuestionType QuestionType {get; }
-        public abstract Object GetAnswer();
+        public abstract object GetAnswer();
         
     }
 

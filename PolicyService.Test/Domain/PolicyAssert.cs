@@ -1,5 +1,4 @@
 using System.Linq;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using PolicyService.Domain;
 using Xunit;
 

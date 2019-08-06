@@ -1,6 +1,6 @@
-﻿using PolicyService.Domain;
+﻿using System;
+using PolicyService.Domain;
 using PolicyService.Test.Domain;
-using System;
 
 namespace PolicyService.Test.TestData
 {
@@ -12,7 +12,7 @@ namespace PolicyService.Test.TestData
 
             var policy = offer.Buy(PolicyHolderFactory.Abc());
 
-            var terminationResult = policy.Terminate(DateTime.Now.AddDays(3));
+            policy.Terminate(DateTime.Now.AddDays(3));
 
             return policy;
         }

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GlobalExceptionHandler.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
-using PricingService.Init;
-using GlobalExceptionHandler.WebApi;
 using PricingService.Infrastructure;
+using PricingService.Init;
 using Steeltoe.Discovery.Client;
 
 namespace PricingService
@@ -43,7 +36,7 @@ namespace PricingService
             services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPricingDemoInitializer();
             services.AddMediatR();
-            services.AddLogingBehaviour();
+            services.AddLoggingBehavior();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

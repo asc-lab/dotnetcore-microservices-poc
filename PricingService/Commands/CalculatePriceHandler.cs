@@ -1,12 +1,10 @@
-﻿using FluentValidation;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentValidation;
 using MediatR;
 using PricingService.Api.Commands;
 using PricingService.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PricingService.Commands
 {
@@ -31,7 +29,7 @@ namespace PricingService.Commands
             return ToResult(calculation);
         }
 
-        private Calculation ToCalculation(CalculatePriceCommand cmd)
+        private static Calculation ToCalculation(CalculatePriceCommand cmd)
         {
             return new Calculation(
                 cmd.ProductCode,
@@ -41,7 +39,7 @@ namespace PricingService.Commands
                 cmd.Answers.ToDictionary(a => a.QuestionCode, a=> a.GetAnswer()));
         }
 
-        private CalculatePriceResult ToResult(Calculation calculation)
+        private static CalculatePriceResult ToResult(Calculation calculation)
         {
             return new CalculatePriceResult
             {
