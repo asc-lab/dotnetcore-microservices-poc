@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PolicyService.Api.Converters;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PolicyService.Api.Commands.Dtos
 {
@@ -11,7 +8,7 @@ namespace PolicyService.Api.Commands.Dtos
     {
         public string QuestionCode { get; set; }
         public abstract QuestionType QuestionType { get; }
-        public abstract Object GetAnswer();
+        public abstract object GetAnswer();
 
     }
 
