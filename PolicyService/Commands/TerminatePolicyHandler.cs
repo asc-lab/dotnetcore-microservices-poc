@@ -10,33 +10,30 @@ namespace PolicyService.Commands
 {
     public class TerminatePolicyHandler : IRequestHandler<TerminatePolicyCommand, TerminatePolicyResult>
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
         private readonly IEventPublisher eventPublisher;
 
-        public TerminatePolicyHandler(IUnitOfWorkProvider uowProvider, IEventPublisher eventPublisher)
+        public TerminatePolicyHandler(IUnitOfWork uow, IEventPublisher eventPublisher)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
             this.eventPublisher = eventPublisher;
         }
 
         public async Task<TerminatePolicyResult> Handle(TerminatePolicyCommand request, CancellationToken cancellationToken)
         {
-            using (var uow = uowProvider.Create())
+            var policy = await uow.Policies.WithNumber(request.PolicyNumber);
+
+            var terminationResult = policy.Terminate(request.TerminationDate);
+            
+            await eventPublisher.PublishMessage(PolicyTerminated(terminationResult));
+
+            await uow.CommitChanges();
+            
+            return new TerminatePolicyResult
             {
-                var policy = await uow.Policies.WithNumber(request.PolicyNumber);
-
-                var terminationResult = policy.Terminate(request.TerminationDate);
-                
-                await uow.CommitChanges();
-
-                await eventPublisher.PublishMessage(PolicyTerminated(terminationResult));
-
-                return new TerminatePolicyResult
-                {
-                    PolicyNumber = policy.Number,
-                    MoneyToReturn = terminationResult.AmountToReturn
-                };
-            }
+                PolicyNumber = policy.Number,
+                MoneyToReturn = terminationResult.AmountToReturn
+            };
         }
 
         private PolicyTerminated PolicyTerminated(PolicyTerminationResult terminationResult)

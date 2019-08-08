@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="PolicyService" namespace="PolicyService.Messaging.RabbitMq.Outbox">
+    
+    <class  name="Message" table="outbox_messages">
+        <id name="Id" column="id">
+            <generator class="identity" />
+        </id>
+        <property name="Type" column="type" length="500"/>
+        <property name="Payload" column="json_payload" length="8000"/>
+    </class>
+</hibernate-mapping>
