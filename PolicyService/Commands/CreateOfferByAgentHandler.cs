@@ -9,12 +9,12 @@ namespace PolicyService.Commands
 {
     public class CreateOfferByAgentHandler : IRequestHandler<CreateOfferByAgentCommand, CreateOfferResult>
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
         private readonly IPricingService pricingService;
 
-        public CreateOfferByAgentHandler(IUnitOfWorkProvider uowProvider, IPricingService pricingService)
+        public CreateOfferByAgentHandler(IUnitOfWork uow, IPricingService pricingService)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
             this.pricingService = pricingService;
         }
 
@@ -35,14 +35,11 @@ namespace PolicyService.Commands
             );
 
             //create and save offer
-            using (var uow = uowProvider.Create())
-            {
-                uow.Offers.Add(o);
-                await uow.CommitChanges();
+            uow.Offers.Add(o);
+            await uow.CommitChanges();
 
-                //return result
-                return ConstructResult(o);
-            }
+            //return result
+            return ConstructResult(o);
         }
 
         private CreateOfferResult ConstructResult(Offer o)

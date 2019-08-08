@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -9,7 +9,9 @@
     <Compile Remove="wwwroot\**" />
     <Content Remove="wwwroot\**" />
     <EmbeddedResource Remove="wwwroot\**" />
+    <EmbeddedResource Include="Messaging\RabbitMq\Outbox\Message.hbm.xml" />
     <None Remove="wwwroot\**" />
+    <None Remove="Messaging\Outbox\Message.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
