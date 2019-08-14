@@ -101,3 +101,7 @@ To run the whole solution:
 ./infra-run.sh
 ./app-run.sh
 ```
+
+## Run
+
+Go to folder with specific service (`PolicyService`, `ProductService` etc) and use `dotnet run` command.

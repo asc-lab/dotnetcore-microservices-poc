@@ -1,9 +1,7 @@
-﻿using MediatR;
-using PolicyService.Api.Commands.Dtos;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
+using MediatR;
+using PolicyService.Api.Commands.Dtos;
 
 namespace PolicyService.Api.Commands
 {

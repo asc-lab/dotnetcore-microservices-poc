@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using PolicyService.Domain;
 using Xunit;
 using static Xunit.Assert;
@@ -38,7 +37,7 @@ namespace PolicyService.Test.Domain
         [Fact]
         public void CanCreateOfferOnBehalfOfAgentBasedOnPrice()
         {
-            var price = new Price(new Dictionary<string, decimal>()
+            var price = new Price(new Dictionary<string, decimal>
             {
                 ["C1"] = 100M,
                 ["C2"] = 200M
@@ -114,7 +113,7 @@ namespace PolicyService.Test.Domain
             var offer = OfferFactory.AlreadyConvertedOffer();
 
             Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
-            Equal($"Offer {offer.Number} is not in new status and connot be bought", ex.Message);
+            Equal($"Offer {offer.Number} is not in new status and cannot be bought", ex.Message);
         }
 
         [Fact]

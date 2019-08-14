@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductService.Domain
@@ -11,7 +10,7 @@ namespace ProductService.Domain
 
         Task<List<Product>> FindAllActive();
 
-        Task<Product> FindOne(String productCode);
+        Task<Product> FindOne(string productCode);
         
         Task<Product> FindById(Guid id);
     }

@@ -1,20 +1,19 @@
-﻿using Moq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Moq;
 using ProductService.Domain;
 using ProductService.Queries;
 using ProductService.Test.TestData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace ProductService.Test.Handlers
 {
     public class FindProductsHandlersTest
     {
-        private Mock<IProductRepository> productRepository;
+        private readonly Mock<IProductRepository> productRepository;
 
-        private List<Product> products = new List<Product>
+        private readonly List<Product> products = new List<Product>
         {
             TestProductFactory.Travel(),
             TestProductFactory.House()
@@ -38,7 +37,7 @@ namespace ProductService.Test.Handlers
             var result = await findAllProductsHandler.Handle(new Api.Queries.FindAllProductsQuery(), new System.Threading.CancellationToken());
 
             Assert.NotNull(result);
-            Assert.Equal(products.Count(), result.Count());
+            Assert.Equal(products.Count, result.Count());
         }
 
         [Fact]

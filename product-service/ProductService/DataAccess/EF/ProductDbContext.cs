@@ -32,7 +32,7 @@ namespace ProductService.DataAccess.EF
             modelBuilder.Entity<Question>().Property(q => q.Index).IsRequired();
 
             modelBuilder.Entity<Question>()
-            .HasDiscriminator<int>("QuestiontType")
+            .HasDiscriminator<int>("QuestionType")
             .HasValue<NumericQuestion>(1)
             .HasValue<DateQuestion>(2)
             .HasValue<ChoiceQuestion>(3);

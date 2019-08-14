@@ -37,7 +37,7 @@ namespace PricingService.IntegrationTest
             });
 
             True(response.Success);
-            Assert.Equal(98M, response.Data.TotalPrice);
+            Equal(98M, response.Data.TotalPrice);
         }
 
         [Fact]

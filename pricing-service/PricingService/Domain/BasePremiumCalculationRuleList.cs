@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PricingService.Domain
 {
     public class BasePremiumCalculationRuleList
     {
-        private List<BasePremiumCalculationRule> rules;
+        private readonly List<BasePremiumCalculationRule> rules;
 
         public BasePremiumCalculationRuleList(List<BasePremiumCalculationRule> rules)
         {

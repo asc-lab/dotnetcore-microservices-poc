@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PolicyService.Api.Commands.Dtos
+﻿namespace PolicyService.Api.Commands.Dtos
 {
     public class PersonDto
     {

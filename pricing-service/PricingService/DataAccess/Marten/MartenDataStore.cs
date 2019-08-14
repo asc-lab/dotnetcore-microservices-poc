@@ -1,9 +1,7 @@
-﻿using Marten;
-using PricingService.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
+using Marten;
+using PricingService.Domain;
 
 namespace PricingService.DataAccess.Marten
 {

@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PolicyService.Api.Commands.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PolicyService.Api.Converters
 {
@@ -17,15 +15,14 @@ namespace PolicyService.Api.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var jsonObject = JObject.Load(reader);
-            var target = Create(objectType, jsonObject);
+            var target = Create(jsonObject);
             serializer.Populate(jsonObject.CreateReader(), target);
             return target;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var questionAnswer = value as QuestionAnswer;
-            if (questionAnswer != null)
+            if (value is QuestionAnswer questionAnswer)
             {
                 writer.WriteStartObject();
                 writer.WritePropertyName("questionCode");
@@ -39,7 +36,7 @@ namespace PolicyService.Api.Converters
 
         }
 
-        QuestionAnswer Create(Type objectType, JObject jsonObject)
+        private static QuestionAnswer Create(JObject jsonObject)
         {
             // examine the $type value
             var typeName = Enum.Parse<QuestionType>(jsonObject["questionType"].ToString());

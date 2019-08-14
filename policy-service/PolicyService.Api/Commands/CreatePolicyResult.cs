@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PolicyService.Api.Commands
+﻿namespace PolicyService.Api.Commands
 {
     public class CreatePolicyResult
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PricingService.Domain
+﻿namespace PricingService.Domain
 {
     public class Cover
     {

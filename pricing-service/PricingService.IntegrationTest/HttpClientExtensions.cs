@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PricingService.IntegrationTest
 {
     static class HttpClientExtensions
     {
-        public static async Task<RestResult<T>> DoPostAsync<T>(this HttpClient client, string uri, Object data)
+        public static async Task<RestResult<T>> DoPostAsync<T>(this HttpClient client, string uri, object data)
             where T : class
         {
             var requestContent = new StringContent(

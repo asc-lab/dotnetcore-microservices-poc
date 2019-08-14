@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PricingService.Domain
 {
@@ -24,8 +22,8 @@ namespace PricingService.Domain
         {
             Id = Guid.NewGuid();
             Code = code;
-            this.basePremiumRules = new List<BasePremiumCalculationRule>();
-            this.discountMarkupRules = new List<DiscountMarkupRule>();
+            basePremiumRules = new List<BasePremiumCalculationRule>();
+            discountMarkupRules = new List<DiscountMarkupRule>();
         }
 
         public Calculation CalculatePrice(Calculation calculation)

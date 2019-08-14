@@ -1,8 +1,5 @@
-﻿using ProductService.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using ProductService.Domain;
 
 namespace ProductService.Test.TestData
 {    
@@ -11,7 +8,7 @@ namespace ProductService.Test.TestData
     {
         internal static Product EmptyTravel()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "TRI",
                     "Safe Traveller",
                     "/static/travel.jpg",
@@ -23,7 +20,7 @@ namespace ProductService.Test.TestData
 
         internal static Product Travel()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "TRI",
                     "Safe Traveller",
                     "/static/travel.jpg",
@@ -49,7 +46,7 @@ namespace ProductService.Test.TestData
 
         internal static Product House()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "HSI",
                     "Happy House",
                     "/static/house.jpg",
@@ -76,7 +73,7 @@ namespace ProductService.Test.TestData
 
         internal static Product Farm()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "FAI",
                     "Happy farm",
                     "/static/farm.jpg",
@@ -103,7 +100,7 @@ namespace ProductService.Test.TestData
 
         internal static Product Car()
         {
-            Product p = Product.CreateDraft(
+            var p = Product.CreateDraft(
                     "CAR",
                     "Happy Driver",
                     "/static/car.jpg",
@@ -115,6 +112,30 @@ namespace ProductService.Test.TestData
                     new NumericQuestion("NUM_OF_CLAIM", 3, "Number of claims in last 5 years")
             });
             p.Activate();
+            return p;
+        }
+
+        internal static Product InactiveTravel()
+        {
+            var p = Product.CreateDraft(
+                "TRI",
+                "Safe Traveller",
+                "/static/travel.jpg",
+                "Travel insurance",
+                10);
+
+            p.AddCover("C2", "Illness", "", false, 5000);
+            p.AddCover("C3", "Assistance", "", true, null);
+
+            p.AddQuestions(new List<Question> { new ChoiceQuestion("DESTINATION", 1, "Destination", new List<Choice> {
+                    new Choice("EUR", "Europe"),
+                    new Choice("WORLD", "World"),
+                    new Choice("PL", "Poland")
+                })
+                ,
+                new NumericQuestion("NUM_OF_ADULTS", 2, "Number of adults"),
+                new NumericQuestion("NUM_OF_CHILDREN", 3, "Number of children")
+            });
             return p;
         }
     }

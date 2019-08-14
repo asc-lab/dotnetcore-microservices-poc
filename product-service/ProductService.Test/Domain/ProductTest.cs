@@ -1,8 +1,8 @@
-using ProductService.Domain;
-using ProductService.Test.TestData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProductService.Domain;
+using ProductService.Test.TestData;
 using Xunit;
 
 namespace ProductService.Test.Domain
@@ -64,6 +64,25 @@ namespace ProductService.Test.Domain
             Assert.NotEmpty(product.Questions);
             Assert.Equal(testQuestions.Count, product.Questions.Count);
             Assert.All(product.Questions, item => Assert.NotEqual(Guid.Empty, item.Id));
+        }
+
+        [Fact]
+        public void Product_DraftCanBeActivated()
+        {
+            var product = TestProductFactory.InactiveTravel();
+            
+            product.Activate();
+            
+            Assert.Equal(ProductStatus.Active, product.Status);
+        }
+        
+        [Fact]
+        public void Product_ActiveCannotBeActivated()
+        {
+            var product = TestProductFactory.Travel();
+
+            var ex = Assert.Throws<ApplicationException>(()=>product.Activate());
+            Assert.Equal("Only draft version can be modified and activated", ex.Message);
         }
     }
 
