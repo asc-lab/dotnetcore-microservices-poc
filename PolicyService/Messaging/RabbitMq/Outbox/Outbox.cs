@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using NHibernate;
 using RawRabbit;
 
@@ -9,12 +11,13 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
     {
         private readonly IBusClient busClient;
         private readonly ISessionFactory sessionFactory;
-        
+        private readonly ILogger logger;
 
-        public Outbox(IBusClient busClient, ISessionFactory sessionFactory)
+        public Outbox(IBusClient busClient, ISessionFactory sessionFactory, ILogger logger)
         {
             this.busClient = busClient;
             this.sessionFactory = sessionFactory;
+            this.logger = logger;
         }
 
 
@@ -44,24 +47,44 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
 
         private void TryPush(Message msg)
         {
-            using (var session = sessionFactory.OpenSession())
+            TryInTx(session =>
             {
-                using (var tx = session.BeginTransaction())
+                PublishMessage(msg);
+                    
+                session
+                    .CreateQuery("delete Message where id=:id")
+                    .SetParameter("id", msg.Id)
+                    .ExecuteUpdate();
+            });
+        }
+
+        private void TryInTx(Action<IStatelessSession> action)
+        {
+            using (var session = sessionFactory.OpenStatelessSession())
+            {
+                var tx = session.BeginTransaction();
+                try
                 {
-                    var deserializedMsg = msg.RecreateMessage();
-                    var messageKey = deserializedMsg.GetType().Name.ToLower();
-                    busClient.BasicPublishAsync(deserializedMsg,
-                        cfg =>
-                        {
-                            cfg.OnExchange("lab-dotnet-micro").WithRoutingKey(messageKey);
-                        });
-                    session
-                        .CreateQuery("delete Message where id=:id")
-                        .SetParameter("id", msg.Id)
-                        .ExecuteUpdate();
+                    action(session);
                     tx.Commit();
                 }
+                catch (Exception e)
+                {
+                    logger.LogError(e,"Failed to push message from outbox",null);
+                    tx?.Rollback();
+                }
             }
+        }
+
+        private void PublishMessage(Message msg)
+        {
+            var deserializedMsg = msg.RecreateMessage();
+            var messageKey = deserializedMsg.GetType().Name.ToLower();
+            busClient.BasicPublishAsync(deserializedMsg,
+                cfg =>
+                {
+                    cfg.OnExchange("lab-dotnet-micro").WithRoutingKey(messageKey);
+                });
         }
 
     }
