@@ -11,19 +11,20 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
     {
         private readonly IBusClient busClient;
         private readonly ISessionFactory sessionFactory;
-        private readonly ILogger logger;
+        private readonly OutboxLogger logger;
 
-        public Outbox(IBusClient busClient, ISessionFactory sessionFactory, ILogger logger)
+        public Outbox(IBusClient busClient, ISessionFactory sessionFactory, ILogger<Outbox> logger)
         {
             this.busClient = busClient;
             this.sessionFactory = sessionFactory;
-            this.logger = logger;
+            this.logger = new OutboxLogger(logger);
         }
 
 
         public void PushPendingMessages()
         {
             var messagesToPush = FetchPendingMessages();
+            logger.LogPending(messagesToPush);
 
             foreach (var msg in messagesToPush)
             {
@@ -67,10 +68,11 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
                 {
                     action(session);
                     tx.Commit();
+                    logger.LogSuccessPush();
                 }
                 catch (Exception e)
                 {
-                    logger.LogError(e,"Failed to push message from outbox",null);
+                    logger.LogFailedPush(e);
                     tx?.Rollback();
                 }
             }
@@ -87,5 +89,27 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
                 });
         }
 
+    }
+
+    class OutboxLogger
+    {
+        private readonly ILogger<Outbox> logger;
+
+        public OutboxLogger(ILogger<Outbox> logger) => this.logger = logger;
+
+        public void LogPending(IEnumerable<Message> messages)
+        {
+            logger.LogInformation($"{messages.Count()} messages about to be pushed.");
+        }
+
+        public void LogSuccessPush()
+        {
+            logger.LogInformation("Successfully pushed message");    
+        }
+
+        public void LogFailedPush(Exception e)
+        {
+            logger.LogError(e,"Failed to push message from outbox",null);
+        }
     }
 }
