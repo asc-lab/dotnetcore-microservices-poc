@@ -1,8 +1,8 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using PaymentService.Domain;
 using PolicyService.Api.Events;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PaymentService.Listeners
 {
@@ -29,6 +29,9 @@ namespace PaymentService.Listeners
 
             using (dataStore)
             {
+                if (await dataStore.PolicyAccounts.ExistsWithPolicyNumber(notification.PolicyNumber))
+                    return;
+                
                 dataStore.PolicyAccounts.Add(policy);
                 await dataStore.CommitChanges();
             }

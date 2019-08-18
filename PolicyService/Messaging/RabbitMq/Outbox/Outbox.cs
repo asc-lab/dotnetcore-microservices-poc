@@ -28,11 +28,12 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
 
             foreach (var msg in messagesToPush)
             {
-                TryPush(msg);
+                if (!TryPush(msg))
+                    break;
             }
         }
 
-        private IEnumerable<Message> FetchPendingMessages()
+        private IList<Message> FetchPendingMessages()
         {
             List<Message> messagesToPush;
             using (var session = sessionFactory.OpenStatelessSession())
@@ -46,9 +47,9 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
             return messagesToPush;
         }
 
-        private void TryPush(Message msg)
+        private bool TryPush(Message msg)
         {
-            TryInTx(session =>
+            return TryInTx(session =>
             {
                 PublishMessage(msg);
                     
@@ -59,7 +60,7 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
             });
         }
 
-        private void TryInTx(Action<IStatelessSession> action)
+        private bool TryInTx(Action<IStatelessSession> action)
         {
             using (var session = sessionFactory.OpenStatelessSession())
             {
@@ -69,11 +70,13 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
                     action(session);
                     tx.Commit();
                     logger.LogSuccessPush();
+                    return true;
                 }
                 catch (Exception e)
                 {
                     logger.LogFailedPush(e);
                     tx?.Rollback();
+                    return true;
                 }
             }
         }

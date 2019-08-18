@@ -1,8 +1,7 @@
-﻿using PaymentService.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PaymentService.Domain;
 
 namespace PaymentService.Test.Domain
 {
@@ -35,6 +34,11 @@ namespace PaymentService.Test.Domain
         public Task<PolicyAccount> FindByNumber(string accountNumber)
         {
             return Task.FromResult(list.Values.FirstOrDefault(x => x.PolicyAccountNumber == accountNumber));
+        }
+
+        public Task<bool> ExistsWithPolicyNumber(string policyNumber)
+        {
+            return Task.FromResult(list.Values.Any(x => x.PolicyAccountNumber == policyNumber));
         }
 
         public PolicyAccount FindForPolicy(string policyNumber)
