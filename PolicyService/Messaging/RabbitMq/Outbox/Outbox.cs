@@ -76,7 +76,7 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
                 {
                     logger.LogFailedPush(e);
                     tx?.Rollback();
-                    return true;
+                    return false;
                 }
             }
         }
