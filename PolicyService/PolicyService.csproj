@@ -48,16 +48,4 @@
     <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Serilog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10">
-      <HintPath>..\..\..\..\..\home\wsuwala\.nuget\packages\serilog\2.5.0\lib\netstandard1.3\Serilog.dll</HintPath>
-    </Reference>
-    <Reference Include="Steeltoe.Common, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\home\wsuwala\.nuget\packages\steeltoe.common\2.1.1\lib\netstandard2.0\Steeltoe.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Steeltoe.Common.Http, Version=2.1.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\..\home\wsuwala\.nuget\packages\steeltoe.common.http\2.1.1\lib\netstandard2.0\Steeltoe.Common.Http.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
