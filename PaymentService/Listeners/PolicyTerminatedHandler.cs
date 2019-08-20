@@ -19,7 +19,7 @@ namespace PaymentService.Listeners
         {
             var policyAccount = await dataStore.PolicyAccounts.FindByNumber(notification.PolicyNumber);
             
-            policyAccount.OutPayment(notification.AmountToReturn, notification.PolicyTo);
+            policyAccount.Close(notification.PolicyTo, notification.AmountToReturn);
             
             dataStore.PolicyAccounts.Update(policyAccount);
 

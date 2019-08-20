@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PaymentService.Domain
@@ -12,6 +11,8 @@ namespace PaymentService.Domain
         public string PolicyNumber { get; protected set; }
         public Owner Owner { get; protected set; }
         
+        public PolicyAccountStatus Status { get; protected set; }
+
         public ICollection<AccountingEntry> Entries { get; protected set; }
 
         public PolicyAccount()
@@ -25,6 +26,7 @@ namespace PaymentService.Domain
             PolicyNumber = policyNumber;
             PolicyAccountNumber = policyAccountNumber;
             Owner = new Owner(ownerFirstName,ownerLastLastName);
+            Status = PolicyAccountStatus.Active;
             Entries = new List<AccountingEntry>();
         }
 
@@ -55,6 +57,21 @@ namespace PaymentService.Domain
 
             return balance;
         }
+
+        public void Close(DateTime closingDate, decimal? amountToReturn)
+        {
+            if (!IsActive())
+                return;
+
+            if (amountToReturn.HasValue)
+            {
+                OutPayment(amountToReturn.Value, closingDate);
+            }
+
+            Status = PolicyAccountStatus.Terminated;
+        }
+
+        public bool IsActive() => Status == PolicyAccountStatus.Active;
     }
 
     public class Owner

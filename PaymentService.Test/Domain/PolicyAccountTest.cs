@@ -1,5 +1,5 @@
-﻿using PaymentService.Domain;
-using System;
+﻿using System;
+using PaymentService.Domain;
 using Xunit;
 using static Xunit.Assert;
 
@@ -7,6 +7,13 @@ namespace PaymentService.Tests.Domain
 {
     public class PolicyAccountTest
     {
+        [Fact]
+        public void NewlyCreatedAccountIsActive()
+        {
+            var account = new PolicyAccount("A", "A", "C", "C");
+            Equal(PolicyAccountStatus.Active, account.Status);
+        }
+        
         [Fact]
         public void CanRegisterInPayment()
         {
@@ -55,6 +62,19 @@ namespace PaymentService.Tests.Domain
             Equal(-10M, account.BalanceAt(dueDate1));
             Equal(15M, account.BalanceAt(incomeDate));
             Equal(0M, account.BalanceAt(dueDate2));
+        }
+
+        [Fact]
+        public void CanCloseAccountAndReturnMoney()
+        {
+            var dueDate = new DateTimeOffset(new DateTime(2018, 1, 1));
+            var account = new PolicyAccount("C", "C", "E", "E");
+            account.ExpectedPayment(10M, dueDate);
+            account.InPayment(10M, dueDate);
+            
+            account.Close(new DateTime(2018,6,1), 5M);
+            
+            Equal(PolicyAccountStatus.Terminated, account.Status);
         }
     }
 }
