@@ -1,10 +1,7 @@
-﻿using NHibernate;
-using PolicyService.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System;
 using System.Threading.Tasks;
+using NHibernate;
+using PolicyService.Domain;
 
 namespace PolicyService.DataAccess.NHibernate
 {
@@ -19,9 +16,10 @@ namespace PolicyService.DataAccess.NHibernate
 
         public IPolicyRepository Policies => policyRepository;
 
-        public UnitOfWork(ISessionFactory sessionFactory)
+
+        public UnitOfWork(ISession session)
         {
-            session = sessionFactory.OpenSession();
+            this.session = session;
             tx = session.BeginTransaction();
             offerRepository = new OfferRepository(session);
             policyRepository = new PolicyRepository(session);
@@ -40,27 +38,13 @@ namespace PolicyService.DataAccess.NHibernate
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && session!=null)
+            if (disposing)
             {
-                tx.Dispose();
-                session.Dispose();
+                tx?.Dispose();
             }
 
         }
     }
 
-    public class UnitOfWorkProvider : IUnitOfWorkProvider
-    {
-        private readonly ISessionFactory sessionFactory;
-
-        public UnitOfWorkProvider(ISessionFactory sessionFactory)
-        {
-            this.sessionFactory = sessionFactory;
-        }
-
-        public IUnitOfWork Create()
-        {
-            return new UnitOfWork(sessionFactory);
-        }
-    }
+    
 }

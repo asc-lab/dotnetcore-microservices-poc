@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace PaymentService.Domain
 {
@@ -10,5 +9,6 @@ namespace PaymentService.Domain
         void Update(PolicyAccount policyAccount);
 
         Task<PolicyAccount> FindByNumber(string accountNumber);
+        Task<bool> ExistsWithPolicyNumber(string policyNumber);
     }
 }

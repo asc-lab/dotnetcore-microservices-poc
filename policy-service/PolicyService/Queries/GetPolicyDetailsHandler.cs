@@ -11,25 +11,22 @@ namespace PolicyService.Queries
 {
     public class GetPolicyDetailsHandler : IRequestHandler<GetPolicyDetailsQuery, GetPolicyDetailsQueryResult>
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
 
-        public GetPolicyDetailsHandler(IUnitOfWorkProvider uowProvider)
+        public GetPolicyDetailsHandler(IUnitOfWork uow)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
         }
 
         public async Task<GetPolicyDetailsQueryResult> Handle(GetPolicyDetailsQuery request, CancellationToken cancellationToken)
         {
-            using (var uow = uowProvider.Create())
+            var policy = await uow.Policies.WithNumber(request.PolicyNumber);
+            if (policy == null)
             {
-                var policy = await uow.Policies.WithNumber(request.PolicyNumber);
-                if (policy == null)
-                {
-                    throw new ApplicationException($"Policy {request.PolicyNumber} not found!");
-                }
-                
-                return ConstructResult(policy);
+                throw new ApplicationException($"Policy {request.PolicyNumber} not found!");
             }
+            
+            return ConstructResult(policy);
         }
 
         private GetPolicyDetailsQueryResult ConstructResult(Policy policy)

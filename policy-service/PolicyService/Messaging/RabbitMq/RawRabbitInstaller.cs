@@ -1,10 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using PolicyService.Messaging.RabbitMq.Outbox;
 using RawRabbit.DependencyInjection.ServiceCollection;
 using RawRabbit.Instantiation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PolicyService.Messaging.RabbitMq
 {
@@ -43,7 +42,9 @@ namespace PolicyService.Messaging.RabbitMq
                 }
             });
 
-            services.AddSingleton<IEventPublisher,RabbitEventPublisher>();
+            services.AddScoped<IEventPublisher,OutboxEventPublisher>();
+            services.AddSingleton<Outbox.Outbox>();
+            services.AddHostedService<OutboxSendingService>();
             return services;
         }
     }

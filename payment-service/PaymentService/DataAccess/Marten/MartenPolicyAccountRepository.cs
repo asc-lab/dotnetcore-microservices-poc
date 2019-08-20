@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Marten;
 using PaymentService.Domain;
@@ -17,19 +15,26 @@ namespace PaymentService.DataAccess.Marten
 
         public void Add(PolicyAccount policyAccount)
         {
-            this.documentSession.Insert(policyAccount);
+            documentSession.Insert(policyAccount);
         }
 
         public void Update(PolicyAccount policyAccount)
         {
-            this.documentSession.Update(policyAccount);
+            documentSession.Update(policyAccount);
         }
 
-        public async Task<PolicyAccount> FindByNumber(string accountNumber)
+        public async Task<PolicyAccount> FindByNumber(string policyNumber)
         {
-            return await this.documentSession
+            return await documentSession
                 .Query<PolicyAccount>()
-                .FirstOrDefaultAsync(p => p.PolicyNumber == accountNumber);
+                .FirstOrDefaultAsync(p => p.PolicyNumber == policyNumber);
+        }
+
+        public async Task<bool> ExistsWithPolicyNumber(string policyNumber)
+        {
+            return await documentSession
+                .Query<PolicyAccount>()
+                .AnyAsync(p => p.PolicyNumber == policyNumber);
         }
     }
 }
