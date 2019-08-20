@@ -103,7 +103,7 @@ namespace PolicyService.Domain
                 throw new ApplicationException($"Offer {Number} has expired");
 
             if (Status != OfferStatus.New)
-                throw new ApplicationException($"Offer {Number} is not in new status and connot be bought");
+                throw new ApplicationException($"Offer {Number} is not in new status and cannot be bought");
 
             Status = OfferStatus.Converted;
 
