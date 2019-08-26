@@ -8,7 +8,7 @@
     <ItemGroup>
         <PackageReference Include="MediatR" Version="5.1.0" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="5.1.0" />
-        <PackageReference Include="Microsoft.AspNetCore.App" />
+        <PackageReference Include="Microsoft.AspNetCore.App"  Version="2.1.4" AllowExplicitVersion="true" />
         <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
         <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5" />
         <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-rc5" />
