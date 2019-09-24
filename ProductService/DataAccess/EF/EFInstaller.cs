@@ -13,14 +13,14 @@ namespace ProductService.DataAccess.EF
 
             services.AddDbContext<ProductDbContext>(options =>
             {
-                if (useInMemoryDatabase)
-                {
+                //if (useInMemoryDatabase)
+                //{
                     options.UseInMemoryDatabase("Products");
-                }
-                else
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("Products"));
-                }
+                //}
+                //else
+                //{
+                //    options.UseSqlServer(configuration.GetConnectionString("Products"));
+                //}
             });
 
             services.AddScoped<IProductRepository, ProductRepository>();
