@@ -1,13 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using NHibernate;
+using NHibernate.Bytecode;
 using NHibernate.Cfg;
+using NHibernate.Connection;
 using NHibernate.Dialect;
 using NHibernate.Driver;
-using NHibernate.Connection;
-using NHibernate.Bytecode;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NHibernate;
 using PolicyService.Domain;
 
 namespace PolicyService.DataAccess.NHibernate
@@ -37,9 +34,11 @@ namespace PolicyService.DataAccess.NHibernate
 
             cfg.AddAssembly(typeof(NHibernateInstaller).Assembly);
 
-            services.AddSingleton<ISessionFactory>(cfg.BuildSessionFactory());
+            services.AddSingleton(cfg.BuildSessionFactory());
 
-            services.AddSingleton<IUnitOfWorkProvider, UnitOfWorkProvider>();
+            services.AddScoped(s => s.GetService<ISessionFactory>().OpenSession());
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

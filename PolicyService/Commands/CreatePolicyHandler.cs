@@ -1,64 +1,60 @@
-﻿using MediatR;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using PolicyService.Api.Commands;
 using PolicyService.Api.Events;
 using PolicyService.Domain;
 using PolicyService.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PolicyService.Commands
 {
     public class CreatePolicyHandler : IRequestHandler<CreatePolicyCommand, CreatePolicyResult>
     {
-        private readonly IUnitOfWorkProvider uowProvider;
+        private readonly IUnitOfWork uow;
         private readonly IEventPublisher eventPublisher;
 
         public CreatePolicyHandler(
-            IUnitOfWorkProvider uowProvider,
+            IUnitOfWork uow,
             IEventPublisher eventPublisher)
         {
-            this.uowProvider = uowProvider;
+            this.uow = uow;
             this.eventPublisher = eventPublisher;
         }
 
         public async Task<CreatePolicyResult> Handle(CreatePolicyCommand request, CancellationToken cancellationToken)
         {
-            using (var uow = uowProvider.Create())
-            {
-                var offer = await uow.Offers.WithNumber(request.OfferNumber);
-                var customer = new PolicyHolder
+            
+            var offer = await uow.Offers.WithNumber(request.OfferNumber);
+            var customer = new PolicyHolder
+            (
+                request.PolicyHolder.FirstName,
+                request.PolicyHolder.LastName,
+                request.PolicyHolder.TaxId,
+                Address.Of
                 (
-                    request.PolicyHolder.FirstName,
-                    request.PolicyHolder.LastName,
-                    request.PolicyHolder.TaxId,
-                    Address.Of
-                    (
-                        request.PolicyHolderAddress.Country,
-                        request.PolicyHolderAddress.ZipCode,
-                        request.PolicyHolderAddress.City,
-                        request.PolicyHolderAddress.Street
-                    )
-                );
-                var policy = offer.Buy(customer);
+                    request.PolicyHolderAddress.Country,
+                    request.PolicyHolderAddress.ZipCode,
+                    request.PolicyHolderAddress.City,
+                    request.PolicyHolderAddress.Street
+                )
+            );
+            var policy = offer.Buy(customer);
 
-                uow.Policies.Add(policy);
+            uow.Policies.Add(policy);
 
-                await uow.CommitChanges();
+            await eventPublisher.PublishMessage(PolicyCreated(policy)); 
+            
+            await uow.CommitChanges();
 
-                await eventPublisher.PublishMessage(PolicyCreated(policy));
-
-                return new CreatePolicyResult
-                {
-                    PolicyNumber = policy.Number
-                };
-                
-            }
+            return new CreatePolicyResult
+            {
+                PolicyNumber = policy.Number
+            };
+            
         }
 
-        private PolicyCreated PolicyCreated(Policy policy)
+        private static PolicyCreated PolicyCreated(Policy policy)
         {
             var version = policy.Versions.First(v => v.VersionNumber == 1);
 
