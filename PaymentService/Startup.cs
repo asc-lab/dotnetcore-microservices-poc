@@ -1,27 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GlobalExceptionHandler.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using PaymentService.Infrastructure;
-using PaymentService.Init;
-using GlobalExceptionHandler.WebApi;
-using Hangfire;
-using Hangfire.PostgreSql;
+using Microsoft.Extensions.Hosting;
 using PaymentService.Configuration;
 using PaymentService.DataAccess.Marten;
 using PaymentService.Domain;
+using PaymentService.Infrastructure;
+using PaymentService.Init;
 using PaymentService.Jobs;
-using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
+using PolicyService.Api.Events;
 
 namespace PaymentService
 {
@@ -38,8 +32,8 @@ namespace PaymentService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opt =>
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt =>
                 {
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
                 });
@@ -54,8 +48,9 @@ namespace PaymentService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
             app.UseGlobalExceptionHandler(cfg => cfg.MapExceptions());
             if (!env.IsDevelopment())
             {
@@ -63,10 +58,10 @@ namespace PaymentService
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseInitializer();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated), typeof(PolicyTerminated) });
             app.UseBackgroundJobs();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
