@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NHibernate;
 using RawRabbit;
@@ -21,14 +22,14 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
         }
 
 
-        public void PushPendingMessages()
+        public async Task PushPendingMessages()
         {
             var messagesToPush = FetchPendingMessages();
             logger.LogPending(messagesToPush);
 
             foreach (var msg in messagesToPush)
             {
-                if (!TryPush(msg))
+                if (!await TryPush(msg))
                     break;
             }
         }
@@ -47,27 +48,20 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
             return messagesToPush;
         }
 
-        private bool TryPush(Message msg)
-        {
-            return TryInTx(session =>
-            {
-                PublishMessage(msg);
-                    
-                session
-                    .CreateQuery("delete Message where id=:id")
-                    .SetParameter("id", msg.Id)
-                    .ExecuteUpdate();
-            });
-        }
-
-        private bool TryInTx(Action<IStatelessSession> action)
+        private async Task<bool> TryPush(Message msg)
         {
             using (var session = sessionFactory.OpenStatelessSession())
             {
                 var tx = session.BeginTransaction();
                 try
                 {
-                    action(session);
+                    await PublishMessage(msg);
+                    
+                    session
+                        .CreateQuery("delete Message where id=:id")
+                        .SetParameter("id", msg.Id)
+                        .ExecuteUpdate();
+                    
                     tx.Commit();
                     logger.LogSuccessPush();
                     return true;
@@ -81,11 +75,11 @@ namespace PolicyService.Messaging.RabbitMq.Outbox
             }
         }
 
-        private void PublishMessage(Message msg)
+        private async Task PublishMessage(Message msg)
         {
             var deserializedMsg = msg.RecreateMessage();
             var messageKey = deserializedMsg.GetType().Name.ToLower();
-            busClient.BasicPublishAsync(deserializedMsg,
+            await busClient.BasicPublishAsync(deserializedMsg,
                 cfg =>
                 {
                     cfg.OnExchange("lab-dotnet-micro").WithRoutingKey(messageKey);
