@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using PolicyService.Api.Events;
+using Microsoft.OpenApi.Models;
 
 namespace ChatService
 {
@@ -91,6 +92,16 @@ namespace ChatService
             services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
             
             services.AddRabbitListeners();
+
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +127,13 @@ namespace ChatService
             app.UseMvc();
 
             app.UseRabbitListeners(new List<Type> {typeof(PolicyCreated)});
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }

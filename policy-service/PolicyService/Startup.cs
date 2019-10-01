@@ -16,6 +16,7 @@ using PolicyService.DataAccess.NHibernate;
 using PolicyService.Messaging.RabbitMq;
 using PolicyService.RestClients;
 using Steeltoe.Discovery.Client;
+using Microsoft.OpenApi.Models;
 
 namespace PolicyService
 {
@@ -37,6 +38,16 @@ namespace PolicyService
             services.AddPricingRestClient();
             services.AddNHibernate(Configuration.GetConnectionString("DefaultConnection"));
             services.AddRabbit();
+
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +65,13 @@ namespace PolicyService
             app.UseHttpsRedirection();
             app.UseMvc();
             app.UseDiscoveryClient();
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }

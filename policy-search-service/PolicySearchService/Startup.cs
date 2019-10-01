@@ -15,6 +15,7 @@ using PolicySearchService.DataAccess.ElasticSearch;
 using PolicySearchService.Messaging.RabbitMq;
 using PolicyService.Api.Events;
 using Steeltoe.Discovery.Client;
+using Microsoft.OpenApi.Models;
 
 namespace PolicySearchService
 {
@@ -35,6 +36,15 @@ namespace PolicySearchService
             services.AddMediatR();
             services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
             services.AddRabbitListeners();
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +63,13 @@ namespace PolicySearchService
             app.UseMvc();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
             app.UseDiscoveryClient();
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }

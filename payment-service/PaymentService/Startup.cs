@@ -22,6 +22,7 @@ using PaymentService.Domain;
 using PaymentService.Jobs;
 using PolicyService.Api.Events;
 using PaymentService.Messaging.RabbitMq;
+using Microsoft.OpenApi.Models;
 
 namespace PaymentService
 {
@@ -51,6 +52,16 @@ namespace PaymentService
             services.AddSingleton<PolicyAccountNumberGenerator>();
             services.AddRabbitListeners();
             services.AddBackgroundJobs(Configuration.GetSection("BackgroundJobs").Get<BackgroundJobsConfig>());
+
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +78,13 @@ namespace PaymentService
             app.UseInitializer();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated), typeof(PolicyTerminated) });
             app.UseBackgroundJobs();
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }
