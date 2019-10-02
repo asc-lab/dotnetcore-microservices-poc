@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace AuthService
 {
@@ -58,6 +59,16 @@ namespace AuthService
 
             services.AddSingleton<Domain.AuthService>();
             services.AddSingleton<IInsuranceAgents, InsuranceAgentsInMemoryDb>();
+
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +93,13 @@ namespace AuthService
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }

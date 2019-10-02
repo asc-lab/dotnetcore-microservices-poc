@@ -10,6 +10,7 @@ using PricingService.DataAccess.Marten;
 using PricingService.Infrastructure;
 using PricingService.Init;
 using Steeltoe.Discovery.Client;
+using Microsoft.OpenApi.Models;
 
 namespace PricingService
 {
@@ -37,6 +38,16 @@ namespace PricingService
             services.AddPricingDemoInitializer();
             services.AddMediatR();
             services.AddLoggingBehavior();
+
+            services.AddSwaggerGen(c =>
+            {
+                string appVer = "v1";
+                c.SwaggerDoc($"{appVer}", new OpenApiInfo
+                {
+                    Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
+                    Version = $"{appVer}"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +63,13 @@ namespace PricingService
             app.UseMvc();
             app.UseInitializer();
             app.UseDiscoveryClient();
+
+            string appVer = "v1";
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
+            });
         }
     }
 }
