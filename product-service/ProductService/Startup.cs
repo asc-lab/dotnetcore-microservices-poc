@@ -13,6 +13,7 @@ namespace ProductService
 {
     public class Startup
     {
+        const string CorsPolicy = "InsuranceSalesPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,6 +38,15 @@ namespace ProductService
                 {
                     Title = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name} API",
                     Version = $"{appVer}"
+                });
+            });
+            services.AddCors(options => 
+            {
+                options.AddPolicy(CorsPolicy, policy => 
+                {
+                    policy.WithOrigins("http://localhost")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                 });
             });
         }
@@ -64,6 +74,7 @@ namespace ProductService
             {
                 c.SwaggerEndpoint($"/swagger/{appVer}/swagger.json", $"{this.GetType().Name} API {appVer}");
             });
+            app.UseCors(CorsPolicy);
         }
         
         private void JsonOptions(MvcJsonOptions options)
