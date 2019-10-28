@@ -1,4 +1,5 @@
 using Hangfire;
+using Hangfire.Logging.LogProviders;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,10 @@ namespace PaymentService.Jobs
         {
             services.AddSingleton(jobsConfig);
             services.AddHangfire(config =>
-                config.UsePostgreSqlStorage(jobsConfig.HangfireConnectionStringName));
+            {
+                config.UsePostgreSqlStorage(jobsConfig.HangfireConnectionStringName);
+                config.UseLogProvider(new ColouredConsoleLogProvider());
+            });
             services.AddScoped<InPaymentRegistrationJob, InPaymentRegistrationJob>();
             return services;
         }

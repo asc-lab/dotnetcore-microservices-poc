@@ -33,6 +33,7 @@ namespace ProductService.DataAccess.EF
 
             modelBuilder.Entity<Question>()
             .HasDiscriminator<int>("QuestionType")
+            .HasValue<Question>(0)
             .HasValue<NumericQuestion>(1)
             .HasValue<DateQuestion>(2)
             .HasValue<ChoiceQuestion>(3);

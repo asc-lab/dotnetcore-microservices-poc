@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
@@ -67,9 +61,14 @@ namespace AgentPortalApiGateway
                 })
                 .Configure(a =>
                 {
+                    var appSettings = new AppSettings();
+                    a.ApplicationServices.GetService<IConfiguration>()
+                        .GetSection("AppSettings")
+                        .Bind(appSettings);
+
                     a.UseCors
                     (b => b
-                        .AllowAnyOrigin()
+                        .WithOrigins(appSettings.AllowedChatOrigins)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()

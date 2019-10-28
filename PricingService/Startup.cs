@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
 using PricingService.Infrastructure;
@@ -27,8 +28,8 @@ namespace PricingService
         {
             services.AddDiscoveryClient(Configuration);
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opt => 
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => 
                 {
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;
                 });
@@ -40,8 +41,9 @@ namespace PricingService
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseRouting();
             app.UseGlobalExceptionHandler(cfg => cfg.MapExceptions());
             if (!env.IsDevelopment())
             {
@@ -49,9 +51,9 @@ namespace PricingService
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
             app.UseInitializer();
             app.UseDiscoveryClient();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
