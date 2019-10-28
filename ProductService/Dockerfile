@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:3.0-sdk AS build
 WORKDIR /src
 
 COPY ProductService.Api/*.csproj ./ProductService.Api/
@@ -23,7 +23,7 @@ FROM build AS publish
 WORKDIR /src/ProductService
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
+FROM microsoft/dotnet:3.0-aspnetcore-runtime AS final
 WORKDIR /app
 EXPOSE 63720
 EXPOSE 44398

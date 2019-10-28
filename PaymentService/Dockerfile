@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:3.0-sdk AS build
 WORKDIR /src
 
 COPY PolicyService.Api/*.csproj ./PolicyService.Api/
@@ -25,7 +25,7 @@ FROM build AS publish
 WORKDIR /src/PaymentService
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS final
+FROM microsoft/dotnet:3.0-aspnetcore-runtime AS final
 WORKDIR /app
 EXPOSE 53050
 EXPOSE 44360
