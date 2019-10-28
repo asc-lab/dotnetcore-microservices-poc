@@ -17,9 +17,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
-    <PackageReference Include="Ocelot" Version="13.8.0-alpha0019" />
-    <PackageReference Include="Ocelot.Cache.CacheManager" Version="13.8.0-alpha0019" />
-    <PackageReference Include="Ocelot.Provider.Eureka" Version="13.8.0-alpha0019" />
+    <PackageReference Include="Ocelot" Version="13.8.0" />
+    <PackageReference Include="Ocelot.Cache.CacheManager" Version="13.8.0" />
+    <PackageReference Include="Ocelot.Provider.Eureka" Version="13.8.0" />
   </ItemGroup>
 
 </Project>
