@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:3.0-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 
 COPY PricingService.Api/*.csproj ./PricingService.Api/
@@ -23,7 +23,7 @@ FROM build AS publish
 WORKDIR /src/PricingService
 RUN dotnet publish -c Release --no-restore -o out
 
-FROM microsoft/dotnet:3.0-aspnetcore-runtime AS final
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0 AS runtime
 WORKDIR /app
 EXPOSE 55269
 EXPOSE 44392
