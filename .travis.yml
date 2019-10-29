@@ -1,6 +1,10 @@
 language: csharp
 mono: none
 dotnet: 3.0.100
+services:
+ - postgres
+before_script:
+ - psql -c 'create database lab_netmicro_pricing;' -U postgres
 script:
  - dotnet restore
  - dotnet build
