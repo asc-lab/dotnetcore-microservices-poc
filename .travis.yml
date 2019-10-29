@@ -9,7 +9,7 @@ addons:
     - postgresql-client-10
 before_script:
   - psql -c 'create database lab_netmicro_pricing;' -U postgres
-  - psql -c 'create role lab_user login password lab_pass;' -U postgres
+  - psql -c "create role lab_user login password 'lab_pass';" -U postgres
 script:
  - dotnet restore
  - dotnet build
