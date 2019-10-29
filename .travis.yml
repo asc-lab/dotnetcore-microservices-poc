@@ -5,7 +5,6 @@ script:
  - dotnet restore
  - dotnet build
  - cd ProductService.Test && dotnet test
- - cd ..
- - cd PricingService.Test && dotnet test
+ - cd .. && cd PricingService.Test && dotnet test
  - cd ../PolicyService.Test && dotnet test
  - cd ../PaymentService.Test && dotnet test
