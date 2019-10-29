@@ -4,4 +4,5 @@ dotnet: 3.0.100
 script:
  - dotnet restore
  - dotnet build
- - dotnet test
+ - cd ProductService.Test && dotnet test
+ - cd PricingService.Test && dotnet test
