@@ -7,8 +7,8 @@ addons:
     packages:
     - postgresql-10
     - postgresql-client-10
-services:
- - postgres
+before_script:
+  - psql -c 'create database lab_netmicro_pricing;' -U postgres
 script:
  - dotnet restore
  - dotnet build
