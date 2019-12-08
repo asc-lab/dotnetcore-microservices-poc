@@ -1,51 +1,72 @@
-version: '2'
+version: '3'
 
 services:
-  dotnet-policy-service:
-    build: ../policy-service
-    image: dotnet-policy-service
-    container_name: dotnet-policy-service
-    network_mode: host
-  dotnet-policy-search-service:
-    build: ../policy-search-service
-    image: dotnet-policy-search-service
-    container_name: dotnet-policy-search-service
-    network_mode: host
-  dotnet-pricing-service:
-    build: ../pricing-service
-    image: dotnet-pricing-service
-    container_name: dotnet-pricing-service
-    network_mode: host
-  dotnet-payment-service:
-    build: ../payment-service
-    image: dotnet-payment-service
-    container_name: dotnet-payment-service
-    network_mode: host
-  dotnet-product-service:
-    build: ../product-service
-    image: dotnet-product-service
-    container_name: dotnet-product-service
-    network_mode: host
-  dotnet-auth-service:
-    build: ../auth-service
-    image: dotnet-auth-service
-    container_name: dotnet-auth-service
-    network_mode: host
-  dotnet-chat-service:
-    build: ../chat-service
-    image: dotnet-chat-service
-    container_name: dotnet-chat-service
-    network_mode: host
   dotnet-agent-portal-gateway:
-    build: ../agent-portal-gateway
+    build: 
+      context: ../
+      dockerfile: AgentPortalApiGateway/Dockerfile
     image: dotnet-agent-portal-gateway
     container_name: dotnet-agent-portal-gateway
     network_mode: host
+
+  dotnet-auth-service:
+    build: 
+      context: ../
+      dockerfile: AuthService/Dockerfile
+    image: dotnet-auth-service
+    container_name: dotnet-auth-service
+    network_mode: host
+  
+  dotnet-chat-service:
+    build: 
+      context: ../
+      dockerfile: ChatService/Dockerfile
+    image: dotnet-chat-service
+    container_name: dotnet-chat-service
+    network_mode: host
+
+  dotnet-payment-service:
+    build: 
+      context: ../
+      dockerfile: PaymentService/Dockerfile
+    image: dotnet-payment-service
+    container_name: dotnet-payment-service
+    network_mode: host
+
+  dotnet-policy-search-service:
+    build: 
+      context: ../
+      dockerfile: PolicySearchService/Dockerfile
+    image: dotnet-policy-search-service
+    container_name: dotnet-policy-search-service
+    network_mode: host
+
+  dotnet-policy-service:
+    build: 
+      context: ../
+      dockerfile: PolicyService/Dockerfile
+    image: dotnet-policy-service
+    container_name: dotnet-policy-service
+    network_mode: host
+
+  dotnet-pricing-service:
+    build: 
+      context: ../
+      dockerfile: PricingService/Dockerfile
+    image: dotnet-pricing-service
+    container_name: dotnet-pricing-service
+    network_mode: host
+
+  dotnet-product-service:
+    build: 
+      context: ../
+      dockerfile: ProductService/Dockerfile
+    image: dotnet-product-service
+    container_name: dotnet-product-service
+    network_mode: host
+
   dotnet-web-vue:
-    build: ../web-vue
+    build: ../Web
     image: dotnet-web-vue
     container_name: dotnet-web-vue
     network_mode: host
-    environment:
-        GATEWAY_URL: "http://localhost:8081"
-        AUTH_URL: "http://localhost:8090"

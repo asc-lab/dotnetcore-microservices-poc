@@ -266,3 +266,5 @@ __pycache__/
 */.settings/*
 */.classpath
 */.project
+
+scripts/data
