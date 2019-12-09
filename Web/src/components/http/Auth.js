@@ -1,5 +1,5 @@
-const API_URL = (process.env.VUE_APP_AUTH_URL ? process.env.VUE_APP_AUTH_URL : "/");
-const LOGIN_URL = API_URL + 'api/User';
+const API_URL = (process.env.VUE_APP_AUTH_URL ? process.env.VUE_APP_AUTH_URL : "/login/");
+const LOGIN_URL = API_URL + 'User';
 
 export const TOKEN_KEY = "jwt";
 export const DETAILS_KEY = "auth-details";
