@@ -22,18 +22,19 @@ This is an example of a very simplified insurance sales system made in a microse
 
 **Comprehensive guide describing exactly the architecture, applied design patterns and technologies can be found on our blog:**
 
-- [Part 1 The Plan](https://altkomsoftware.pl/en/blog/building-microservices-on-net-core-1/)
-- [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://altkomsoftware.pl/en/blog/microservices-net-core-cqrs-mediatr/)
-- [Part 3 Service Discovery with Eureka](https://altkomsoftware.pl/en/blog/service-discovery-eureka/)
-- [Part 4 Building API Gateways With Ocelot](https://altkomsoftware.pl/en/blog/building-api-gateways-with-ocelot/)
-- [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://altkomsoftware.pl/en/blog/building-microservices-domain-aggregates/)
-- [Part 6 Real time server client communication with SignalR and RabbitMQ](https://altkomsoftware.pl/en/blog/building-microservices-6/)
-- [Part 7 Transactional Outbox with RabbitMQ](https://altkomsoftware.pl/en/blog/microservices-outbox-rabbitmq/)
+* [Part 1 The Plan](https://altkomsoftware.pl/en/blog/building-microservices-on-net-core-1/)
+* [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://altkomsoftware.pl/en/blog/microservices-net-core-cqrs-mediatr/)
+* [Part 3 Service Discovery with Eureka](https://altkomsoftware.pl/en/blog/service-discovery-eureka/)
+* [Part 4 Building API Gateways With Ocelot](https://altkomsoftware.pl/en/blog/building-api-gateways-with-ocelot/)
+* [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://altkomsoftware.pl/en/blog/building-microservices-domain-aggregates/)
+* [Part 6 Real time server client communication with SignalR and RabbitMQ](https://altkomsoftware.pl/en/blog/building-microservices-6/)
+* [Part 7 Transactional Outbox with RabbitMQ](https://altkomsoftware.pl/en/blog/microservices-outbox-rabbitmq/)
 
 Other articles around microservices that could be interesting:
-- [CQRS and Event Sourcing Intro For Developers](https://altkomsoftware.pl/en/blog/cqrs-event-sourcing/)
-- [From monolith to microservices – to migrate or not to migrate?](https://altkomsoftware.pl/en/blog/monolith-microservices/)
-- [Event Storming — innovation in IT projects](https://altkomsoftware.pl/en/blog/event-storming/)
+
+* [CQRS and Event Sourcing Intro For Developers](https://altkomsoftware.pl/en/blog/cqrs-event-sourcing/)
+* [From monolith to microservices – to migrate or not to migrate?](https://altkomsoftware.pl/en/blog/monolith-microservices/)
+* [Event Storming — innovation in IT projects](https://altkomsoftware.pl/en/blog/event-storming/)
 
 ## Business Case
 
@@ -78,7 +79,20 @@ Each business microservice has also **.Api project** (`PaymentService.Api`, `Pol
 
 ## Running with Docker
 
-Check branch [docker-compose](https://github.com/asc-lab/dotnetcore-microservices-poc/tree/docker-compose). On this branch you can find version that you can run with one command using Docker and Docker Compose.
+You must install Docker & Docker Compose before. \
+Scripts have been divided into two parts:
+
+* [`infra.yml`](scripts/infra.yml) runs the necessary infrastructure.
+* [`app.yml`](scripts/app.yml) is used to run the application.
+
+You can use scripts to build/run/stop/down all containers.
+
+To run the whole solution:
+
+```bash
+./infra-run.sh
+./app-run.sh
+```
 
 ## Manual running
 
@@ -90,21 +104,19 @@ Install [RabbitMQ](https://www.rabbitmq.com/).
 
 Install [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html) version >= 6.
 
-Install [Maven](https://maven.apache.org/download.cgi) in order to run Eureka or use Maven wrapper.
-
 ### Init databases
 
 #### Windows
 
 ```bash
-cd DbScripts
+cd postgres
 "PATH_TO_PSQL.EXE" --host "localhost" --port EXAMPLE_PORT --username "EXAMPLE_USER" --file "createdatabases.sql"
 ```
 
 In my case this command looks like:
 
 ```bash
-cd DbScripts
+cd postgres
 "C:\Program Files\PostgreSQL\9.6\bin\psql.exe" --host "localhost" --port 5432 --username "postgres" --file "createdatabases.sql"
 ```
 
@@ -123,8 +135,8 @@ Service registry and discovery tool for our project is Eureka. It is included in
 In order to start it open terminal / command prompt.
 
 ```bash
-cd eureka
-mvn spring-boot:run
+cd eureka-server
+./gradlew.[bat] spring-boot:run
 ```
 
 This should start Eureka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
@@ -141,6 +153,7 @@ build-without-tests.bat
 ```
 
 #### Linux
+
 ```bash
 cd scripts
 ./build-without-tests.sh
@@ -162,6 +175,6 @@ cd scripts
 ./build.sh
 ```
 
-## Run
+## Run specific service
 
 Go to folder with specific service (`PolicyService`, `ProductService` etc) and use `dotnet run` command.
