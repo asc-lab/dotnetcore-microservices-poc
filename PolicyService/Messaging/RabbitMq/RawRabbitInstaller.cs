@@ -19,7 +19,7 @@ namespace PolicyService.Messaging.RabbitMq
                     Password = "guest",
                     VirtualHost = "/",
                     Port = 5672,
-                    Hostnames = new List<string> {"localhost"},
+                    Hostnames = new List<string> {"rabbitmq"},
                     RequestTimeout = TimeSpan.FromSeconds(10),
                     PublishConfirmTimeout = TimeSpan.FromSeconds(1),
                     RecoveryInterval = TimeSpan.FromSeconds(1),
