@@ -1,19 +1,16 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using RawRabbit.Instantiation;
-using RawRabbit.DependencyInjection.ServiceCollection;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RawRabbit;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using RawRabbit;
+using RawRabbit.DependencyInjection.ServiceCollection;
+using RawRabbit.Instantiation;
 
 namespace PaymentService.Messaging.RabbitMq
 {
     public static class RawRabbitInstaller
     {
-        public static IServiceCollection AddRabbitListeners(this IServiceCollection services)
+        public static IServiceCollection AddRabbitListeners(this IServiceCollection services, RabbitMqOptions options)
         {
             services.AddRawRabbit(new RawRabbitOptions
             {
@@ -22,8 +19,8 @@ namespace PaymentService.Messaging.RabbitMq
                     Username = "guest",
                     Password = "guest",
                     VirtualHost = "/",
-                    Port = 5672,
-                    Hostnames = new List<string> { "rabbitmq" },
+                    Port = options.Port,
+                    Hostnames = new List<string> { options.Host },
                     RequestTimeout = TimeSpan.FromSeconds(10),
                     PublishConfirmTimeout = TimeSpan.FromSeconds(1),
                     RecoveryInterval = TimeSpan.FromSeconds(1),

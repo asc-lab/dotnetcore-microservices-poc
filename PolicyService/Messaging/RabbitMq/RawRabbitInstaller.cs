@@ -9,7 +9,7 @@ namespace PolicyService.Messaging.RabbitMq
 {
     public static class RawRabbitInstaller
     {
-        public static IServiceCollection AddRabbit(this IServiceCollection services)
+        public static IServiceCollection AddRabbit(this IServiceCollection services, RabbitMqOptions options)
         {
             services.AddRawRabbit(new RawRabbitOptions
             {
@@ -18,8 +18,8 @@ namespace PolicyService.Messaging.RabbitMq
                     Username = "guest",
                     Password = "guest",
                     VirtualHost = "/",
-                    Port = 5672,
-                    Hostnames = new List<string> {"rabbitmq"},
+                    Port = options.Port,
+                    Hostnames = new List<string> {options.Host},
                     RequestTimeout = TimeSpan.FromSeconds(10),
                     PublishConfirmTimeout = TimeSpan.FromSeconds(1),
                     RecoveryInterval = TimeSpan.FromSeconds(1),
