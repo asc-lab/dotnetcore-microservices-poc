@@ -29,7 +29,12 @@ namespace DashboardService.DataAccess.Elastic
 
             if (query.FilterBySalesDateStart != default || query.FilterBySalesDateEnd != default)
             {
-                //TODO: RangeQuery
+                filters.Add(new DateRangeQuery
+                {
+                    Field = new Field("from"),
+                    GreaterThanOrEqualTo = query.FilterBySalesDateStart,
+                    LessThanOrEqualTo = query.FilterBySalesDateEnd
+                });
             }
 
             

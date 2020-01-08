@@ -28,7 +28,7 @@ namespace DashboardService.Controllers
         {
             var r = new ElasticPolicyRepository();
             
-            r.Save
+            /*r.Save
             (
                 new PolicyDocument
                     (
@@ -40,17 +40,6 @@ namespace DashboardService.Controllers
                     2000M,
                     "joe doe"
                     )
-            );
-
-            /*var x = r.GetAgentSales
-            (
-                new AgentSalesQuery
-                (
-                    "admin admin",
-                    "BDA",
-                    DateTime.MinValue, 
-                    DateTime.MaxValue
-                )
             );*/
 
             //var xx = r.FindByNumber("POL0001");
@@ -60,8 +49,8 @@ namespace DashboardService.Controllers
                 new AgentSalesQuery(
                     null,
                     "BDA",
-                    DateTime.MinValue,
-                    DateTime.MaxValue
+                    new DateTime(2019,1,1), 
+                    new DateTime(2019,12,31)
                 )
             );
 
@@ -70,8 +59,8 @@ namespace DashboardService.Controllers
                 new TotalSalesQuery
                 (
                     null,
-                    DateTime.MinValue,
-                    DateTime.MaxValue
+                    new DateTime(2019,1,1),
+                    new DateTime(2019,12,31)
                 )
             );
 
