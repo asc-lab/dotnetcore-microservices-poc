@@ -6,7 +6,12 @@
 
     <ItemGroup>
       <PackageReference Include="MediatR" Version="5.1.0" />
-      <PackageReference Include="NEST" Version="7.5.1" />
+      <PackageReference Include="NEST" Version="6.4.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DashboardService.Api\DashboardService.Api.csproj" />
     </ItemGroup>
 
 
