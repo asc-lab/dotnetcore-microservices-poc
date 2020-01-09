@@ -36,8 +36,18 @@ namespace DashboardService.Domain
             TimeAggregationUnit.Week => DateInterval.Week,
             TimeAggregationUnit.Month => DateInterval.Month,
             TimeAggregationUnit.Year => DateInterval.Year,
-            _ => throw new ArgumentException("Invalid value of unit " + unit)
+            _ => throw new ArgumentException($"Invalid value of unit {unit}")
         };
+
+        public static TimeAggregationUnit ToTimeAggregationUnit(this DashboardService.Api.Queries.Dtos.TimeUnit unit) =>
+            unit switch
+            {
+                Api.Queries.Dtos.TimeUnit.Day => TimeAggregationUnit.Day,
+                Api.Queries.Dtos.TimeUnit.Week => TimeAggregationUnit.Week,
+                Api.Queries.Dtos.TimeUnit.Month => TimeAggregationUnit.Month,
+                Api.Queries.Dtos.TimeUnit.Year => TimeAggregationUnit.Year,
+                _ => throw new ArgumentException($"Invalid value of unit {unit}")
+    };
     }
 
     public class SalesTrendsResult

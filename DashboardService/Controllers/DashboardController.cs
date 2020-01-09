@@ -21,5 +21,17 @@ namespace DashboardService.Controllers
         {
             return await bus.Send(query);
         }
+        
+        [HttpPost("total-sales")]
+        public async Task<GetTotalSalesResult> TotalSales([FromBody] GetTotalSalesQuery query)
+        {
+            return await bus.Send(query);
+        }
+        
+        [HttpPost("sales-trends")]
+        public async Task<GetSalesTrendsResult> SalesTrands([FromBody] GetSalesTrendsQuery query)
+        {
+            return await bus.Send(query);
+        }
     }
 }
