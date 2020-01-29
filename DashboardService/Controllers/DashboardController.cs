@@ -29,7 +29,7 @@ namespace DashboardService.Controllers
         }
         
         [HttpPost("sales-trends")]
-        public async Task<GetSalesTrendsResult> SalesTrands([FromBody] GetSalesTrendsQuery query)
+        public async Task<GetSalesTrendsResult> SalesTrends([FromBody] GetSalesTrendsQuery query)
         {
             return await bus.Send(query);
         }

@@ -10,10 +10,10 @@ using Xunit;
 
 namespace DashboardService.Test
 {
-    public class UnitTest1
+    public class ElasticPolicyRepositoryTest
     {
         [Fact]
-        public async Task Test1()
+        public async Task SavedPolicy_CanBeFoundWith_FindByNumber()
         {
             //docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:7.5.1	
 

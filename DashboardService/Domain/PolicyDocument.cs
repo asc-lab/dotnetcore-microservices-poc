@@ -11,9 +11,7 @@ namespace DashboardService.Domain
         public string ProductCode { get; private set; }
         public decimal TotalPremium { get; private set; }
         public string AgentLogin { get; private set; }
-
         
-        //[JsonConstructor]
         public PolicyDocument(string number, DateTime @from, DateTime to, string policyHolder, string productCode, decimal totalPremium, string agentLogin)
         {
             Number = number;

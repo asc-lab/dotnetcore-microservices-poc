@@ -7,7 +7,7 @@ namespace DashboardService.DataAccess.Elastic
 {
     public class AgentSalesQueryAdapter : QueryAdapter<AgentSalesQuery,AgentSalesQueryResult,PolicyDocument>
     {
-        public AgentSalesQueryAdapter(AgentSalesQuery query) : base(query)
+        private AgentSalesQueryAdapter(AgentSalesQuery query) : base(query)
         {
         }
         

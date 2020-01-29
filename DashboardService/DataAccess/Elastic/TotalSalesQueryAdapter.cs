@@ -7,7 +7,7 @@ namespace DashboardService.DataAccess.Elastic
 {
     public class TotalSalesQueryAdapter : QueryAdapter<TotalSalesQuery,TotalSalesQueryResult,PolicyDocument>
     {
-        public TotalSalesQueryAdapter(TotalSalesQuery query) : base(query)
+        private TotalSalesQueryAdapter(TotalSalesQuery query) : base(query)
         {
         }
         

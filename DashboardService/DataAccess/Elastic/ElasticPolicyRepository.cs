@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using DashboardService.Domain;
+using Elasticsearch.Net;
 using Nest;
 
 namespace DashboardService.DataAccess.Elastic
@@ -12,12 +13,6 @@ namespace DashboardService.DataAccess.Elastic
         public ElasticPolicyRepository(ElasticClient elasticClient)
         {
             this.elasticClient = elasticClient;
-            
-            //var connectionSettings = new ConnectionSettings();
-            //connectionSettings.DefaultIndex("policies");
-            //this.elasticClient = new ElasticClient(connectionSettings);
-
-            //this.elasticClient.CreateIndex("policies", c => c.Mappings(ms => ms.Map<Policy>(m => m.AutoMap())));
         }
 
         public void Save(PolicyDocument policy)
@@ -28,6 +23,7 @@ namespace DashboardService.DataAccess.Elastic
                 i => i
                     .Index("policy_lab_stats")
                     .Id(policy.Number)
+                    .Refresh(Refresh.True)
             );
 
             if (!response.IsValid)
