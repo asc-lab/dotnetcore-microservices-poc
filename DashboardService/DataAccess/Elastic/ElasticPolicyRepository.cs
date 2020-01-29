@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using DashboardService.Domain;
 using Nest;
@@ -7,13 +8,6 @@ namespace DashboardService.DataAccess.Elastic
     public class ElasticPolicyRepository : IPolicyRepository
     {
         private readonly ElasticClient elasticClient;
-
-        public ElasticPolicyRepository()
-        {
-            var connectionSettings = new ConnectionSettings()
-                .DefaultMappingFor<PolicyDocument>(m=>m.IndexName("policy_lab_stats").IdProperty(d=>d.Number));
-            elasticClient = new ElasticClient(connectionSettings);
-        }
 
         public ElasticPolicyRepository(ElasticClient elasticClient)
         {
@@ -28,13 +22,18 @@ namespace DashboardService.DataAccess.Elastic
 
         public void Save(PolicyDocument policy)
         {
-            elasticClient.Index
+            var response = elasticClient.Index
             (
                 policy, 
                 i => i
                     .Index("policy_lab_stats")
                     .Id(policy.Number)
             );
+
+            if (!response.IsValid)
+            {
+                throw new ApplicationException("Failed to index a policy document");
+            }
         }
 
         public PolicyDocument FindByNumber(string policyNumber)
