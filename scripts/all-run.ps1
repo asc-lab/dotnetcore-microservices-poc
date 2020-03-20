@@ -1,0 +1,1 @@
+docker-compose.exe -f all.yml up -d
