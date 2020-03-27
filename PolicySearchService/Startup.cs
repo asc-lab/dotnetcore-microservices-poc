@@ -31,7 +31,7 @@ namespace PolicySearchService
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddMediatR();
-            services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
+            services.AddElasticSearch(Configuration.GetSection("ElasticSearchOptions").Get<ElasticSearchOptions>());
             services.AddRabbitListeners(Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>());
         }
 

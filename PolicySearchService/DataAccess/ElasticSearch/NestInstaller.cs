@@ -2,17 +2,14 @@
 using Nest;
 using PolicySearchService.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PolicySearchService.DataAccess.ElasticSearch
 {
     public static class NestInstaller
     {
-        public static IServiceCollection AddElasticSearch(this IServiceCollection services, string cnString)
+        public static IServiceCollection AddElasticSearch(this IServiceCollection services, ElasticSearchOptions options)
         {
-            services.AddSingleton(typeof(ElasticClient), svc => CreateElasticClient(cnString));
+            services.AddSingleton(typeof(ElasticClient), svc => CreateElasticClient(options.Connection));
             services.AddScoped(typeof(IPolicyRepository), typeof(PolicyRepository));
             return services;
         }
