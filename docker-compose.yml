@@ -1,0 +1,176 @@
+version: '3.7'
+
+services:
+
+  dotnet-agent-portal-gateway:
+    container_name: dotnet-agent-portal-gateway
+    image: ${DOCKER_REGISTRY-}dotnet-agent-portal-gateway
+    build:
+      context: .
+      dockerfile: AgentPortalApiGateway/Dockerfile
+    ports:
+      - 8099:8099
+    depends_on: 
+      - eureka-server
+    environment: 
+      WAIT_HOSTS: eureka-server:8761
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-auth-service:
+    container_name: dotnet-auth-service
+    image: ${DOCKER_REGISTRY-}dotnet-auth-service
+    build: 
+      context: .
+      dockerfile: AuthService/Dockerfile
+    ports:
+      - 6060:6060
+  
+  dotnet-chat-service:
+    container_name: dotnet-chat-service
+    image: ${DOCKER_REGISTRY-}dotnet-chat-service
+    build: 
+      context: .
+      dockerfile: ChatService/Dockerfile
+    ports:
+      - 4099:4099
+    depends_on:
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: rabbitmq:5672
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-payment-service:
+    container_name: dotnet-payment-service
+    image: ${DOCKER_REGISTRY-}dotnet-payment-service
+    build: 
+      context: .
+      dockerfile: PaymentService/Dockerfile
+    ports:
+      - 5070:5070
+    depends_on:
+      - postgres
+      - eureka-server
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: eureka-server:8761, postgres:5432, rabbitmq:5672
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-policy-search-service:
+    container_name: dotnet-policy-search-service
+    image: ${DOCKER_REGISTRY-}dotnet-policy-search-service
+    build: 
+      context: .
+      dockerfile: PolicySearchService/Dockerfile
+    ports:
+      - 5060:5060
+    depends_on:
+      - elasticsearch
+      - eureka-server
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: eureka-server:8761, elasticsearch:9200, rabbitmq:5672
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-policy-service:
+    container_name: dotnet-policy-service
+    image: ${DOCKER_REGISTRY-}dotnet-policy-service
+    build: 
+      context: .
+      dockerfile: PolicyService/Dockerfile
+    ports:
+      - 5050:5050
+    depends_on:
+      - postgres
+      - eureka-server
+      - rabbitmq
+    environment:
+      WAIT_HOSTS: eureka-server:8761, postgres:5432, rabbitmq:5672
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-pricing-service:
+    container_name: dotnet-pricing-service
+    image: ${DOCKER_REGISTRY-}dotnet-pricing-service
+    build: 
+      context: .
+      dockerfile: PricingService/Dockerfile
+    ports:
+      - 5040:5040
+    depends_on:
+      - postgres
+      - eureka-server
+    environment:
+      WAIT_HOSTS: eureka-server:8761, postgres:5432
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-product-service:
+    container_name: dotnet-product-service
+    image: ${DOCKER_REGISTRY-}dotnet-product-service
+    build: 
+      context: .
+      dockerfile: ProductService/Dockerfile
+    ports:
+      - 5030:5030
+    depends_on:
+      - eureka-server
+    environment:
+      WAIT_HOSTS: eureka-server:8761
+      WAIT_HOSTS_TIMEOUT: 120
+      WAIT_SLEEP_INTERVAL: 10
+
+  dotnet-web-vue:
+    container_name: dotnet-web-vue
+    image: ${DOCKER_REGISTRY-}dotnet-web-vue
+    build: 
+      context: ./Web
+    ports:
+      - 80:80
+    depends_on:
+      - dotnet-agent-portal-gateway
+      - dotnet-auth-service
+
+  eureka-server:
+    container_name: eureka-server
+    build: 
+      context: ./eureka-server
+    ports:
+      - 8761:8761
+
+  postgres:
+    container_name: postgres
+    build: 
+      context: ./postgres
+    volumes:
+      - /tmp/data/postgresql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    environment:
+    - cluster.name=docker-cluster
+    - bootstrap.memory_lock=true
+    - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+    - 9200:9200
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+      - 5672:5672
+    labels:
+      NAME: rabbitmq
+    volumes:
+      - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
