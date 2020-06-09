@@ -32,4 +32,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:5050
 COPY --from=publish /opt/app/PolicyService/out ./
-ENTRYPOINT ["dotnet", "PolicyService.dll"]
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+
+CMD /wait && dotnet PolicyService.dll

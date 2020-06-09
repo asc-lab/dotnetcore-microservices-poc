@@ -99,6 +99,6 @@
     "RequestIdKey": "OcRequestId",
     "AdministrationPath": "/administration",
     "UseServiceDiscovery" : true,
-    "ServiceDiscoveryProvider": { "Type": "Eureka", "Host" : "localhost", "Port" : "8761"}
+    "ServiceDiscoveryProvider": { "Type": "Eureka", "Host" : "eureka-server", "Port" : "8761"}
   }
 }

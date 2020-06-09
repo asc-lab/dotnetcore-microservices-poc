@@ -31,8 +31,8 @@ namespace PolicySearchService
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddMediatR();
-            services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
-            services.AddRabbitListeners();
+            services.AddElasticSearch(Configuration.GetSection("ElasticSearchOptions").Get<ElasticSearchOptions>());
+            services.AddRabbitListeners(Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

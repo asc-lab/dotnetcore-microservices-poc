@@ -30,4 +30,8 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:5040
 COPY --from=publish /opt/app/PricingService/out ./
-ENTRYPOINT ["dotnet", "PricingService.dll"]
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.2.1/wait /wait
+RUN chmod +x /wait
+
+CMD /wait && dotnet PricingService.dll
