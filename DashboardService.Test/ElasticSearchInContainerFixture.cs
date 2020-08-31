@@ -20,12 +20,9 @@ namespace DashboardService.Test
                 .WithEnvironment("discovery.type","single-node")
                 .WithPortBinding(9200, 9200)
                 .WithPortBinding(9300, 9300)
-                //.WithCleanUp(true)        
-                //.WithWaitStrategy(Wait.UntilContainerIsRunning());    
                 .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200));
 
             testContainer = testContainersBuilder.Build();
-            //await testContainer.StartAsync();
             testContainer.StartAsync().Wait();
 
             InsertData();
@@ -151,15 +148,100 @@ namespace DashboardService.Test
                     .Build()
             );
             
-            //test agent danny.solid
+            //agent danny.solid
+            agent = "danny.solid";
             //january-2020
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("TRI")
+                    .WithDates("2020-01-01","2020-12-31")
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("HSI")
+                    .WithDates("2020-01-01","2020-12-31")
+                    .WithPremium(50M)
+                    .Build()
+            );
             //feb-2020
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("TRI")
+                    .WithDates("2020-02-01","2021-01-31")
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("HSI")
+                    .WithDates("2020-02-01","2021-01-31")
+                    .WithPremium(25M)
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("FAI")
+                    .WithDates("2020-02-01","2021-01-31")
+                    .WithPremium(50M)
+                    .Build()
+            );
             //march-2020
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("TRI")
+                    .WithDates("2020-03-01","2021-02-28")
+                    .WithPremium(50M)
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("HSI")
+                    .WithDates("2020-03-01","2021-02-28")
+                    .WithPremium(50M)
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("HSI")
+                    .WithDates("2020-03-01","2021-02-28")
+                    .WithPremium(50M)
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("FAI")
+                    .WithDates("2020-03-01","2021-02-28")
+                    .WithPremium(25M)
+                    .Build()
+            );
+            policyRepo.Save
+            (
+                PolicyDocumentBuilder.Create()
+                    .WithAgent(agent)
+                    .WithProduct("FAI")
+                    .WithDates("2020-03-01","2021-02-28")
+                    .WithPremium(25M)
+                    .Build()
+            );
             
-            //test agent admin
-            //january-2020
-            //feb-2020
-            //march-2020
         }
     }
 

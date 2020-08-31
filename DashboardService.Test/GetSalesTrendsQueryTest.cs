@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using DashboardService.Api.Queries;
 using DashboardService.Api.Queries.Dtos;
 using DashboardService.DataAccess.Elastic;
-using DashboardService.Domain;
 using DashboardService.Queries;
 using Xunit;
 
@@ -13,7 +12,7 @@ namespace DashboardService.Test
     [Collection("ElasticSearch in a container")]
     public class GetSalesTrendsQueryTest
     {
-        private ElasticSearchInContainerFixture fixture;
+        private readonly ElasticSearchInContainerFixture fixture;
 
         public GetSalesTrendsQueryTest(ElasticSearchInContainerFixture fixture)
         {
@@ -21,7 +20,7 @@ namespace DashboardService.Test
         }
 
         [Fact]
-        public async Task Sales_All_Product_In_First_Q_2020()
+        public async Task SalesTrends_All_Product_In_First_Q_2020()
         {
             var queryHandler = new GetSalesTrendsHandler(new ElasticPolicyRepository(fixture.ElasticClient()));
 
@@ -37,35 +36,36 @@ namespace DashboardService.Test
                 .Should()
                 .HavePeriods(3)
                 .And
-                .HaveSalesForMonth(2020,1,450M,4)
+                .HaveSalesForMonth(2020,1,600M,6)
                 .And
-                .HaveSalesForMonth(2020,2,180,2)
+                .HaveSalesForMonth(2020,2,355,5)
                 .And
-                .HaveSalesForMonth(2020,3,690,6)
-                ;
+                .HaveSalesForMonth(2020,3,890,11);
         }
         
         [Fact]
-        public async Task SavedPolicy_CanBeFoundWith_FindByNumber()
+        public async Task SalesTrends_HSI_Product_In_First_Q_2020()
         {
-            var policyRepo = new ElasticPolicyRepository(fixture.ElasticClient());
-            
-            var pol = new PolicyDocument
-            (
-                "POL1201",
-                new DateTime(2019,1,1),
-                new DateTime(2019,12,31),
-                "Jan Ziomalski",
-                "BDA",
-                4500M,
-                "jim beam"
-            );
-            
-            policyRepo.Save(pol);
+            var queryHandler = new GetSalesTrendsHandler(new ElasticPolicyRepository(fixture.ElasticClient()));
 
-            var saved = policyRepo.FindByNumber("POL1201");
+            var result = await queryHandler.Handle(new GetSalesTrendsQuery
+                {
+                    ProductCode = "HSI",
+                    Unit    = TimeUnit.Month,
+                    SalesDateFrom = new DateTime(2020,1,1),
+                    SalesDateTo = new DateTime(2020,3,31)
+                }, 
+                CancellationToken.None);
             
-            Assert.NotNull(saved);
+            result
+                .Should()
+                .HavePeriods(3)
+                .And
+                .HaveSalesForMonth(2020,1,150M,2)
+                .And
+                .HaveSalesForMonth(2020,2,105M,2)
+                .And
+                .HaveSalesForMonth(2020,3,200M,3);
         }
     }
 }

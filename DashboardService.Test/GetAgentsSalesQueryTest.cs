@@ -1,7 +1,8 @@
 using System;
-using System.Threading.Tasks;
+using System.Threading;
+using DashboardService.Api.Queries;
 using DashboardService.DataAccess.Elastic;
-using DashboardService.Domain;
+using DashboardService.Queries;
 using Xunit;
 
 namespace DashboardService.Test
@@ -9,7 +10,7 @@ namespace DashboardService.Test
     [Collection("ElasticSearch in a container")]
     public class GetAgentsSalesQueryTest 
     {
-        private ElasticSearchInContainerFixture fixture;
+        private readonly ElasticSearchInContainerFixture fixture;
 
         public GetAgentsSalesQueryTest(ElasticSearchInContainerFixture fixture)
         {
@@ -17,49 +18,45 @@ namespace DashboardService.Test
         }
 
         [Fact]
-        public async Task SavedPolicy_CanBeFoundWith_FindByNumber()
+        public async void Sales_All_Product_By_Jim_In_01_And_02_2020()
         {
-            var policyRepo = new ElasticPolicyRepository(fixture.ElasticClient());
-            
-            var pol = new PolicyDocument
-            (
-                "POL1201",
-                new DateTime(2019,1,1),
-                new DateTime(2019,12,31),
-                "Jan Ziomalski",
-                "BDA",
-                4500M,
-                "jim beam"
-            );
-            
-            policyRepo.Save(pol);
+            var queryHandler = new GetAgentsSalesHandler(new ElasticPolicyRepository(fixture.ElasticClient()));
+            var result = await queryHandler.Handle(
+                new GetAgentsSalesQuery
+                {
+                    AgentLogin = "jimmy.solid",
+                    SalesDateFrom = new DateTime(2020,1,1),
+                    SalesDateTo = new DateTime(2020,2,28)
+                }, 
+                CancellationToken.None);
 
-            var saved = policyRepo.FindByNumber("POL1201");
-            
-            Assert.NotNull(saved);
+            result.Should()
+                .HaveResultsForAgents(1)
+                .And
+                .HaveAgentSales("jimmy.solid", 6, 630M);
+
         }
         
         [Fact]
-        public async Task SavedPolicy_CanBeFoundWith_FindByNumber2()
+        public async void Sales_All_Product_By_All_Agents_In_01_And_02_2020()
         {
-            var policyRepo = new ElasticPolicyRepository(fixture.ElasticClient());
-            
-            var pol = new PolicyDocument
-            (
-                "POL1201",
-                new DateTime(2019,1,1),
-                new DateTime(2019,12,31),
-                "Jan Ziomalski",
-                "BDA",
-                4500M,
-                "jim beam"
-            );
-            
-            policyRepo.Save(pol);
+            var queryHandler = new GetAgentsSalesHandler(new ElasticPolicyRepository(fixture.ElasticClient()));
+            var result = await queryHandler.Handle(
+                new GetAgentsSalesQuery
+                {
+                    SalesDateFrom = new DateTime(2020,1,1),
+                    SalesDateTo = new DateTime(2020,2,28)
+                }, 
+                CancellationToken.None);
 
-            var saved = policyRepo.FindByNumber("POL1201");
-            
-            Assert.NotNull(saved);
+            result.Should()
+                .HaveResultsForAgents(2)
+                .And
+                .HaveAgentSales("jimmy.solid", 6, 630M)
+                .And
+                .HaveAgentSales("danny.solid", 5, 325M);
+
         }
+        
     }
 }

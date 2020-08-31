@@ -2,7 +2,6 @@ using System.Linq;
 using DashboardService.Api.Queries;
 using FluentAssertions;
 using FluentAssertions.Primitives;
-using Xunit;
 
 namespace DashboardService.Test
 {
@@ -18,10 +17,10 @@ namespace DashboardService.Test
         public GetSalesTrendsResultAssertions(GetSalesTrendsResult subject) : base(subject)
         {
         }
-
+        
         public AndConstraint<GetSalesTrendsResultAssertions> HavePeriods(int expectedNumberOfPeriods)
         {
-            Assert.Equal(expectedNumberOfPeriods, Subject.PeriodsSales.Count);
+            Subject.PeriodsSales.Count.Should().Be(expectedNumberOfPeriods);
 
             return new AndConstraint<GetSalesTrendsResultAssertions>(this);
         }
@@ -36,10 +35,10 @@ namespace DashboardService.Test
                 .PeriodsSales
                 .Where(p => p.PeriodDate.Year == year && p.PeriodDate.Month == month)
                 .Sum(p => p.Sales.PoliciesCount);
-            Assert.Equal(expectedSales, salesInMonth);
-            Assert.Equal(expectedCount, countInMonth);
 
-            
+            salesInMonth.Should().Be(expectedSales,$"we expected {expectedSales} for {year}-{month}");
+            countInMonth.Should().Be(countInMonth, $"we expected {countInMonth} for {year}-{month}");
+
             return new AndConstraint<GetSalesTrendsResultAssertions>(this);
         }
     }

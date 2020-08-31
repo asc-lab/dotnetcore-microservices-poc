@@ -18,6 +18,15 @@ namespace DashboardService.DataAccess.Elastic
         {
             var filters = new List<QueryContainer>();
             
+            if (!string.IsNullOrWhiteSpace(query.FilterByAgentLogin))
+            {
+                filters.Add(new TermQuery
+                {
+                    Field = new Field("agentLogin.keyword"),
+                    Value = query.FilterByAgentLogin
+                });
+            }
+            
             if (!string.IsNullOrWhiteSpace(query.FilterByProductCode))
             {
                 filters.Add(new TermQuery
