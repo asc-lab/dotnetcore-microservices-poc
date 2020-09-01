@@ -32,6 +32,22 @@
     },
 
     {
+      "DownstreamPathTemplate": "/api/Dashboard/{everything}",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/api/Dashboard/{everything}",
+      "ServiceName": "DashboardService",
+      "UpstreamHttpMethod": [ "Post" ],
+      "FileCacheOptions": { "TtlSeconds": 15 },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ApiSecurity",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "userType" : "SALESMAN"
+      }
+    },
+
+    {
       "DownstreamPathTemplate": "/api/Offer",
       "DownstreamScheme": "http",
       "UpstreamPathTemplate": "/api/Offers",

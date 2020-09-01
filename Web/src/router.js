@@ -34,6 +34,11 @@ export default new Router({
             component: loadView('Account')
         },
         {
+            path: '/dashboard',
+            name: 'dashboard',
+            component: loadView('Dashboard')
+        },
+        {
             path: '/products',
             name: 'products',
             component: loadView('Products')

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PolicyService.Api.Events;
+using Steeltoe.Discovery.Client;
 
 namespace DashboardService
 {
@@ -26,6 +27,7 @@ namespace DashboardService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDiscoveryClient(Configuration);
             services.AddMvc()
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -48,6 +50,8 @@ namespace DashboardService
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseDiscoveryClient();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
