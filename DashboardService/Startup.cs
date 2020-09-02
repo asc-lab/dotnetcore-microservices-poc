@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using DashboardService.DataAccess.Elastic;
 using DashboardService.Domain;
+using DashboardService.Init;
 using DashboardService.Messaging.RabbitMq;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,7 @@ namespace DashboardService
             services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
             services.AddSingleton<IPolicyRepository, ElasticPolicyRepository>();
             services.AddRabbitListeners(Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>());
+            services.AddInitialSalesData();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -187,8 +187,8 @@ export default {
       this.fetchSalesTrends();
     },
     setupRequest(request) {
-      request.saleDateFrom = moment(this.filteredPeriod.startDate).format('YYYY-MM-DD');
-      request.saleDateTo = moment(this.filteredPeriod.endDate).format('YYYY-MM-DD'); 
+      request.salesDateFrom = moment(this.filteredPeriod.startDate).format('YYYY-MM-DD');
+      request.salesDateTo = moment(this.filteredPeriod.endDate).format('YYYY-MM-DD'); 
       request.unit = this.filteredPeriod.option === 'THIS_MONTH' ? 'Week' : 'Month';
       request.productCode = this.filterProductsSelection==='ALL' ? null : this.filterProductsSelection;
       return request;
