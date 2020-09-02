@@ -75,7 +75,7 @@ It provides basic information about each insurance product and its parameters th
 
 * **Document Service** - this service uses JS Report to generate pdf certificates.
 
-* **Dashboard Service** - Dashboard that presents sales statistics. \ 
+* **Dashboard Service** - Dashboard that presents sales statistics. \
 Business dashboards that presents our agents sales results. Dashboard service subscribes to events of selling policies and index sales data in ElasticSearch. Then ElasticSearch aggregation framework is used to calculate sales stats like: total sales and number of policies per product per time period, sales per agent in given time period and sales timeline. Sales stats are nicely visualized using ChartJS.
 
 Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations and **.Test project** (`PaymentService.Test`, `PolicyService.Test`) with unit and integration tests.
