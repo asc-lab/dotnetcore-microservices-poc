@@ -11,5 +11,7 @@ namespace ProductService.Api.Queries.Dtos
         public IList<CoverDto> Covers { get; set; }        
         public IList<QuestionDto> Questions { get; set; }
         public int MaxNumberOfInsured { get; set; }
+        
+        public string Icon { get; set; }
     }
 }

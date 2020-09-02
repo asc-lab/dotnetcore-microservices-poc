@@ -3,7 +3,7 @@
         <h1>{{ msg }}</h1>
         <h3>This is an example of a very simplified insurance sales system made in a microservice architecture using Micronaut.</h3>
 
-        <img class="arch-image" alt="architecture" src="https://raw.githubusercontent.com/asc-lab/micronaut-microservices-poc/master/readme-images/micronaut-microservices-architecture.png" />
+        <img class="arch-image" alt="architecture" src="https://raw.githubusercontent.com/asc-lab/dotnetcore-microservices-poc/master/readme-images/dotnetcore-microservices-architecture.png" />
     </div>
 </template>
 

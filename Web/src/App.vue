@@ -7,6 +7,8 @@
             |
             <router-link to="/policies">Policies</router-link>
             |
+            <router-link to="/dashboard">Dashboard</router-link>
+            |
             <router-link to="/chat">Chat for Agents</router-link>
             |
             <router-link to="/account">Account</router-link>
@@ -26,7 +28,7 @@
 
         <footer>
             <img src="./assets/logo_horizontal.png" alt="Logo Footer"/>
-            <p><a href="https://asc.altkom.pl">Altkom Software & Consulting LAB @ 2018</a></p>
+            <p><a href="https://asc.altkom.pl">Altkom Software & Consulting LAB @ 2020</a></p>
         </footer>
     </div>
 </template>

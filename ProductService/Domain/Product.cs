@@ -14,11 +14,13 @@ namespace ProductService.Domain
         public IList<Cover> Covers { get; private set; }
         public IList<Question> Questions { get; private set; }
         public int MaxNumberOfInsured { get; private set; }
+        
+        public string ProductIcon { get; private set; }
 
         private Product()
         { }
 
-        private Product(string code, string name, string image, string description, int maxNumberOfInsured)
+        private Product(string code, string name, string image, string description, int maxNumberOfInsured, string productIcon)
         {
             Id = Guid.NewGuid();
             Code = code;
@@ -29,11 +31,12 @@ namespace ProductService.Domain
             Covers = new List<Cover>();
             Questions = new List<Question>();
             MaxNumberOfInsured = maxNumberOfInsured;
+            ProductIcon = productIcon;
         }
 
-         public static Product CreateDraft(string code, string name, string image, string description, int maxNumberOfInsured)
+         public static Product CreateDraft(string code, string name, string image, string description, int maxNumberOfInsured, string productIcon)
          {
-             return new Product(code,name,image,description,maxNumberOfInsured);
+             return new Product(code,name,image,description,maxNumberOfInsured,productIcon);
          }
 
          public void Activate()

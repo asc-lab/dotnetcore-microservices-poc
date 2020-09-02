@@ -21,10 +21,11 @@ namespace ProductService.Test.Domain
                     "Safe Traveller",
                     "/static/travel.jpg",
                     "Travel insurance",
-                    10)]
-        public void ProductDraftIsCreated(string code, string name, string image, string description, int maxNumberOfInsured)
+                    10,
+                    "plane")]
+        public void ProductDraftIsCreated(string code, string name, string image, string description, int maxNumberOfInsured, string icon)
         {
-            var product = Product.CreateDraft(code, name, image, description, maxNumberOfInsured);
+            var product = Product.CreateDraft(code, name, image, description, maxNumberOfInsured, icon);
 
             Assert.NotEqual(Guid.Empty, product.Id);
             Assert.NotNull(product.Questions);

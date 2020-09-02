@@ -11,10 +11,16 @@
     "@aspnet/signalr": "^1.1.2",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "chart.js": "^2.9.3",
     "dotenv": "^6.0.0",
+    "font-awesome": "~4.7.0",
+    "moment": "^2.24.0",
+    "underscore": "^1.9.1",
     "vue": "^2.5.16",
+    "vue-chartjs": "^3.5.1",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-underscore": "^0.1.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
