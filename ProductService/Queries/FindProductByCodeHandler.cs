@@ -1,10 +1,10 @@
-﻿using MediatR;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using ProductService.Api.Queries;
 using ProductService.Api.Queries.Dtos;
 using ProductService.Domain;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ProductService.Queries
 {
@@ -28,6 +28,7 @@ namespace ProductService.Queries
                 Description = result.Description,
                 Image = result.Image,
                 MaxNumberOfInsured = result.MaxNumberOfInsured,
+                Icon = result.ProductIcon,
                 Questions = result.Questions != null ? ProductMapper.ToQuestionDtoList(result.Questions) : null,
                 Covers = result.Covers != null ? ProductMapper.ToCoverDtoList(result.Covers) : null
             } : null;

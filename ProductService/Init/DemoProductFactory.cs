@@ -12,7 +12,8 @@ namespace ProductService.Init
                     "Safe Traveller",
                     "/static/travel.jpg",
                     "Travel insurance",
-                    10);
+                    10,
+                    "plane");
 
             p.AddCover("C2", "Illness", "", false, 5000);
             p.AddCover("C3", "Assistance", "", true, null);
@@ -37,7 +38,8 @@ namespace ProductService.Init
                     "Happy House",
                     "/static/house.jpg",
                     "House insurance",
-                    5);
+                    5,
+                    "building");
 
             p.AddCover("C1", "Fire", "", false, 200000);
             p.AddCover("C2", "Flood", "", false, 100000);
@@ -64,7 +66,8 @@ namespace ProductService.Init
                     "Happy farm",
                     "/static/farm.jpg",
                     "Farm insurance",
-                    1);
+                    1,
+                    "apple");
 
             p.AddCover("C1", "Crops", "", false, 200000);
             p.AddCover("C2", "Flood", "", false, 100000);
@@ -91,7 +94,8 @@ namespace ProductService.Init
                     "Happy Driver",
                     "/static/car.jpg",
                     "Car insurance",
-                    1);
+                    1,
+                    "car");
 
             p.AddCover("C1", "Assistance", "", true, null);
             p.AddQuestions(new List<Question> {

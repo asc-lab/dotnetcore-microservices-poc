@@ -26,7 +26,8 @@ namespace ProductService.Commands
                 request.ProductDraft.Name,
                 request.ProductDraft.Image,
                 request.ProductDraft.Description,
-                request.ProductDraft.MaxNumberOfInsured
+                request.ProductDraft.MaxNumberOfInsured,
+                request.ProductDraft.Icon
             );
 
             foreach (var cover in request.ProductDraft.Covers)
