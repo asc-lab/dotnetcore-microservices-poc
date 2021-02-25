@@ -28,7 +28,7 @@ namespace PolicyService.DataAccess.NHibernate
                 db.SchemaAction = SchemaAutoAction.Update;
             });
 
-            cfg.Proxy(p => p.ProxyFactoryFactory<DefaultProxyFactoryFactory>());
+            cfg.Proxy(p => p.ProxyFactoryFactory<StaticProxyFactoryFactory>());
 
             cfg.Cache(c => c.UseQueryCache = false);
 
