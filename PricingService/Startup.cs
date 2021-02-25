@@ -36,7 +36,7 @@ namespace PricingService
             
             services.AddMarten(Configuration.GetConnectionString("DefaultConnection"));
             services.AddPricingDemoInitializer();
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             services.AddLoggingBehavior();
         }
 

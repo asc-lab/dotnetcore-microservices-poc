@@ -28,7 +28,7 @@ namespace ProductService
             services.AddMvc()
                 .AddNewtonsoftJson(JsonOptions)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             services.AddProductDemoInitializer();
         }
 
