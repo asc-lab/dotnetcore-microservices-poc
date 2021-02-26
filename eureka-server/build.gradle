@@ -1,37 +1,27 @@
-
-buildscript {
-  ext {
-    springBootVersion = '1.4.0.RELEASE'
-  }
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-  }
+plugins {
+  id 'org.springframework.boot' version '2.4.3'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'java'
 }
 
-apply plugin: 'spring-boot'
-
-dependencyManagement {
-    imports {
-      mavenBom 'org.springframework.cloud:spring-cloud-starter-parent:Brixton.SR4'
-    }
-}
-
-dependencies {
-  compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
-}
-
-test {
-    forkEvery 1
-}
-
+group = 'net.chrisrichardson.microservices'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 repositories {
-    mavenCentral()
-    maven { url 'http://repo.spring.io/milestone' }
+  mavenCentral()
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.11'
+ext {
+  set('springCloudVersion', "2020.0.1")
+}
+dependencies {
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+dependencyManagement {
+  imports {
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+  }
+}
+test {
+  useJUnitPlatform()
 }
