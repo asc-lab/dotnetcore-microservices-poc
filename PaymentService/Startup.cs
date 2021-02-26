@@ -40,7 +40,7 @@ namespace PaymentService
 
             services.AddMarten(Configuration.GetConnectionString("PgConnection"));
             services.AddPaymentDemoInitializer();
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             services.AddLogingBehaviour();
             services.AddSingleton<PolicyAccountNumberGenerator>();
             services.AddRabbitListeners();
