@@ -32,7 +32,7 @@ namespace DashboardService
             services.AddMvc()
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
             services.AddSingleton<IPolicyRepository, ElasticPolicyRepository>();
             services.AddRabbitListeners(Configuration.GetSection("RabbitMqOptions").Get<RabbitMqOptions>());
