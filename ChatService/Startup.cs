@@ -33,7 +33,7 @@ namespace ChatService
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             
             services.AddCors(opt => opt.AddPolicy("CorsPolicy",
                 builder =>
