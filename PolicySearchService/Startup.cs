@@ -30,7 +30,7 @@ namespace PolicySearchService
             services.AddMvc()
                 .AddNewtonsoftJson()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup));
             services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
             services.AddRabbitListeners();
         }
