@@ -9,6 +9,6 @@ EXPOSE 8761
 
 RUN mkdir /app
 
-COPY --from=build /home/gradle/src/build/libs/*.jar /app/eureka-server.jar
+COPY --from=build /home/gradle/src/build/libs/eureka-server-0.0.1-SNAPSHOT.jar /app/eureka-server.jar
 
 ENTRYPOINT ["java","-jar","/app/eureka-server.jar", "--server.port=8761"]
