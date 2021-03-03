@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 
 ENV APP_HOME /opt/app
 RUN mkdir $APP_HOME
@@ -14,7 +14,7 @@ FROM build AS publish
 WORKDIR $APP_HOME
 RUN cd $APP_HOME && dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:8099
 COPY --from=publish /opt/app/out ./

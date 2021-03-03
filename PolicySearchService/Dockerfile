@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 
 ENV APP_HOME /opt/app
 RUN mkdir $APP_HOME
@@ -18,7 +18,7 @@ FROM build AS publish
 WORKDIR $APP_HOME/PolicySearchService
 RUN dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:5060
 COPY --from=publish /opt/app/PolicySearchService/out ./
