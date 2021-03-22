@@ -140,7 +140,7 @@ In order to start it open terminal / command prompt.
 
 ```bash
 cd eureka-server
-./gradlew.[bat] spring-boot:run
+./gradlew.[bat] bootRun
 ```
 
 This should start Eureka and you should be able to go to http://localhost:8761/ and see Eureka management panel.
