@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 5.0.3
+dotnet: 5.0
 addons:
   postgresql: "10"
   apt:
