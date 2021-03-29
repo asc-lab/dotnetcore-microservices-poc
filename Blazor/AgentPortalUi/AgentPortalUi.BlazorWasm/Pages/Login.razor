@@ -1,0 +1,54 @@
+﻿@page "/login"
+@inject NavigationManager NavigationManager
+@inject UserService userService
+
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+        <h4 class="card-header">Agent Portal Blazor UI</h4>
+        <div class="card-body">
+            <EditForm Model="@loginModel" OnValidSubmit="LogIn">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="login">Login</label>
+                    <InputText id="login" @bind-Value="@loginModel.Login" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => loginModel.Login)" />
+                </div>
+                <div class="form-group">
+                    <label for="pass">Password</label>
+                    <InputText id="pass" @bind-Value="@loginModel.Password" class="form-control"></InputText>
+                    <ValidationMessage For="@(() => loginModel.Password)" />
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </EditForm>
+
+            @if (loginError)
+            {
+                <div class="alert alert-danger mt-3 mb-0">
+                    Login failed! Please try again.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@code {
+    private LoginModel loginModel = new LoginModel();
+    private bool loginError = false;
+
+    protected async Task LogIn()
+    {
+        var success = await userService.LogIn(loginModel);
+        loginError = !success;
+
+        Console.WriteLine($"Is login success: {success}");
+
+        if (success)
+        {
+            var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+            QueryHelpers.ParseQuery(uri.Query).TryGetValue("returnUrl", out var returnUrl);
+
+            string navigateUrl = returnUrl;
+            navigateUrl = navigateUrl ?? "/";
+            NavigationManager.NavigateTo(navigateUrl);
+        }
+    }
+}
