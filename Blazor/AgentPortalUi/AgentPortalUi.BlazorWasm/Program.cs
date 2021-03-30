@@ -19,6 +19,7 @@ namespace AgentPortalUi.BlazorWasm
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<UserService, UserService>();
             builder.Services.AddScoped<ILocalStorageService, LocalStorageService>();
+            builder.Services.AddScoped<IProductsService, ProductsService>();
 
 
             var host = builder.Build();

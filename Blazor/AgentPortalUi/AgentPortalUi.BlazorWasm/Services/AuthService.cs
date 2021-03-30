@@ -1,5 +1,6 @@
 ﻿using AgentPortalUi.BlazorWasm.Contracts;
-using AgentPortalUi.BlazorWasm.Dto;
+using AgentPortalUi.BlazorWasm.Contracts.Dto;
+using AgentPortalUi.BlazorWasm.Model;
 using RestEase;
 using System;
 using System.Net.Http;
@@ -22,7 +23,7 @@ namespace AgentPortalUi.BlazorWasm.Services
             client = RestClient.For<IAuthService>(httpClient);
         }
 
-        public Task<string> Authorize([Body] LoginModel loginModel)
+        public Task<AuthorizeResult> Authorize([Body] LoginModel loginModel)
         {
             return client.Authorize(loginModel);
         }

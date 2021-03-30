@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AgentPortalUi.BlazorWasm.Dto
+namespace AgentPortalUi.BlazorWasm.Model
 {
     public class LoginModel
     {

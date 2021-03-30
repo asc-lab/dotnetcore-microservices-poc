@@ -1,0 +1,43 @@
+﻿@page "/products"
+@attribute [Authorize]
+@inject IProductsService ProductsService
+
+<h1>Products</h1>
+
+<p>List of all avaiable products</p>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Code</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<ProductDto> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductsService.GetAll();
+    }
+}
