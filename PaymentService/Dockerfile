@@ -31,5 +31,6 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:5070
+ENV ASPNETCORE_ENVIRONMENT=docker
 COPY --from=publish /opt/app/PaymentService/out ./
 ENTRYPOINT ["dotnet", "PaymentService.dll"]

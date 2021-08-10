@@ -20,6 +20,7 @@
     <PackageReference Include="Ocelot" Version="17.0.0" />
     <PackageReference Include="Ocelot.Cache.CacheManager" Version="17.0.0" />
     <PackageReference Include="Ocelot.Provider.Eureka" Version="17.0.0" />
+    <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.1.0" />
   </ItemGroup>
 
 </Project>

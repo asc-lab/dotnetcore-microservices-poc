@@ -22,7 +22,8 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Steeltoe.Discovery.ClientCore" Version="2.1.1" />
+    <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.1.0" />
+    <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>

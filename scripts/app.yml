@@ -7,7 +7,8 @@ services:
       dockerfile: AgentPortalApiGateway/Dockerfile
     image: dotnet-agent-portal-gateway
     container_name: dotnet-agent-portal-gateway
-    network_mode: host
+    ports:
+    - 8099:8099
 
   dotnet-auth-service:
     build: 
@@ -15,7 +16,8 @@ services:
       dockerfile: AuthService/Dockerfile
     image: dotnet-auth-service
     container_name: dotnet-auth-service
-    network_mode: host
+    ports:
+    - 6060:6060
   
   dotnet-chat-service:
     build: 
@@ -23,7 +25,8 @@ services:
       dockerfile: ChatService/Dockerfile
     image: dotnet-chat-service
     container_name: dotnet-chat-service
-    network_mode: host
+    ports:
+    - 4099:4099
 
   dotnet-payment-service:
     build: 
@@ -31,7 +34,8 @@ services:
       dockerfile: PaymentService/Dockerfile
     image: dotnet-payment-service
     container_name: dotnet-payment-service
-    network_mode: host
+    ports:
+    - 5070:5070
 
   dotnet-policy-search-service:
     build: 
@@ -39,7 +43,8 @@ services:
       dockerfile: PolicySearchService/Dockerfile
     image: dotnet-policy-search-service
     container_name: dotnet-policy-search-service
-    network_mode: host
+    ports:
+    - 5060:5060
 
   dotnet-policy-service:
     build: 
@@ -47,7 +52,8 @@ services:
       dockerfile: PolicyService/Dockerfile
     image: dotnet-policy-service
     container_name: dotnet-policy-service
-    network_mode: host
+    ports:
+    - 5050:5050
 
   dotnet-pricing-service:
     build: 
@@ -55,7 +61,8 @@ services:
       dockerfile: PricingService/Dockerfile
     image: dotnet-pricing-service
     container_name: dotnet-pricing-service
-    network_mode: host
+    ports:
+    - 5040:5040
 
   dotnet-product-service:
     build: 
@@ -63,10 +70,21 @@ services:
       dockerfile: ProductService/Dockerfile
     image: dotnet-product-service
     container_name: dotnet-product-service
-    network_mode: host
+    ports:
+    - 5030:5030
+
+  dotnet-dashboard-service:
+    build: 
+      context: ../
+      dockerfile: DashboardService/Dockerfile
+    image: dotnet-dashboard-service
+    container_name: dotnet-dashboard-service
+    ports:
+    - 5035:5035
 
   dotnet-web-vue:
     build: ../Web
     image: dotnet-web-vue
     container_name: dotnet-web-vue
-    network_mode: host
+    ports:
+    - 8080:80

@@ -25,7 +25,6 @@ namespace AgentPortalApiGateway
             var key = Encoding.ASCII.GetBytes("THIS_IS_A_RANDOM_SECRET_2e7a1e80-16ee-4e52-b5c6-5e8892453459");
             
             return WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://localhost:8099") 
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
@@ -34,6 +33,7 @@ namespace AgentPortalApiGateway
                         .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
                             true)
                         .AddJsonFile("ocelot.json", false, false)
+                        .AddJsonFile($"ocelot.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
                         .AddEnvironmentVariables();
                 })
                 .ConfigureServices(s =>

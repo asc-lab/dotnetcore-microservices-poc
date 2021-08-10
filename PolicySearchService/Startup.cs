@@ -50,7 +50,6 @@ namespace PolicySearchService
 
             app.UseHttpsRedirection();
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
-            app.UseDiscoveryClient();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

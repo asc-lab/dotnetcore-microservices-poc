@@ -5,8 +5,6 @@ using RawRabbit.DependencyInjection.ServiceCollection;
 using RawRabbit.Instantiation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PolicySearchService.Messaging.RabbitMq
 {
@@ -14,6 +12,11 @@ namespace PolicySearchService.Messaging.RabbitMq
     {
         public static IServiceCollection AddRabbitListeners(this IServiceCollection services)
         {
+            var host = "localhost";
+            if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+            {
+                host = "rabbit";
+            }
             services.AddRawRabbit(new RawRabbitOptions
             {
                 ClientConfiguration = new RawRabbit.Configuration.RawRabbitConfiguration
@@ -22,7 +25,7 @@ namespace PolicySearchService.Messaging.RabbitMq
                     Password = "guest",
                     VirtualHost = "/",
                     Port = 5672,
-                    Hostnames = new List<string> { "localhost" },
+                    Hostnames = new List<string> { host },
                     RequestTimeout = TimeSpan.FromSeconds(10),
                     PublishConfirmTimeout = TimeSpan.FromSeconds(1),
                     RecoveryInterval = TimeSpan.FromSeconds(1),

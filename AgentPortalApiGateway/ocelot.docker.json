@@ -1,0 +1,7 @@
+{
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host" : "eureka-server"
+    }
+  }
+}

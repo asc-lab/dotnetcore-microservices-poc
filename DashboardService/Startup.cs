@@ -53,8 +53,6 @@ namespace DashboardService
 
             app.UseAuthorization();
 
-            app.UseDiscoveryClient();
-
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
             app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
