@@ -98,6 +98,8 @@ To run the whole solution:
 ./app-run.sh
 ```
 
+>If ElasticSearch fails to start, try running `sudo sysctl -w vm.max_map_count=262144` first
+
 ## Manual running
 
 ### Prerequisites

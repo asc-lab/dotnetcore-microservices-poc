@@ -9,8 +9,13 @@ namespace PolicyService.Messaging.RabbitMq
 {
     public static class RawRabbitInstaller
     {
-        public static IServiceCollection AddRabbit(this IServiceCollection services)
+        public static IServiceCollection AddRabbitListeners(this IServiceCollection services)
         {
+            var host = "localhost";
+            if (Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true")
+            {
+                host = "rabbit";
+            }
             services.AddRawRabbit(new RawRabbitOptions
             {
                 ClientConfiguration = new RawRabbit.Configuration.RawRabbitConfiguration
@@ -19,7 +24,7 @@ namespace PolicyService.Messaging.RabbitMq
                     Password = "guest",
                     VirtualHost = "/",
                     Port = 5672,
-                    Hostnames = new List<string> {"localhost"},
+                    Hostnames = new List<string> { host },
                     RequestTimeout = TimeSpan.FromSeconds(10),
                     PublishConfirmTimeout = TimeSpan.FromSeconds(1),
                     RecoveryInterval = TimeSpan.FromSeconds(1),

@@ -7,6 +7,7 @@ using Polly.Retry;
 using PricingService.Api.Commands;
 using RestEase;
 using Steeltoe.Common.Discovery;
+using Steeltoe.Discovery;
 
 namespace PolicyService.RestClients
 {

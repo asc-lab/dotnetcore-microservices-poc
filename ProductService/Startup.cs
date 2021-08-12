@@ -48,7 +48,6 @@ namespace ProductService
 
             app.UseHttpsRedirection();
             app.UseInitializer();
-            app.UseDiscoveryClient();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
         

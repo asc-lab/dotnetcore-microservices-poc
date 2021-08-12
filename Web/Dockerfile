@@ -5,6 +5,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+ENV VUE_APP_CHAT_URL=http://localhost:4099
 RUN npm run build
 
 FROM nginx:1.12-alpine

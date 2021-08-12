@@ -52,7 +52,6 @@ namespace PricingService
 
             app.UseHttpsRedirection();
             app.UseInitializer();
-            app.UseDiscoveryClient();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
