@@ -6,6 +6,7 @@ using PolicyService.Api.Commands;
 using PolicyService.Api.Events;
 using PolicyService.Domain;
 using PolicyService.Messaging;
+using PolicyService.Metrics;
 
 namespace PolicyService.Commands
 {
@@ -46,6 +47,8 @@ namespace PolicyService.Commands
             await eventPublisher.PublishMessage(PolicyCreated(policy)); 
             
             await uow.CommitChanges();
+            
+            MetricsRegistry.RegisterPolicyCreation(policy.ProductCode, policy.Versions.FirstVersion().TotalPremiumAmount);
 
             return new CreatePolicyResult
             {

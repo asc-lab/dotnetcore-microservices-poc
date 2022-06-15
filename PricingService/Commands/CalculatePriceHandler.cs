@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using PricingService.Api.Commands;
 using PricingService.Domain;
+using PricingService.Infrastructure.Metrics;
 
 namespace PricingService.Commands
 {
@@ -25,6 +26,8 @@ namespace PricingService.Commands
             var tariff = await dataStore.Tariffs[cmd.ProductCode];
 
             var calculation = tariff.CalculatePrice(ToCalculation(cmd));
+            
+            MetricsRegistry.ReportPriceCalculation(cmd.ProductCode,calculation.TotalPremium);
 
             return ToResult(calculation);
         }

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using PolicyService.Api.Commands;
 using PolicyService.Domain;
+using PolicyService.Metrics;
 
 namespace PolicyService.Commands
 {
@@ -37,6 +38,9 @@ namespace PolicyService.Commands
             //create and save offer
             uow.Offers.Add(o);
             await uow.CommitChanges();
+            
+            //report metrics
+            MetricsRegistry.RegisterOfferCreation(o.ProductCode);
 
             //return result
             return ConstructResult(o);

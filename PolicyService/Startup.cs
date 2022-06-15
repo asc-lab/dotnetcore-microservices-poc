@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using PolicyService.DataAccess.NHibernate;
 using PolicyService.Messaging.RabbitMq;
 using PolicyService.RestClients;
+using Prometheus;
 using Steeltoe.Discovery.Client;
 
 namespace PolicyService
@@ -45,8 +46,13 @@ namespace PolicyService
             }
 
             app.UseRouting();
-            app.UseHttpsRedirection();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseHttpMetrics();
+            
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapMetrics();
+            });
         }
     }
 }

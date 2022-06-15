@@ -10,6 +10,7 @@ using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
 using PricingService.Infrastructure;
 using PricingService.Init;
+using Prometheus;
 using Steeltoe.Discovery.Client;
 
 namespace PricingService
@@ -44,15 +45,20 @@ namespace PricingService
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseHttpMetrics();app.UseHttpMetrics();
+            
             app.UseGlobalExceptionHandler(cfg => cfg.MapExceptions());
             if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseInitializer();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapMetrics();
+            });
         }
     }
 }

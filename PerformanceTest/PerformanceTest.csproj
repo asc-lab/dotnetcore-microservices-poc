@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NBomber" Version="2.1.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
+      <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj" />
+    </ItemGroup>
+
+</Project>
