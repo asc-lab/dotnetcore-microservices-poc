@@ -45,9 +45,7 @@ namespace ChatService
                         .WithOrigins(appSettingsSection.Get<AppSettings>().AllowedChatOrigins);
                 }));
             
-            services.AddMvc()
-                .AddNewtonsoftJson()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().AddNewtonsoftJson();
             
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
