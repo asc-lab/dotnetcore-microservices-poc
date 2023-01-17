@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2036
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricingService", "PricingService\PricingService.csproj", "{1FE999BA-76D7-4370-ACC2-7CF01D4A3010}"
 EndProject
@@ -35,17 +35,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService", "AuthService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AgentPortalApiGateway", "AgentPortalApiGateway\AgentPortalApiGateway.csproj", "{DDD629C8-7CB8-4829-869A-2B134C7A20FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricingService.IntegrationTest", "PricingService.IntegrationTest\PricingService.IntegrationTest.csproj", "{B5FF5E4B-8184-4B2A-A905-D445A09362FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PricingService.IntegrationTest", "PricingService.IntegrationTest\PricingService.IntegrationTest.csproj", "{B5FF5E4B-8184-4B2A-A905-D445A09362FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService", "ChatService\ChatService.csproj", "{1AEA594D-19DF-46B9-964C-B6BD11540FA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatService", "ChatService\ChatService.csproj", "{1AEA594D-19DF-46B9-964C-B6BD11540FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService.Api", "ChatService.Api\ChatService.Api.csproj", "{A284655C-40E8-4AFE-A8FD-5AAC4728E634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatService.Api", "ChatService.Api\ChatService.Api.csproj", "{A284655C-40E8-4AFE-A8FD-5AAC4728E634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardService.Api", "DashboardService.Api\DashboardService.Api.csproj", "{0371B31C-36B7-43F9-8D86-36C072B7979E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardService.Api", "DashboardService.Api\DashboardService.Api.csproj", "{0371B31C-36B7-43F9-8D86-36C072B7979E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardService", "DashboardService\DashboardService.csproj", "{C8B8AF36-EB9C-4C93-BB9F-0CC5D3A4411C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardService", "DashboardService\DashboardService.csproj", "{C8B8AF36-EB9C-4C93-BB9F-0CC5D3A4411C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardService.Test", "DashboardService.Test\DashboardService.Test.csproj", "{4B044FAA-8281-4936-9211-6B236890A199}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DashboardService.Test", "DashboardService.Test\DashboardService.Test.csproj", "{4B044FAA-8281-4936-9211-6B236890A199}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solusion", "solusion", "{9D2B5C09-ADDD-4E6A-8153-CF99CA43EC6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
