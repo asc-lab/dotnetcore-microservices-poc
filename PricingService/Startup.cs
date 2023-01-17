@@ -28,7 +28,6 @@ namespace PricingService
         {
             services.AddDiscoveryClient(Configuration);
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddNewtonsoftJson(opt => 
                 {
                     opt.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto;

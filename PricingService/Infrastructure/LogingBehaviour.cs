@@ -7,7 +7,8 @@ using Microsoft.Extensions.Logging;
 namespace PricingService.Infrastructure
 {
     public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    {
+                where TRequest : MediatR.IRequest<TResponse>
+        {
         private readonly ILogger<TRequest> logger;
 
         public LoggingBehavior(ILogger<TRequest> logger)
@@ -21,8 +22,11 @@ namespace PricingService.Infrastructure
             return next();
         }
 
-        
-    }
+                public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+                {
+                        throw new System.NotImplementedException();
+                }
+        }
 
     public static class LoggingBehaviorInstaller
     {

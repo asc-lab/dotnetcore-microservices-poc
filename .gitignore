@@ -269,3 +269,4 @@ __pycache__/
 
 scripts/data
 .gradle
+/.project

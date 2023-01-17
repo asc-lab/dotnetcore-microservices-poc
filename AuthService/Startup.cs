@@ -39,9 +39,7 @@ namespace AuthService
                         .WithOrigins(appSettingsSection.Get<AppSettings>().AllowedAuthOrigins);
                 }));
             
-            services.AddMvc()
-                .AddNewtonsoftJson()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().AddNewtonsoftJson();
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

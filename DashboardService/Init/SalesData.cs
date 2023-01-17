@@ -18,10 +18,10 @@ namespace DashboardService.Init
 
         public async Task SeedData()
         {
-            var policyIndexExists = await elasticClient.IndexExistsAsync("policy_lab_stats");
+            var policyIndexExists = await elasticClient.Indices.ExistsAsync("policy_lab_stats");
             if (policyIndexExists.Exists)
             {
-                await elasticClient.DeleteIndexAsync(new DeleteIndexRequest("policy_lab_stats"));
+                await elasticClient.Indices.DeleteAsync(new DeleteIndexRequest("policy_lab_stats"));
             }
 
             var salesData = new Dictionary<string,(string Product, int Month, int Policies)[]> 

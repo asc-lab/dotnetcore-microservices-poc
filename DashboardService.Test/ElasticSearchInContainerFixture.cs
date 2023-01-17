@@ -1,14 +1,13 @@
 using DashboardService.DataAccess.Elastic;
 using DashboardService.Domain;
-using DotNet.Testcontainers.Containers.Builders;
-using DotNet.Testcontainers.Containers.Modules;
-using DotNet.Testcontainers.Containers.WaitStrategies;
+using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Containers;
 using Nest;
 using Xunit;
 
 namespace DashboardService.Test
 {
-    public class ElasticSearchInContainerFixture 
+        public class ElasticSearchInContainerFixture 
     {
         private readonly TestcontainersContainer testContainer;
         

@@ -25,9 +25,7 @@ namespace ProductService
         {
             services.AddDiscoveryClient(Configuration);
             services.AddEFConfiguration(Configuration);
-            services.AddMvc()
-                .AddNewtonsoftJson(JsonOptions)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc().AddNewtonsoftJson(JsonOptions);
             services.AddMediatR(typeof(Startup));
             services.AddProductDemoInitializer();
         }
