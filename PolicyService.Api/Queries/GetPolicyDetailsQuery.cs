@@ -1,9 +1,8 @@
 using MediatR;
 
-namespace PolicyService.Api.Queries
+namespace PolicyService.Api.Queries;
+
+public class GetPolicyDetailsQuery : IRequest<GetPolicyDetailsQueryResult>
 {
-    public class GetPolicyDetailsQuery : IRequest<GetPolicyDetailsQueryResult>
-    {
-        public string PolicyNumber { get; set; }    
-    }
+    public string PolicyNumber { get; set; }
 }

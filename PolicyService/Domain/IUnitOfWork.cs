@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PolicyService.Domain
+namespace PolicyService.Domain;
+
+public interface IUnitOfWork : IDisposable
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        IOfferRepository Offers { get; }
+    IOfferRepository Offers { get; }
 
-        IPolicyRepository Policies { get; }
+    IPolicyRepository Policies { get; }
 
-        Task CommitChanges();
-    }
-    
+    Task CommitChanges();
 }

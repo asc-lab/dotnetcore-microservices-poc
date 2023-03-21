@@ -1,10 +1,9 @@
 using System;
 using MediatR;
 
-namespace ProductService.Api.Commands
+namespace ProductService.Api.Commands;
+
+public class DiscontinueProductCommand : IRequest<DiscontinueProductResult>
 {
-    public class DiscontinueProductCommand : IRequest<DiscontinueProductResult>
-    {
-        public Guid ProductId { get; set; }
-    }
+    public Guid ProductId { get; set; }
 }

@@ -1,10 +1,9 @@
-namespace DashboardService.Api.Queries.Dtos
+namespace DashboardService.Api.Queries.Dtos;
+
+public enum TimeUnit
 {
-    public enum TimeUnit
-    {
-        Day,
-        Week,
-        Month,
-        Year
-    }
+    Day,
+    Week,
+    Month,
+    Year
 }

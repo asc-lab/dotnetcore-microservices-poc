@@ -7,47 +7,44 @@ using PolicyService.Api.Queries;
 using PolicyService.Api.Queries.Dto;
 using PolicyService.Domain;
 
-namespace PolicyService.Queries
+namespace PolicyService.Queries;
+
+public class GetPolicyDetailsHandler : IRequestHandler<GetPolicyDetailsQuery, GetPolicyDetailsQueryResult>
 {
-    public class GetPolicyDetailsHandler : IRequestHandler<GetPolicyDetailsQuery, GetPolicyDetailsQueryResult>
+    private readonly IUnitOfWork uow;
+
+    public GetPolicyDetailsHandler(IUnitOfWork uow)
     {
-        private readonly IUnitOfWork uow;
+        this.uow = uow;
+    }
 
-        public GetPolicyDetailsHandler(IUnitOfWork uow)
-        {
-            this.uow = uow;
-        }
+    public async Task<GetPolicyDetailsQueryResult> Handle(GetPolicyDetailsQuery request,
+        CancellationToken cancellationToken)
+    {
+        var policy = await uow.Policies.WithNumber(request.PolicyNumber);
+        if (policy == null) throw new ApplicationException($"Policy {request.PolicyNumber} not found!");
 
-        public async Task<GetPolicyDetailsQueryResult> Handle(GetPolicyDetailsQuery request, CancellationToken cancellationToken)
+        return ConstructResult(policy);
+    }
+
+    private GetPolicyDetailsQueryResult ConstructResult(Policy policy)
+    {
+        var effectiveVersion = policy.Versions.FirstVersion();
+
+        return new GetPolicyDetailsQueryResult
         {
-            var policy = await uow.Policies.WithNumber(request.PolicyNumber);
-            if (policy == null)
+            Policy = new PolicyDetailsDto
             {
-                throw new ApplicationException($"Policy {request.PolicyNumber} not found!");
+                Number = policy.Number,
+                ProductCode = policy.ProductCode,
+                DateFrom = effectiveVersion.CoverPeriod.ValidFrom,
+                DateTo = effectiveVersion.CoverPeriod.ValidTo,
+                PolicyHolder = $"{effectiveVersion.PolicyHolder.FirstName} {effectiveVersion.PolicyHolder.LastName}",
+                TotalPremium = effectiveVersion.TotalPremiumAmount,
+
+                AccountNumber = null,
+                Covers = effectiveVersion.Covers.Select(c => c.Code).ToList()
             }
-            
-            return ConstructResult(policy);
-        }
-
-        private GetPolicyDetailsQueryResult ConstructResult(Policy policy)
-        {
-            var effectiveVersion = policy.Versions.FirstVersion();
-            
-            return new GetPolicyDetailsQueryResult
-            {
-                Policy = new PolicyDetailsDto
-                {
-                    Number = policy.Number,
-                    ProductCode = policy.ProductCode,
-                    DateFrom = effectiveVersion.CoverPeriod.ValidFrom,
-                    DateTo = effectiveVersion.CoverPeriod.ValidTo,
-                    PolicyHolder = $"{effectiveVersion.PolicyHolder.FirstName} {effectiveVersion.PolicyHolder.LastName}",
-                    TotalPremium = effectiveVersion.TotalPremiumAmount,
-                    
-                    AccountNumber = null,
-                    Covers = effectiveVersion.Covers.Select(c=>c.Code).ToList()
-                }
-            };
-        }
+        };
     }
 }

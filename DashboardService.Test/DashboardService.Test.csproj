@@ -1,23 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DotNet.Testcontainers" Version="1.4.0" />
-        <PackageReference Include="FluentAssertions" Version="5.10.3" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
-        <PackageReference Include="xunit" Version="2.4.0" />
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
-        <PackageReference Include="coverlet.collector" Version="1.0.1" />
+        <PackageReference Include="DotNet.Testcontainers" Version="1.4.0"/>
+        <PackageReference Include="FluentAssertions" Version="5.10.3"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
+        <PackageReference Include="xunit" Version="2.4.2"/>
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5"/>
+        <PackageReference Include="coverlet.collector" Version="3.2.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\DashboardService.Api\DashboardService.Api.csproj" />
-      <ProjectReference Include="..\DashboardService\DashboardService.csproj" />
+        <ProjectReference Include="..\DashboardService.Api\DashboardService.Api.csproj"/>
+        <ProjectReference Include="..\DashboardService\DashboardService.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -2,17 +2,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace PaymentService.Init
+namespace PaymentService.Init;
+
+public static class ApplicationBuilderExtensions
 {
-    public static class ApplicationBuilderExtensions
+    public static async Task UseInitializer(this IApplicationBuilder app)
     {
-        public static async Task UseInitializer(this IApplicationBuilder app)
+        using (var scope = app.ApplicationServices.CreateScope())
         {
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                var initializer = scope.ServiceProvider.GetService<DataLoader>();
-                await initializer.Seed();
-            }
+            var initializer = scope.ServiceProvider.GetService<DataLoader>();
+            await initializer.Seed();
         }
     }
 }

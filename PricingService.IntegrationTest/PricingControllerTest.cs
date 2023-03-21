@@ -1,53 +1,63 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net;
+using System.Threading.Tasks;
+using Alba;
 using PricingService.Api.Commands;
 using PricingService.Api.Commands.Dto;
 using Xunit;
 using static Xunit.Assert;
 
-namespace PricingService.IntegrationTest
+namespace PricingService.IntegrationTest;
+
+[Collection("PricingControllerFixtureCollection")]
+public class PricingControllerTest
 {
-    public class PricingControllerTest : IClassFixture<WebApplicationFactory<Startup>>
+    private readonly PricingControllerFixture fixture;
+
+    public PricingControllerTest(PricingControllerFixture fixture)
     {
-        private readonly WebApplicationFactory<Startup> factory;
+        this.fixture = fixture;
+    }
 
-        public PricingControllerTest(WebApplicationFactory<Startup> factory)
+    [Fact]
+    public async Task PriceForTravelPolicyIsCorrect()
+    {
+        var response = await fixture.SystemUnderTest.Scenario(_ =>
         {
-            this.factory = factory;
-        }
-
-        [Fact]
-        public async void PriceForTravelPolicyIsCorrect()
-        {
-            var client = factory.CreateClient();
-
-            var response = await client.DoPostAsync<CalculatePriceResult>("/api/Pricing", new CalculatePriceCommand
-            {
-                ProductCode = "TRI",
-                PolicyFrom = DateTimeOffset.Now.AddDays(5),
-                PolicyTo = DateTimeOffset.Now.AddDays(10),
-                SelectedCovers = new List<string> {  "C1" , "C2", "C3"},
-                Answers = new List<QuestionAnswer>
+            _.Post
+                .Json(new CalculatePriceCommand
                 {
-                    new NumericQuestionAnswer { QuestionCode = "NUM_OF_ADULTS", Answer = 1M},
-                    new NumericQuestionAnswer { QuestionCode = "NUM_OF_CHILDREN", Answer = 1M},
-                    new TextQuestionAnswer { QuestionCode = "DESTINATION", Answer = "EUR"}
-                }
-            });
+                    ProductCode = "TRI",
+                    PolicyFrom = DateTimeOffset.Now.AddDays(5),
+                    PolicyTo = DateTimeOffset.Now.AddDays(10),
+                    SelectedCovers = new List<string> { "C1", "C2", "C3" },
+                    Answers = new List<QuestionAnswer>
+                    {
+                        new NumericQuestionAnswer { QuestionCode = "NUM_OF_ADULTS", Answer = 1M },
+                        new NumericQuestionAnswer { QuestionCode = "NUM_OF_CHILDREN", Answer = 1M },
+                        new TextQuestionAnswer { QuestionCode = "DESTINATION", Answer = "EUR" }
+                    }
+                })
+                .ToUrl("/api/Pricing");
 
-            True(response.Success);
-            Equal(98M, response.Data.TotalPrice);
-        }
+            _.StatusCodeShouldBeOk();
+        });
 
-        [Fact]
-        public async void CommandIsProperlyValidated()
+        var calculationResult = response.ReadAsJson<CalculatePriceResult>();
+        Equal(98M, calculationResult.TotalPrice);
+    }
+
+    [Fact]
+    public async Task CommandIsProperlyValidated()
+    {
+        var response = await fixture.SystemUnderTest.Scenario(_ =>
         {
-            var client = factory.CreateClient();
-            var response = await client.DoPostAsync<CalculatePriceResult>("/api/Pricing", new CalculatePriceCommand { });
+            _.Post
+                .Json(new CalculatePriceCommand())
+                .ToUrl("/api/Pricing");
 
-            False(response.Success);
-            Equal("400", response.ErrorCode);
-        }
+            _.StatusCodeShouldBe(HttpStatusCode.BadRequest);
+        });
     }
 }

@@ -1,19 +1,18 @@
-﻿namespace PricingService.Domain
+﻿namespace PricingService.Domain;
+
+public class Cover
 {
-    public class Cover
+    public Cover(string code, decimal price)
     {
-        public string Code { get; private set; }
-        public decimal Price { get; private set; }
+        Code = code;
+        Price = price;
+    }
 
-        public Cover(string code, decimal price)
-        {
-            Code = code;
-            Price = price;
-        }
+    public string Code { get; }
+    public decimal Price { get; private set; }
 
-        public void SetPrice(decimal price)
-        {
-            Price = price;
-        }
+    public void SetPrice(decimal price)
+    {
+        Price = price;
     }
 }

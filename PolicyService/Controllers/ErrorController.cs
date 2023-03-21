@@ -2,20 +2,19 @@ using System;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PolicyService.Controllers
+namespace PolicyService.Controllers;
+
+[ApiController]
+public class ErrorController : ControllerBase
 {
-    [ApiController]
-    public class ErrorController : ControllerBase
+    [Route("/error")]
+    public IActionResult Error()
     {
-        [Route("/error")]
-        public IActionResult Error()
+        var exception = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
+        return exception switch
         {
-            var exception = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
-            return exception switch
-            {
-                ApplicationException appEx => Problem(title: "Business rules violation", detail: exception.Message),
-                _ => Problem()
-            };
-        }
+            ApplicationException appEx => Problem(title: "Business rules violation", detail: exception.Message),
+            _ => Problem()
+        };
     }
 }

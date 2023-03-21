@@ -1,14 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
+namespace PricingService.Init;
 
-namespace PricingService.Init
+public static class DataLoaderInstaller
 {
-    public static class DataLoaderInstaller
+    public static IServiceCollection AddPricingDemoInitializer(this IServiceCollection services)
     {
-        public static IServiceCollection AddPricingDemoInitializer(this IServiceCollection services)
-        {
-            services.AddScoped<DataLoader>();
-            return services;
-        }
+        services.AddScoped<DataLoader>();
+        return services;
     }
 }

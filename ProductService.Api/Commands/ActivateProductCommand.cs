@@ -1,10 +1,9 @@
 using System;
 using MediatR;
 
-namespace ProductService.Api.Commands
+namespace ProductService.Api.Commands;
+
+public class ActivateProductCommand : IRequest<ActivateProductResult>
 {
-    public class ActivateProductCommand : IRequest<ActivateProductResult>
-    {
-        public Guid ProductId { get; set; }
-    }
+    public Guid ProductId { get; set; }
 }

@@ -1,31 +1,30 @@
-﻿using MediatR;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 using PolicySearchService.Domain;
 using PolicyService.Api.Events;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace PolicySearchService.Listeners
+namespace PolicySearchService.Listeners;
+
+public class PolicyCreatedHandler : INotificationHandler<PolicyCreated>
 {
-    public class PolicyCreatedHandler : INotificationHandler<PolicyCreated>
+    private readonly IPolicyRepository policis;
+
+    public PolicyCreatedHandler(IPolicyRepository policis)
     {
-        private readonly IPolicyRepository policis;
+        this.policis = policis;
+    }
 
-        public PolicyCreatedHandler(IPolicyRepository policis)
+    public async Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
+    {
+        await policis.Add(new Policy
         {
-            this.policis = policis;
-        }
-
-        public async Task Handle(PolicyCreated notification, CancellationToken cancellationToken)
-        {
-            await policis.Add(new Policy
-            {
-                PolicyNumber = notification.PolicyNumber,
-                PolicyStartDate = notification.PolicyFrom,
-                PolicyEndDate = notification.PolicyTo,
-                ProductCode = notification.ProductCode,
-                PolicyHolder = $"{notification.PolicyHolder.FirstName} {notification.PolicyHolder.LastName}",
-                PremiumAmount = notification.TotalPremium,
-            });
-        }
+            PolicyNumber = notification.PolicyNumber,
+            PolicyStartDate = notification.PolicyFrom,
+            PolicyEndDate = notification.PolicyTo,
+            ProductCode = notification.ProductCode,
+            PolicyHolder = $"{notification.PolicyHolder.FirstName} {notification.PolicyHolder.LastName}",
+            PremiumAmount = notification.TotalPremium
+        });
     }
 }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace ChatService
+namespace ChatService;
+
+public class NameUserIdProvider : IUserIdProvider
 {
-    public class NameUserIdProvider : IUserIdProvider
+    public string GetUserId(HubConnectionContext connection)
     {
-        public string GetUserId(HubConnectionContext connection)
-        {
-            return connection.User?.Identity?.Name;
-        }
+        return connection.User?.Identity?.Name;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace ProductService.Api.Queries.Dtos
+﻿namespace ProductService.Api.Queries.Dtos;
+
+public class ChoiceDto
 {
-    public class ChoiceDto
-    {
-        public string Code { get; set; }
-        public string Label { get; set; }
-    }
+    public string Code { get; set; }
+    public string Label { get; set; }
 }

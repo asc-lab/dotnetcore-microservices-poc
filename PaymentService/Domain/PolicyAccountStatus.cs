@@ -1,8 +1,7 @@
-namespace PaymentService.Domain
+namespace PaymentService.Domain;
+
+public enum PolicyAccountStatus
 {
-    public enum PolicyAccountStatus
-    {
-        Active,
-        Terminated
-    }
+    Active,
+    Terminated
 }

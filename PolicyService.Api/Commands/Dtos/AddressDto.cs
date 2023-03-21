@@ -1,10 +1,9 @@
-namespace PolicyService.Api.Commands.Dtos
+namespace PolicyService.Api.Commands.Dtos;
+
+public class AddressDto
 {
-    public class AddressDto
-    {
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-    }
+    public string Country { get; set; }
+    public string ZipCode { get; set; }
+    public string City { get; set; }
+    public string Street { get; set; }
 }

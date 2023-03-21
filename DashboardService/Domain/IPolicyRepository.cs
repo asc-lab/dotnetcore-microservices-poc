@@ -1,15 +1,14 @@
-namespace DashboardService.Domain
+namespace DashboardService.Domain;
+
+public interface IPolicyRepository
 {
-    public interface IPolicyRepository
-    {
-        void Save(PolicyDocument policy);
+    void Save(PolicyDocument policy);
 
-        PolicyDocument FindByNumber(string policyNumber);
+    PolicyDocument FindByNumber(string policyNumber);
 
-        AgentSalesQueryResult GetAgentSales(AgentSalesQuery query);
+    AgentSalesQueryResult GetAgentSales(AgentSalesQuery query);
 
-        TotalSalesQueryResult GetTotalSales(TotalSalesQuery query);
+    TotalSalesQueryResult GetTotalSales(TotalSalesQuery query);
 
-        SalesTrendsResult GetSalesTrend(SalesTrendsQuery query);
-    }
+    SalesTrendsResult GetSalesTrend(SalesTrendsQuery query);
 }

@@ -2,56 +2,51 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PricingService.Domain
+namespace PricingService.Domain;
+
+public class Tariff
 {
-    public class Tariff
+    [JsonProperty] private List<BasePremiumCalculationRule> basePremiumRules;
+
+    [JsonProperty] private List<DiscountMarkupRule> discountMarkupRules;
+
+    public Tariff(string code)
     {
-        public Guid Id { get; private set; }
-        public string Code { get; private set; }
-        [JsonProperty]
-        private List<BasePremiumCalculationRule> basePremiumRules;
-        [JsonProperty]
-        private List<DiscountMarkupRule> discountMarkupRules;
+        Id = Guid.NewGuid();
+        Code = code;
+        basePremiumRules = new List<BasePremiumCalculationRule>();
+        discountMarkupRules = new List<DiscountMarkupRule>();
+    }
 
-        [JsonIgnore]
-        public BasePremiumCalculationRuleList BasePremiumRules => new BasePremiumCalculationRuleList(basePremiumRules);
-        [JsonIgnore]
-        public DiscountMarkupRuleList DiscountMarkupRules => new DiscountMarkupRuleList(discountMarkupRules);
+    public Guid Id { get; }
+    public string Code { get; }
 
-        public Tariff(string code)
-        {
-            Id = Guid.NewGuid();
-            Code = code;
-            basePremiumRules = new List<BasePremiumCalculationRule>();
-            discountMarkupRules = new List<DiscountMarkupRule>();
-        }
+    [JsonIgnore] public BasePremiumCalculationRuleList BasePremiumRules => new(basePremiumRules);
 
-        public Calculation CalculatePrice(Calculation calculation)
-        {
-            CalcBasePrices(calculation);
-            ApplyDiscounts(calculation);
-            UpdateTotals(calculation);
-            return calculation;
-        }
+    [JsonIgnore] public DiscountMarkupRuleList DiscountMarkupRules => new(discountMarkupRules);
 
-        
+    public Calculation CalculatePrice(Calculation calculation)
+    {
+        CalcBasePrices(calculation);
+        ApplyDiscounts(calculation);
+        UpdateTotals(calculation);
+        return calculation;
+    }
 
-        private void CalcBasePrices(Calculation calculation)
-        {
-            foreach (var cover in calculation.Covers.Values)
-            {
-                cover.SetPrice(BasePremiumRules.CalculateBasePriceFor(cover,calculation));
-            }
-        }
 
-        private void ApplyDiscounts(Calculation calculation)
-        {
-            DiscountMarkupRules.Apply(calculation);
-        }
+    private void CalcBasePrices(Calculation calculation)
+    {
+        foreach (var cover in calculation.Covers.Values)
+            cover.SetPrice(BasePremiumRules.CalculateBasePriceFor(cover, calculation));
+    }
 
-        private void UpdateTotals(Calculation calculation)
-        {
-            calculation.UpdateTotal();
-        }
+    private void ApplyDiscounts(Calculation calculation)
+    {
+        DiscountMarkupRules.Apply(calculation);
+    }
+
+    private void UpdateTotals(Calculation calculation)
+    {
+        calculation.UpdateTotal();
     }
 }

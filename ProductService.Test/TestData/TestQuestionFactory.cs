@@ -1,29 +1,26 @@
-﻿using ProductService.Domain;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using ProductService.Domain;
 
-namespace ProductService.Test.TestData
+namespace ProductService.Test.TestData;
+
+public class TestQuestionFactory
 {
-    public class TestQuestionFactory
+    internal static ChoiceQuestion ChoiceQuestion()
     {
-        internal static ChoiceQuestion ChoiceQuestion()
+        return new ChoiceQuestion("TYP", 1, "Apartment / House", new List<Choice>
         {
-            return new ChoiceQuestion("TYP", 1, "Apartment / House", new List<Choice> {
-                            new Choice("APT", "Apartment"),
-                            new Choice("HOUSE", "House")
-                    });
-        }
+            new("APT", "Apartment"),
+            new("HOUSE", "House")
+        });
+    }
 
-        internal static NumericQuestion NumericQuestion()
-        {
-            return new NumericQuestion("AREA", 2, "Area");
-        }
+    internal static NumericQuestion NumericQuestion()
+    {
+        return new NumericQuestion("AREA", 2, "Area");
+    }
 
-        internal static DateQuestion DateQuestion()
-        {
-            return new DateQuestion("BIRTHDATE", 3, "Birhtdate");
-        }
-
+    internal static DateQuestion DateQuestion()
+    {
+        return new DateQuestion("BIRTHDATE", 3, "Birhtdate");
     }
 }

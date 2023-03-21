@@ -6,50 +6,47 @@ using DashboardService.Api.Queries.Dtos;
 using DashboardService.Domain;
 using MediatR;
 
-namespace DashboardService.Queries
+namespace DashboardService.Queries;
+
+public class GetAgentsSalesHandler : IRequestHandler<GetAgentsSalesQuery, GetAgentsSalesResult>
 {
-    public class GetAgentsSalesHandler : IRequestHandler<GetAgentsSalesQuery, GetAgentsSalesResult>
+    private readonly IPolicyRepository policyRepository;
+
+    public GetAgentsSalesHandler(IPolicyRepository policyRepository)
     {
-        private readonly IPolicyRepository policyRepository;
+        this.policyRepository = policyRepository;
+    }
 
-        public GetAgentsSalesHandler(IPolicyRepository policyRepository)
-        {
-            this.policyRepository = policyRepository;
-        }
-
-        public Task<GetAgentsSalesResult> Handle(GetAgentsSalesQuery request, CancellationToken cancellationToken)
-        {
-            var queryResult = policyRepository.GetAgentSales
+    public Task<GetAgentsSalesResult> Handle(GetAgentsSalesQuery request, CancellationToken cancellationToken)
+    {
+        var queryResult = policyRepository.GetAgentSales
+        (
+            new AgentSalesQuery
             (
-                new AgentSalesQuery
-                (
-                    request.AgentLogin,
-                    request.ProductCode,
-                    request.SalesDateFrom,
-                    request.SalesDateTo
-                )
-            );
+                request.AgentLogin,
+                request.ProductCode,
+                request.SalesDateFrom,
+                request.SalesDateTo
+            )
+        );
 
-            return Task.FromResult(BuildResult(queryResult));
-        }
+        return Task.FromResult(BuildResult(queryResult));
+    }
 
-        private GetAgentsSalesResult BuildResult(AgentSalesQueryResult queryResult)
+    private GetAgentsSalesResult BuildResult(AgentSalesQueryResult queryResult)
+    {
+        var result = new GetAgentsSalesResult
         {
-            var result  = new GetAgentsSalesResult
+            PerAgentTotal = new Dictionary<string, SalesDto>()
+        };
+
+        foreach (var agentResult in queryResult.PerAgentTotal)
+            result.PerAgentTotal[agentResult.Key] = new SalesDto
             {
-                PerAgentTotal = new Dictionary<string, SalesDto>()
+                PoliciesCount = agentResult.Value.PoliciesCount,
+                PremiumAmount = agentResult.Value.PremiumAmount
             };
 
-            foreach (var agentResult in queryResult.PerAgentTotal)
-            {
-                result.PerAgentTotal[agentResult.Key] = new SalesDto
-                {
-                    PoliciesCount = agentResult.Value.PoliciesCount,
-                    PremiumAmount = agentResult.Value.PremiumAmount
-                };
-            }
-
-            return result;
-        }
+        return result;
     }
 }

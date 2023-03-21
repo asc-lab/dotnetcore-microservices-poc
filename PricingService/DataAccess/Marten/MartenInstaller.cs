@@ -2,40 +2,37 @@
 using Marten.Services;
 using Microsoft.Extensions.DependencyInjection;
 using PricingService.Domain;
+using Weasel.Core;
 
-namespace PricingService.DataAccess.Marten
+namespace PricingService.DataAccess.Marten;
+
+public static class MartenInstaller
 {
-    public static class MartenInstaller
+    public static void AddMarten(this IServiceCollection services, string cnnString)
     {
-        public static void AddMarten(this IServiceCollection services, string cnnString)
+        services.AddSingleton(CreateDocumentStore(cnnString));
+        services.AddScoped<IDataStore, MartenDataStore>();
+    }
+
+    private static IDocumentStore CreateDocumentStore(string cn)
+    {
+        return DocumentStore.For(_ =>
         {
-            services.AddSingleton(CreateDocumentStore(cnnString));
+            _.Connection(cn);
+            _.DatabaseSchemaName = "policy_service";
+            _.Serializer(CustomizeJsonSerializer());
+            _.AutoCreateSchemaObjects = AutoCreate.All;
 
-            services.AddScoped<IDataStore, MartenDataStore>();
-        }
+            _.Schema.For<Tariff>().Duplicate(t => t.Code, "varchar(50)", configure: idx => idx.IsUnique = true);
+        });
+    }
 
-        private static IDocumentStore CreateDocumentStore(string cn)
-        {
-            return DocumentStore.For(_ =>
-            {
-                _.Connection(cn);
-                _.DatabaseSchemaName = "policy_service";
-                _.Serializer(CustomizeJsonSerializer());
+    private static JsonNetSerializer CustomizeJsonSerializer()
+    {
+        var serializer = new JsonNetSerializer();
 
-                _.Schema.For<Tariff>().Duplicate(t => t.Code,pgType: "varchar(50)", configure: idx => idx.IsUnique = true);
-            });
-        }
+        serializer.Customize(_ => { _.ContractResolver = new ProtectedSettersContractResolver(); });
 
-        private static JsonNetSerializer CustomizeJsonSerializer()
-        {
-            var serializer = new JsonNetSerializer();
-
-            serializer.Customize(_ =>
-            {
-                _.ContractResolver = new ProtectedSettersContractResolver();
-            });
-
-            return serializer;
-        }
+        return serializer;
     }
 }

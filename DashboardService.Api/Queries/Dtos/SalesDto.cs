@@ -1,18 +1,17 @@
-namespace DashboardService.Api.Queries.Dtos
+namespace DashboardService.Api.Queries.Dtos;
+
+public class SalesDto
 {
-    public class SalesDto
+    public SalesDto()
     {
-        public long PoliciesCount { get; set; }
-        public decimal PremiumAmount { get; set; }
-
-        public SalesDto()
-        {
-        }
-
-        public SalesDto(long policiesCount, decimal premiumAmount)
-        {
-            PoliciesCount = policiesCount;
-            PremiumAmount = premiumAmount;
-        }
     }
+
+    public SalesDto(long policiesCount, decimal premiumAmount)
+    {
+        PoliciesCount = policiesCount;
+        PremiumAmount = premiumAmount;
+    }
+
+    public long PoliciesCount { get; set; }
+    public decimal PremiumAmount { get; set; }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PaymentService.Domain
-{
-    public interface IDataStore : IDisposable
-    {
-        IPolicyAccountRepository PolicyAccounts { get; }
+namespace PaymentService.Domain;
 
-        Task CommitChanges();
-    }
+public interface IDataStore : IDisposable
+{
+    IPolicyAccountRepository PolicyAccounts { get; }
+
+    Task CommitChanges();
 }

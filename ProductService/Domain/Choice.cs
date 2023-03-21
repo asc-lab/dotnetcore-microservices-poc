@@ -1,19 +1,19 @@
-﻿namespace ProductService.Domain
+﻿namespace ProductService.Domain;
+
+public class Choice
 {
-    public class Choice
+    public Choice()
     {
-        public string Code { get; private set; }
-        public string Label { get; private set; }
-
-        public ChoiceQuestion Question { get; private set; }
-
-        public Choice()
-        { }
-
-        public Choice(string code, string label)
-        {
-            Code = code;
-            Label = label;
-        }
     }
+
+    public Choice(string code, string label)
+    {
+        Code = code;
+        Label = label;
+    }
+
+    public string Code { get; }
+    public string Label { get; }
+
+    public ChoiceQuestion Question { get; private set; }
 }

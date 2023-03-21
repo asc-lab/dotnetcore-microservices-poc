@@ -1,9 +1,8 @@
-namespace DashboardService.Messaging.RabbitMq
-{
-    public class RabbitMqOptions
-    {
-        public string Host { get; set; }
+namespace DashboardService.Messaging.RabbitMq;
 
-        public int Port { get; set; }
-    }
+public class RabbitMqOptions
+{
+    public string Host { get; set; }
+
+    public int Port { get; set; }
 }

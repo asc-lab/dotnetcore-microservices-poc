@@ -1,9 +1,8 @@
 using MediatR;
 
-namespace ChatService.Api.Commands
+namespace ChatService.Api.Commands;
+
+public class SendNotificationCommand : IRequest<Unit>
 {
-    public class SendNotificationCommand : IRequest
-    {
-        public string Message { get; set; }
-    }
+    public string Message { get; set; }
 }

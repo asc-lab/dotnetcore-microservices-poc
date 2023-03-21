@@ -1,9 +1,8 @@
 using MediatR;
 
-namespace PaymentService.Api.Queries
+namespace PaymentService.Api.Queries;
+
+public class GetAccountBalanceQuery : IRequest<GetAccountBalanceQueryResult>
 {
-    public class GetAccountBalanceQuery : IRequest<GetAccountBalanceQueryResult>
-    {
-        public string PolicyNumber { get; set; }
-    }
+    public string PolicyNumber { get; set; }
 }

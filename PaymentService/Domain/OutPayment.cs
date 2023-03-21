@@ -1,19 +1,21 @@
 ﻿using System;
 
-namespace PaymentService.Domain
+namespace PaymentService.Domain;
+
+public class OutPayment : AccountingEntry
 {
-    public class OutPayment : AccountingEntry
+    protected OutPayment()
     {
-        protected OutPayment() : base()
-        { }
+    }
 
-        public OutPayment(PolicyAccount policyAccount, DateTimeOffset creationDate, DateTimeOffset effectiveDate, decimal amount) :
-                base(policyAccount, creationDate, effectiveDate, amount)
-        { }
+    public OutPayment(PolicyAccount policyAccount, DateTimeOffset creationDate, DateTimeOffset effectiveDate,
+        decimal amount) :
+        base(policyAccount, creationDate, effectiveDate, amount)
+    {
+    }
 
-        public override decimal Apply(decimal state)
-        {
-            return state - Amount;
-        }
+    public override decimal Apply(decimal state)
+    {
+        return state - Amount;
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace PaymentService.Api.Exceptions
+namespace PaymentService.Api.Exceptions;
+
+public class BankStatementsFileNotFound : BussinesExceptions
 {
-    public class BankStatementsFileNotFound : BussinesExceptions
+    public BankStatementsFileNotFound(Exception ex) :
+        base("Bank statements file not found.", ex)
     {
-        public BankStatementsFileNotFound(Exception ex) :
-            base("Bank statements file not found.", ex)
-        {
-        }
     }
 }

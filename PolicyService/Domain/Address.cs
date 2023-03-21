@@ -1,27 +1,26 @@
-namespace PolicyService.Domain
+namespace PolicyService.Domain;
+
+public class Address
 {
-    public class Address
+    protected Address()
     {
-        public virtual string Country { get; protected set; }
-        public virtual string ZipCode { get; protected set; }
-        public virtual string City { get; protected set; }
-        public virtual string Street { get; protected set; }
+    }
 
-        protected Address()
-        {
-        }
+    public Address(string country, string zipCode, string city, string street)
+    {
+        Country = country;
+        ZipCode = zipCode;
+        City = city;
+        Street = street;
+    }
 
-        public static Address Of(string country, string zipCode, string city, string street)
-        {
-            return new Address(country,zipCode,city,street);
-        }
+    public virtual string Country { get; protected set; }
+    public virtual string ZipCode { get; protected set; }
+    public virtual string City { get; protected set; }
+    public virtual string Street { get; protected set; }
 
-        public Address(string country, string zipCode, string city, string street)
-        {
-            Country = country;
-            ZipCode = zipCode;
-            City = city;
-            Street = street;
-        }
+    public static Address Of(string country, string zipCode, string city, string street)
+    {
+        return new Address(country, zipCode, city, street);
     }
 }

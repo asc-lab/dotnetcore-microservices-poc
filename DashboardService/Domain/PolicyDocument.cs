@@ -1,26 +1,26 @@
 using System;
 
-namespace DashboardService.Domain
+namespace DashboardService.Domain;
+
+public class PolicyDocument
 {
-    public class PolicyDocument
+    public PolicyDocument(string number, DateTime from, DateTime to, string policyHolder, string productCode,
+        decimal totalPremium, string agentLogin)
     {
-        public string Number { get; private set; }
-        public DateTime From { get; private set; }
-        public DateTime To { get; private set; }
-        public string PolicyHolder { get; private set; }
-        public string ProductCode { get; private set; }
-        public decimal TotalPremium { get; private set; }
-        public string AgentLogin { get; private set; }
-        
-        public PolicyDocument(string number, DateTime @from, DateTime to, string policyHolder, string productCode, decimal totalPremium, string agentLogin)
-        {
-            Number = number;
-            From = @from;
-            To = to;
-            PolicyHolder = policyHolder;
-            ProductCode = productCode;
-            TotalPremium = totalPremium;
-            AgentLogin = agentLogin;
-        }
+        Number = number;
+        From = from;
+        To = to;
+        PolicyHolder = policyHolder;
+        ProductCode = productCode;
+        TotalPremium = totalPremium;
+        AgentLogin = agentLogin;
     }
+
+    public string Number { get; }
+    public DateTime From { get; }
+    public DateTime To { get; }
+    public string PolicyHolder { get; }
+    public string ProductCode { get; }
+    public decimal TotalPremium { get; }
+    public string AgentLogin { get; }
 }

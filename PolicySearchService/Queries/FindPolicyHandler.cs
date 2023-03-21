@@ -1,35 +1,35 @@
-﻿using MediatR;
-using PolicySearchService.Api.Queries;
-using PolicySearchService.Domain;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using PolicySearchService.Api.Queries;
+using PolicySearchService.Api.Queries.Dtos;
+using PolicySearchService.Domain;
 
-namespace PolicySearchService.Queries
+namespace PolicySearchService.Queries;
+
+public class FindPolicyHandler : IRequestHandler<FindPolicyQuery, FindPolicyResult>
 {
-    public class FindPolicyHandler : IRequestHandler<FindPolicyQuery, FindPolicyResult>
+    private readonly IPolicyRepository policis;
+
+    public FindPolicyHandler(IPolicyRepository policis)
     {
-        private readonly IPolicyRepository policis;
+        this.policis = policis;
+    }
 
-        public FindPolicyHandler(IPolicyRepository policis)
+    public async Task<FindPolicyResult> Handle(FindPolicyQuery request, CancellationToken cancellationToken)
+    {
+        var searchResults = await policis.Find(request.QueryText);
+
+        return FindPolicyResult(searchResults);
+    }
+
+    private FindPolicyResult FindPolicyResult(List<Policy> searchResults)
+    {
+        return new FindPolicyResult
         {
-            this.policis = policis;
-        }
-
-        public async Task<FindPolicyResult> Handle(FindPolicyQuery request, CancellationToken cancellationToken)
-        {
-            var searchResults = await policis.Find(request.QueryText);
-
-            return FindPolicyResult(searchResults);
-        }
-
-        private FindPolicyResult FindPolicyResult(List<Policy> searchResults)
-        {
-            return new FindPolicyResult
-            {
-                Policies = searchResults.Select(p => new Api.Queries.Dtos.PolicyDto
+            Policies = searchResults.Select(p => new PolicyDto
                 {
                     PolicyNumber = p.PolicyNumber,
                     PolicyStartDate = p.PolicyStartDate,
@@ -39,7 +39,6 @@ namespace PolicySearchService.Queries
                     PremiumAmount = p.PremiumAmount
                 })
                 .ToList()
-            };
-        }
+        };
     }
 }

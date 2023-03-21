@@ -2,34 +2,34 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace DashboardService.Domain
-{
-    public class AgentSalesQuery
-    {
-        public string FilterByAgentLogin { get; }
-        public string FilterByProductCode { get; }
-        public DateTime FilterBySalesDateStart { get; }
-        public DateTime FilterBySalesDateEnd { get; }
+namespace DashboardService.Domain;
 
-        public AgentSalesQuery(string filterByAgentLogin, string filterByProductCode, DateTime filterBySalesDateStart, DateTime filterBySalesDateEnd)
-        {
-            FilterByAgentLogin = filterByAgentLogin;
-            FilterByProductCode = filterByProductCode;
-            FilterBySalesDateStart = filterBySalesDateStart;
-            FilterBySalesDateEnd = filterBySalesDateEnd;
-        }
+public class AgentSalesQuery
+{
+    public AgentSalesQuery(string filterByAgentLogin, string filterByProductCode, DateTime filterBySalesDateStart,
+        DateTime filterBySalesDateEnd)
+    {
+        FilterByAgentLogin = filterByAgentLogin;
+        FilterByProductCode = filterByProductCode;
+        FilterBySalesDateStart = filterBySalesDateStart;
+        FilterBySalesDateEnd = filterBySalesDateEnd;
     }
 
-    public class AgentSalesQueryResult
-    {
-        private readonly IDictionary<string, SalesResult> perAgentTotal = new Dictionary<string, SalesResult>();
-        
-        public IDictionary<string,SalesResult> PerAgentTotal => new ReadOnlyDictionary<string, SalesResult>(perAgentTotal);
+    public string FilterByAgentLogin { get; }
+    public string FilterByProductCode { get; }
+    public DateTime FilterBySalesDateStart { get; }
+    public DateTime FilterBySalesDateEnd { get; }
+}
 
-        public AgentSalesQueryResult AgentResult(string agentLogin, SalesResult result)
-        {
-            perAgentTotal[agentLogin] = result;
-            return this;
-        }
+public class AgentSalesQueryResult
+{
+    private readonly IDictionary<string, SalesResult> perAgentTotal = new Dictionary<string, SalesResult>();
+
+    public IDictionary<string, SalesResult> PerAgentTotal => new ReadOnlyDictionary<string, SalesResult>(perAgentTotal);
+
+    public AgentSalesQueryResult AgentResult(string agentLogin, SalesResult result)
+    {
+        perAgentTotal[agentLogin] = result;
+        return this;
     }
 }

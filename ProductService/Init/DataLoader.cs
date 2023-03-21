@@ -1,32 +1,26 @@
-﻿using System.Linq;
-using ProductService.DataAccess.EF;
+﻿using ProductService.DataAccess.EF;
 
-namespace ProductService.Init
+namespace ProductService.Init;
+
+public class DataLoader
 {
-    public class DataLoader
+    private readonly ProductDbContext dbContext;
+
+    public DataLoader(ProductDbContext context)
     {
+        dbContext = context;
+    }
 
-        private readonly ProductDbContext dbContext;
+    public void Seed()
+    {
+        dbContext.Database.EnsureCreated();
+        if (dbContext.Products.Any()) return;
 
-        public DataLoader(ProductDbContext context)
-        {
-            dbContext = context;
-        }
+        dbContext.Products.Add(DemoProductFactory.Travel());
+        dbContext.Products.Add(DemoProductFactory.House());
+        dbContext.Products.Add(DemoProductFactory.Farm());
+        dbContext.Products.Add(DemoProductFactory.Car());
 
-        public void Seed()
-        {
-            dbContext.Database.EnsureCreated();
-            if (dbContext.Products.Any())
-            {
-                return;
-            }
-
-            dbContext.Products.Add(DemoProductFactory.Travel());
-            dbContext.Products.Add(DemoProductFactory.House());
-            dbContext.Products.Add(DemoProductFactory.Farm());
-            dbContext.Products.Add(DemoProductFactory.Car());
-
-            dbContext.SaveChanges();
-        }
+        dbContext.SaveChanges();
     }
 }

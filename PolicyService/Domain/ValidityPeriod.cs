@@ -1,53 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PolicyService.Domain
+namespace PolicyService.Domain;
+
+public class ValidityPeriod : ICloneable
 {
-    public class ValidityPeriod : ICloneable
+    public ValidityPeriod(DateTime validFrom, DateTime validTo)
     {
-        public virtual DateTime ValidFrom { get; protected set; }
-        public virtual DateTime ValidTo { get; protected set; }
+        ValidFrom = validFrom;
+        ValidTo = validTo;
+    }
 
-        public ValidityPeriod(DateTime validFrom, DateTime validTo)
-        {
-            ValidFrom = validFrom;
-            ValidTo = validTo;
-        }
+    protected ValidityPeriod()
+    {
+    } //NH required
 
-        protected ValidityPeriod() { } //NH required
+    public virtual DateTime ValidFrom { get; protected set; }
+    public virtual DateTime ValidTo { get; protected set; }
 
-        public static ValidityPeriod Between(DateTime validFrom, DateTime validTo)
-            => new ValidityPeriod(validFrom, validTo);
+    public int Days => ValidTo.Subtract(ValidFrom).Days;
 
-        public ValidityPeriod Clone()
-        {
-            return new ValidityPeriod(ValidFrom, ValidTo);
-        }
+    object ICloneable.Clone()
+    {
+        return Clone();
+    }
 
-        public bool Contains(DateTime theDate)
-        {
-            if (theDate > ValidTo)
-                return false;
+    public static ValidityPeriod Between(DateTime validFrom, DateTime validTo)
+    {
+        return new ValidityPeriod(validFrom, validTo);
+    }
 
-            if (theDate < ValidFrom)
-                return false;
-            
-            return true;
-        }
+    public ValidityPeriod Clone()
+    {
+        return new ValidityPeriod(ValidFrom, ValidTo);
+    }
 
-        public ValidityPeriod EndOn(DateTime endDate)
-        {
-            return new ValidityPeriod(ValidFrom, endDate);
-        }
+    public bool Contains(DateTime theDate)
+    {
+        if (theDate > ValidTo)
+            return false;
 
-        public int Days => ValidTo.Subtract(ValidFrom).Days;
-        
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
+        if (theDate < ValidFrom)
+            return false;
 
+        return true;
+    }
+
+    public ValidityPeriod EndOn(DateTime endDate)
+    {
+        return new ValidityPeriod(ValidFrom, endDate);
     }
 }

@@ -1,37 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <DockerTargetOS>Linux</DockerTargetOS>
-    <UserSecretsId>db17c895-b36a-4a46-adb9-0f14c003764d</UserSecretsId>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <UserSecretsId>db17c895-b36a-4a46-adb9-0f14c003764d</UserSecretsId>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="wwwroot\**" />
-    <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="wwwroot\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
+        <PackageReference Include="DynamicExpresso.Core" Version="2.13.0"/>
+        <PackageReference Include="GlobalExceptionHandler" Version="4.0.2"/>
+        <PackageReference Include="Marten" Version="5.11.0"/>
+        <PackageReference Include="MediatR" Version="12.0.1"/>
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0"/>
+        <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1"/>
+        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3"/>
+        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />
-    <PackageReference Include="DynamicExpresso.Core" Version="2.4.0" />
-    <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
-    <PackageReference Include="Marten" Version="3.2.0" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
-    <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
-    <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.1.0" />
-    <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.1.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Properties"/>
+    </ItemGroup>
 
 </Project>

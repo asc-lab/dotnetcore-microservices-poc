@@ -1,30 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using ProductService.Domain;
 
-namespace ProductService.DataAccess.EF
+namespace ProductService.DataAccess.EF;
+
+public static class EFInstaller
 {
-    public static class EFInstaller
+    public static IServiceCollection AddEFConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddEFConfiguration(this IServiceCollection services, IConfiguration configuration)
+        var useInMemoryDatabase = configuration.GetSection("Settings").GetValue<bool>("UseInMemoryDatabase");
+
+        services.AddDbContext<ProductDbContext>(options =>
         {
-            var useInMemoryDatabase = configuration.GetSection("Settings").GetValue<bool>("UseInMemoryDatabase");
+            if (useInMemoryDatabase)
+                options.UseInMemoryDatabase("Products");
+            else
+                options.UseSqlServer(configuration.GetConnectionString("Products"));
+        });
 
-            services.AddDbContext<ProductDbContext>(options =>
-            {
-                if (useInMemoryDatabase)
-                {
-                    options.UseInMemoryDatabase("Products");
-                }
-                else
-                {
-                    options.UseSqlServer(configuration.GetConnectionString("Products"));
-                }
-            });
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-            return services;
-        }       
+        services.AddScoped<IProductRepository, ProductRepository>();
+        return services;
     }
 }

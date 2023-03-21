@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace PaymentService.Api.Exceptions
+namespace PaymentService.Api.Exceptions;
+
+public class BankStatementsFileReadingError : BussinesExceptions
 {
-    public class BankStatementsFileReadingError : BussinesExceptions
+    public BankStatementsFileReadingError(Exception ex) :
+        base("Policy Account not found. BankStatementsFileReadingError", ex)
     {
-        public BankStatementsFileReadingError(Exception ex) :
-            base($"Policy Account not found. BankStatementsFileReadingError", ex)
-        {
-        }
     }
 }

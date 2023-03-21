@@ -1,59 +1,56 @@
-﻿using MediatR;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using RawRabbit.Configuration.Exchange;
 
-namespace PaymentService.Messaging.RabbitMq
+namespace PaymentService.Messaging.RabbitMq;
+
+public class RabbitEventListener
 {
-    public class RabbitEventListener
+    private readonly IBusClient busClient;
+    private readonly IServiceProvider serviceProvider;
+
+    public RabbitEventListener(
+        IBusClient busClient,
+        IServiceProvider serviceProvider)
     {
-        private readonly IBusClient busClient;
-        private readonly IServiceProvider serviceProvider;
+        this.busClient = busClient;
+        this.serviceProvider = serviceProvider;
+    }
 
-        public RabbitEventListener(
-            IBusClient busClient,
-            IServiceProvider serviceProvider)
-        {
-            this.busClient = busClient;
-            this.serviceProvider = serviceProvider;
-        }
+    public void ListenTo(List<Type> eventsToSubscribe)
+    {
+        foreach (var evtType in eventsToSubscribe)
+            //add check if is INotification
+            GetType()
+                .GetMethod("Subscribe", BindingFlags.NonPublic | BindingFlags.Instance)
+                .MakeGenericMethod(evtType)
+                .Invoke(this, new object[] { });
+    }
 
-        public void ListenTo(List<Type> eventsToSubscribe)
-        {
-            foreach (var evtType in eventsToSubscribe)
+    private void Subscribe<T>() where T : INotification
+    {
+        //TODO: move exchange name and queue prefix to cfg
+        busClient.SubscribeAsync<T>(
+            async msg =>
             {
-                //add check if is INotification
-                this.GetType()
-                    .GetMethod("Subscribe", System.Reflection.BindingFlags.NonPublic| System.Reflection.BindingFlags.Instance)
-                    .MakeGenericMethod(evtType)
-                    .Invoke(this, new object[] { });
-            }
-        }
-
-        private void Subscribe<T>() where T : INotification
-        {
-            //TODO: move exchange name and queue prefix to cfg
-            this.busClient.SubscribeAsync<T>(
-                async (msg) =>
+                //add logging
+                using (var scope = serviceProvider.CreateScope())
                 {
-                    //add logging
-                    using (var scope = serviceProvider.CreateScope())
-                    {
-                        var internalBus = scope.ServiceProvider.GetRequiredService<IMediator>();
-                        await internalBus.Publish(msg);
-                    }
-                },
-                cfg => cfg.UseSubscribeConfiguration( 
-                    c => c
+                    var internalBus = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    await internalBus.Publish(msg);
+                }
+            },
+            cfg => cfg.UseSubscribeConfiguration(
+                c => c
                     .OnDeclaredExchange(e => e
                         .WithName("lab-dotnet-micro")
-                        .WithType(RawRabbit.Configuration.Exchange.ExchangeType.Topic)
+                        .WithType(ExchangeType.Topic)
                         .WithArgument("key", typeof(T).Name.ToLower()))
                     .FromDeclaredQueue(q => q.WithName("lab-payments-service-" + typeof(T).Name)))
-                );
-        }
+        );
     }
 }

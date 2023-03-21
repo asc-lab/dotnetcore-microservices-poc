@@ -1,70 +1,75 @@
-﻿using PricingService.Api.Commands.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using PolicyService.Api.Commands.Dtos;
 
-namespace PolicyService.Domain
+namespace PolicyService.Domain;
+
+public abstract class Answer
 {
-    public abstract class Answer
+    public string QuestionCode { get; protected set; }
+
+    public abstract object GetAnswerValue();
+
+    public static Answer Create(QuestionType questionType, string questionCode, object answerValue)
     {
-        public string QuestionCode { get; protected set; }
-
-        public abstract object GetAnswerValue();
-
-        public static Answer Create(PolicyService.Api.Commands.Dtos.QuestionType questionType, string questionCode, object answerValue)
+        switch (questionType)
         {
-            switch (questionType)
-            {
-                case PolicyService.Api.Commands.Dtos.QuestionType.Text:
-                    return new TextAnswer(questionCode, (string)answerValue);
-                case PolicyService.Api.Commands.Dtos.QuestionType.Choice:
-                    return new ChoiceAnswer(questionCode, (string)answerValue);
-                case PolicyService.Api.Commands.Dtos.QuestionType.Numeric:
-                    return new NumericAnswer(questionCode, (decimal)answerValue);
-                default:
-                    throw new ArgumentException();
-            }
+            case QuestionType.Text:
+                return new TextAnswer(questionCode, (string)answerValue);
+            case QuestionType.Choice:
+                return new ChoiceAnswer(questionCode, (string)answerValue);
+            case QuestionType.Numeric:
+                return new NumericAnswer(questionCode, (decimal)answerValue);
+            default:
+                throw new ArgumentException();
         }
     }
+}
 
-    public abstract class Answer<T> : Answer
+public abstract class Answer<T> : Answer
+{
+    public T AnswerValue { get; protected set; }
+
+    public override object GetAnswerValue()
     {
-        public T AnswerValue { get; protected set; }
-
-        public override object GetAnswerValue() => AnswerValue;
+        return AnswerValue;
     }
+}
 
-    public class TextAnswer : Answer<string>
+public class TextAnswer : Answer<string>
+{
+    public TextAnswer()
     {
-        public TextAnswer() { } //NH required
+    } //NH required
 
-        public TextAnswer(string questionCode, string answer)
-        {
-            this.QuestionCode = questionCode;
-            this.AnswerValue = answer;
-        }
+    public TextAnswer(string questionCode, string answer)
+    {
+        QuestionCode = questionCode;
+        AnswerValue = answer;
     }
+}
 
-    public class NumericAnswer : Answer<decimal>
+public class NumericAnswer : Answer<decimal>
+{
+    public NumericAnswer()
     {
-        public NumericAnswer() { } //NH required
+    } //NH required
 
-        public NumericAnswer(string questionCode, decimal answer)
-        {
-            this.QuestionCode = questionCode;
-            this.AnswerValue = answer;
-        }
+    public NumericAnswer(string questionCode, decimal answer)
+    {
+        QuestionCode = questionCode;
+        AnswerValue = answer;
     }
+}
 
-    public class ChoiceAnswer : Answer<string>
+public class ChoiceAnswer : Answer<string>
+{
+    public ChoiceAnswer()
     {
-        public ChoiceAnswer() { } //NH required
+    } //NH required
 
-        public ChoiceAnswer(string questionCode, string answer)
-        {
-            this.QuestionCode = questionCode;
-            this.AnswerValue = answer;
-        }
+    public ChoiceAnswer(string questionCode, string answer)
+    {
+        QuestionCode = questionCode;
+        AnswerValue = answer;
     }
 }

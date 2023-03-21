@@ -1,9 +1,8 @@
-namespace AuthService.Domain
-{
-    public interface IInsuranceAgents
-    {
-        void Add(InsuranceAgent agent);
+namespace AuthService.Domain;
 
-        InsuranceAgent FindByLogin(string login);
-    }
+public interface IInsuranceAgents
+{
+    void Add(InsuranceAgent agent);
+
+    InsuranceAgent FindByLogin(string login);
 }

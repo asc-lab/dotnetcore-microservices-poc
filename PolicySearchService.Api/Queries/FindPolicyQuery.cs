@@ -1,12 +1,8 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PolicySearchService.Api.Queries
+namespace PolicySearchService.Api.Queries;
+
+public class FindPolicyQuery : IRequest<FindPolicyResult>
 {
-    public class FindPolicyQuery : IRequest<FindPolicyResult>
-    {
-        public string QueryText { get; set; }
-    }
+    public string QueryText { get; set; }
 }

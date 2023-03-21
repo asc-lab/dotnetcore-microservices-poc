@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Data;
+using Microsoft.Extensions.DependencyInjection;
 using NHibernate;
 using NHibernate.Bytecode;
 using NHibernate.Cfg;
@@ -7,40 +8,39 @@ using NHibernate.Dialect;
 using NHibernate.Driver;
 using PolicyService.Domain;
 
-namespace PolicyService.DataAccess.NHibernate
+namespace PolicyService.DataAccess.NHibernate;
+
+public static class NHibernateInstaller
 {
-    public static class NHibernateInstaller
+    public static IServiceCollection AddNHibernate(this IServiceCollection services, string cnString)
     {
-        public static IServiceCollection AddNHibernate(this IServiceCollection services,string cnString)
+        var cfg = new Configuration();
+
+        cfg.DataBaseIntegration(db =>
         {
-            var cfg = new Configuration();
+            db.Dialect<PostgreSQL83Dialect>();
+            db.Driver<NpgsqlDriver>();
+            db.ConnectionProvider<DriverConnectionProvider>();
+            db.BatchSize = 500;
+            db.IsolationLevel = IsolationLevel.ReadCommitted;
+            db.LogSqlInConsole = false;
+            db.ConnectionString = cnString;
+            db.Timeout = 30; /*seconds*/
+            db.SchemaAction = SchemaAutoAction.Update;
+        });
 
-            cfg.DataBaseIntegration(db =>
-            {
-                db.Dialect<PostgreSQL83Dialect>();
-                db.Driver<NpgsqlDriver>();
-                db.ConnectionProvider<DriverConnectionProvider>();
-                db.BatchSize = 500;
-                db.IsolationLevel = System.Data.IsolationLevel.ReadCommitted;
-                db.LogSqlInConsole = false;
-                db.ConnectionString = cnString;
-                db.Timeout = 30;/*seconds*/
-                db.SchemaAction = SchemaAutoAction.Update;
-            });
+        cfg.Proxy(p => p.ProxyFactoryFactory<StaticProxyFactoryFactory>());
 
-            cfg.Proxy(p => p.ProxyFactoryFactory<StaticProxyFactoryFactory>());
+        cfg.Cache(c => c.UseQueryCache = false);
 
-            cfg.Cache(c => c.UseQueryCache = false);
+        cfg.AddAssembly(typeof(NHibernateInstaller).Assembly);
 
-            cfg.AddAssembly(typeof(NHibernateInstaller).Assembly);
+        services.AddSingleton(cfg.BuildSessionFactory());
 
-            services.AddSingleton(cfg.BuildSessionFactory());
+        services.AddScoped(s => s.GetService<ISessionFactory>().OpenSession());
 
-            services.AddScoped(s => s.GetService<ISessionFactory>().OpenSession());
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            return services;
-        }
+        return services;
     }
 }

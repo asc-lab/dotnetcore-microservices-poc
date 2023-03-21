@@ -4,124 +4,123 @@ using PolicyService.Domain;
 using Xunit;
 using static Xunit.Assert;
 
-namespace PolicyService.Test.Domain
+namespace PolicyService.Test.Domain;
+
+public class OfferTest
 {
-    public class OfferTest
+    [Fact]
+    public void CanCreateOfferBasedOnPrice()
     {
-        [Fact]
-        public void CanCreateOfferBasedOnPrice()
+        var price = new Price(new Dictionary<string, decimal>
         {
-            var price = new Price(new Dictionary<string, decimal>()
-            {
-                ["C1"] = 100M,
-                ["C2"] = 200M
-            });
+            ["C1"] = 100M,
+            ["C2"] = 200M
+        });
 
-            var offer = Offer.ForPrice
-            (
-                "P1",
-                DateTime.Now,
-                DateTime.Now.AddDays(5),
-                null,
-                price
-            );
+        var offer = Offer.ForPrice
+        (
+            "P1",
+            DateTime.Now,
+            DateTime.Now.AddDays(5),
+            null,
+            price
+        );
 
-            OfferAssert
-                .AssertThat(offer)
-                .ProductCodeIs("P1")
-                .StatusIsNew()
-                .PriceIs(300M)
-                .AgentIs(null);
-        }
-        
-        [Fact]
-        public void CanCreateOfferOnBehalfOfAgentBasedOnPrice()
+        OfferAssert
+            .AssertThat(offer)
+            .ProductCodeIs("P1")
+            .StatusIsNew()
+            .PriceIs(300M)
+            .AgentIs(null);
+    }
+
+    [Fact]
+    public void CanCreateOfferOnBehalfOfAgentBasedOnPrice()
+    {
+        var price = new Price(new Dictionary<string, decimal>
         {
-            var price = new Price(new Dictionary<string, decimal>
-            {
-                ["C1"] = 100M,
-                ["C2"] = 200M
-            });
+            ["C1"] = 100M,
+            ["C2"] = 200M
+        });
 
-            var offer = Offer.ForPriceAndAgent
-            (
-                "P1",
-                DateTime.Now,
-                DateTime.Now.AddDays(5),
-                null,
-                price,
-                "jimmy.son"
-            );
+        var offer = Offer.ForPriceAndAgent
+        (
+            "P1",
+            DateTime.Now,
+            DateTime.Now.AddDays(5),
+            null,
+            price,
+            "jimmy.son"
+        );
 
-            OfferAssert
-                .AssertThat(offer)
-                .ProductCodeIs("P1")
-                .StatusIsNew()
-                .PriceIs(300M)
-                .AgentIs("jimmy.son");
-        }
+        OfferAssert
+            .AssertThat(offer)
+            .ProductCodeIs("P1")
+            .StatusIsNew()
+            .PriceIs(300M)
+            .AgentIs("jimmy.son");
+    }
 
-        [Fact]
-        public void CanBuyNewNonExpiredOffer()
-        {
-            var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
+    [Fact]
+    public void CanBuyNewNonExpiredOffer()
+    {
+        var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
 
-            var policy = offer.Buy(PolicyHolderFactory.Abc());
+        var policy = offer.Buy(PolicyHolderFactory.Abc());
 
-            OfferAssert
-                .AssertThat(offer)
-                .StatusIsConverted();
+        OfferAssert
+            .AssertThat(offer)
+            .StatusIsConverted();
 
-            PolicyAssert
-                .AssertThat(policy)
-                .StatusIsActive()
-                .HasVersions(1)
-                .HasVersion(1)
-                .AgentIs(null);
+        PolicyAssert
+            .AssertThat(policy)
+            .StatusIsActive()
+            .HasVersions(1)
+            .HasVersion(1)
+            .AgentIs(null);
 
-            PolicyVersionAssert
-                .AssertThat(policy.Versions.WithNumber(1))
-                .TotalPremiumIs(offer.TotalPrice);
-        }
-        
-        [Fact]
-        public void CanBuyNewNonExpiredOfferFromAgent()
-        {
-            var offer = OfferFactory.NewOfferValidUntilForAgent(DateTime.Now.AddDays(5),"jimmy.young");
+        PolicyVersionAssert
+            .AssertThat(policy.Versions.WithNumber(1))
+            .TotalPremiumIs(offer.TotalPrice);
+    }
 
-            var policy = offer.Buy(PolicyHolderFactory.Abc());
+    [Fact]
+    public void CanBuyNewNonExpiredOfferFromAgent()
+    {
+        var offer = OfferFactory.NewOfferValidUntilForAgent(DateTime.Now.AddDays(5), "jimmy.young");
 
-            OfferAssert
-                .AssertThat(offer)
-                .StatusIsConverted()
-                .AgentIs("jimmy.young");
+        var policy = offer.Buy(PolicyHolderFactory.Abc());
 
-            PolicyAssert
-                .AssertThat(policy)
-                .StatusIsActive()
-                .HasVersions(1)
-                .HasVersion(1);
+        OfferAssert
+            .AssertThat(offer)
+            .StatusIsConverted()
+            .AgentIs("jimmy.young");
 
-            PolicyVersionAssert
-                .AssertThat(policy.Versions.WithNumber(1))
-                .TotalPremiumIs(offer.TotalPrice);
-        }
+        PolicyAssert
+            .AssertThat(policy)
+            .StatusIsActive()
+            .HasVersions(1)
+            .HasVersion(1);
 
-        [Fact]
-        public void CannotBuyAlreadyConvertedOffer()
-        {
-            var offer = OfferFactory.AlreadyConvertedOffer();
+        PolicyVersionAssert
+            .AssertThat(policy.Versions.WithNumber(1))
+            .TotalPremiumIs(offer.TotalPrice);
+    }
 
-            Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
-            Equal($"Offer {offer.Number} is not in new status and cannot be bought", ex.Message);
-        }
+    [Fact]
+    public void CannotBuyAlreadyConvertedOffer()
+    {
+        var offer = OfferFactory.AlreadyConvertedOffer();
 
-        [Fact]
-        public void CannotBuyExpiredOffer()
-        {
-            var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(-5));
-            Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
-            Equal($"Offer {offer.Number} has expired", ex.Message);
-        }
+        Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
+        Equal($"Offer {offer.Number} is not in new status and cannot be bought", ex.Message);
+    }
+
+    [Fact]
+    public void CannotBuyExpiredOffer()
+    {
+        var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(-5));
+        Exception ex = Throws<ApplicationException>(() => offer.Buy(PolicyHolderFactory.Abc()));
+        Equal($"Offer {offer.Number} has expired", ex.Message);
     }
 }

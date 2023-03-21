@@ -1,12 +1,9 @@
-﻿using PolicySearchService.Api.Queries.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using PolicySearchService.Api.Queries.Dtos;
 
-namespace PolicySearchService.Api.Queries
+namespace PolicySearchService.Api.Queries;
+
+public class FindPolicyResult
 {
-    public class FindPolicyResult
-    {
-        public List<PolicyDto> Policies { get; set; }
-    }
+    public List<PolicyDto> Policies { get; set; }
 }

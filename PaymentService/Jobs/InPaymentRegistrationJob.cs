@@ -1,30 +1,27 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using PaymentService.Domain;
 
-namespace PaymentService.Jobs
+namespace PaymentService.Jobs;
+
+public class InPaymentRegistrationJob
 {
-    public class InPaymentRegistrationJob
+    private readonly IDataStore dataStore;
+    private readonly BackgroundJobsConfig jobConfig;
+
+    public InPaymentRegistrationJob(IDataStore dataStore, BackgroundJobsConfig jobConfig)
     {
-        private readonly IDataStore dataStore;
-        private readonly BackgroundJobsConfig jobConfig;
+        this.dataStore = dataStore;
+        this.jobConfig = jobConfig;
+    }
 
-        public InPaymentRegistrationJob(IDataStore dataStore, BackgroundJobsConfig jobConfig)
-        {
-            this.dataStore = dataStore;
-            this.jobConfig = jobConfig;
-        }
+    public async Task Run()
+    {
+        Console.WriteLine($"InPayment import started. Looking for file in {jobConfig.InPaymentFileFolder}");
 
-        public async Task Run()
-        {
-            Console.WriteLine($"InPayment import started. Looking for file in {jobConfig.InPaymentFileFolder}");
+        var importService = new InPaymentRegistrationService(dataStore);
+        await importService.RegisterInPayments(jobConfig.InPaymentFileFolder, DateTimeOffset.Now);
 
-            var importService = new InPaymentRegistrationService(dataStore);
-            await importService.RegisterInPayments(jobConfig.InPaymentFileFolder, DateTimeOffset.Now);
-            
-            Console.WriteLine("InPayment import finished.");
-
-        }
+        Console.WriteLine("InPayment import finished.");
     }
 }

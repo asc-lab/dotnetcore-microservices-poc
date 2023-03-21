@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
 ENV APP_HOME /opt/app
 RUN mkdir $APP_HOME

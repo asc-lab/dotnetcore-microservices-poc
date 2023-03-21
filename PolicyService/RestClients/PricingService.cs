@@ -1,73 +1,66 @@
-﻿using PolicyService.Domain;
-using PricingService.Api.Commands;
-using PricingService.Api.Commands.Dto;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PolicyService.Domain;
+using PricingService.Api.Commands;
+using PricingService.Api.Commands.Dto;
 
-namespace PolicyService.RestClients
+namespace PolicyService.RestClients;
+
+public class PricingService : IPricingService
 {
-    public class PricingService : IPricingService
+    private readonly IPricingClient pricingClient;
+
+    public PricingService(IPricingClient pricingClient)
     {
-        private readonly IPricingClient pricingClient;
+        this.pricingClient = pricingClient;
+    }
 
-        public PricingService(IPricingClient pricingClient)
+    public async Task<Price> CalculatePrice(PricingParams pricingParams)
+    {
+        var cmd = new CalculatePriceCommand
         {
-            this.pricingClient = pricingClient;
-        }
+            ProductCode = pricingParams.ProductCode,
+            PolicyFrom = pricingParams.PolicyFrom,
+            PolicyTo = pricingParams.PolicyTo,
+            SelectedCovers = pricingParams.SelectedCovers,
+            Answers = ConstructAnswers(pricingParams.Answers)
+        };
 
-        public async Task<Price> CalculatePrice(PricingParams pricingParams)
-        {
-            var cmd = new CalculatePriceCommand
+        var result = await pricingClient.CalculatePrice(cmd);
+
+        return new Price(result.CoverPrices);
+    }
+
+    private List<QuestionAnswer> ConstructAnswers(List<Answer> answers)
+    {
+        return answers.Select(a => ToQuestionAnswer(a)).ToList();
+    }
+
+    private QuestionAnswer ToQuestionAnswer(Answer a)
+    {
+        if (a is TextAnswer)
+            return new TextQuestionAnswer
             {
-                ProductCode = pricingParams.ProductCode,
-                PolicyFrom = pricingParams.PolicyFrom,
-                PolicyTo = pricingParams.PolicyTo,
-                SelectedCovers = pricingParams.SelectedCovers,
-                Answers = ConstructAnswers(pricingParams.Answers)
+                QuestionCode = a.QuestionCode,
+                Answer = (string)a.GetAnswerValue()
             };
 
-            var result = await pricingClient.CalculatePrice(cmd);
-
-            return new Price(result.CoverPrices);
-        }
-
-        private List<QuestionAnswer> ConstructAnswers(List<Answer> answers)
-        {
-            return answers.Select(a => ToQuestionAnswer(a)).ToList();
-        }
-
-        private QuestionAnswer ToQuestionAnswer(Answer a)
-        {
-            if (a is TextAnswer)
+        if (a is ChoiceAnswer)
+            return new ChoiceQuestionAnswer
             {
-                return new TextQuestionAnswer
-                {
-                    QuestionCode = a.QuestionCode,
-                    Answer = (string)a.GetAnswerValue()
-                };
-            }
+                QuestionCode = a.QuestionCode,
+                Answer = (string)a.GetAnswerValue()
+            };
 
-            if (a is ChoiceAnswer)
+        if (a is NumericAnswer)
+            return new NumericQuestionAnswer
             {
-                return new ChoiceQuestionAnswer
-                {
-                    QuestionCode = a.QuestionCode,
-                    Answer = (string)a.GetAnswerValue()
-                };
-            }
+                QuestionCode = a.QuestionCode,
+                Answer = (decimal)a.GetAnswerValue()
+            };
 
-            if (a is NumericAnswer)
-            {
-                return new NumericQuestionAnswer
-                {
-                    QuestionCode = a.QuestionCode,
-                    Answer = (decimal)a.GetAnswerValue()
-                };
-            }
-
-            throw new ArgumentException("Unexpectd answer type " + a.GetType().Name);
-        }
+        throw new ArgumentException("Unexpectd answer type " + a.GetType().Name);
     }
 }

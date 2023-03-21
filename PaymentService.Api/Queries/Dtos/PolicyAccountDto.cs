@@ -1,8 +1,7 @@
-﻿namespace PaymentService.Api.Queries.Dtos
+﻿namespace PaymentService.Api.Queries.Dtos;
+
+public class PolicyAccountDto
 {
-    public class PolicyAccountDto
-    {
-        public string PolicyAccountNumber { get; set; }
-        public string PolicyNumber { get; set; }
-    }
+    public string PolicyAccountNumber { get; set; }
+    public string PolicyNumber { get; set; }
 }

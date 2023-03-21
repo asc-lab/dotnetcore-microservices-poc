@@ -1,28 +1,26 @@
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using ProductService.Api.Commands;
 using ProductService.Domain;
 
-namespace ProductService.Commands
+namespace ProductService.Commands;
+
+public class DiscontinueProductHandler : IRequestHandler<DiscontinueProductCommand, DiscontinueProductResult>
 {
-    public class DiscontinueProductHandler : IRequestHandler<DiscontinueProductCommand, DiscontinueProductResult>
+    private readonly IProductRepository products;
+
+    public DiscontinueProductHandler(IProductRepository products)
     {
-        private readonly IProductRepository products;
+        this.products = products;
+    }
 
-        public DiscontinueProductHandler(IProductRepository products)
+    public async Task<DiscontinueProductResult> Handle(DiscontinueProductCommand request,
+        CancellationToken cancellationToken)
+    {
+        var product = await products.FindById(request.ProductId);
+        product.Discontinue();
+        return new DiscontinueProductResult
         {
-            this.products = products;
-        }
-
-        public async Task<DiscontinueProductResult> Handle(DiscontinueProductCommand request, CancellationToken cancellationToken)
-        {
-            var product = await products.FindById(request.ProductId);
-            product.Discontinue();
-            return new DiscontinueProductResult
-            {
-                ProductId = product.Id
-            };
-        }
+            ProductId = product.Id
+        };
     }
 }

@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿namespace ProductService.Domain;
 
-namespace ProductService.Domain
+public class Cover
 {
-    public class Cover
+    public Cover()
     {
-        public Guid Id { get; private set; }
-        public string Code { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public bool Optional { get; private set; }
-        public decimal? SumInsured { get; private set; }
-
-        public Product Product { get; private set; }
-
-        public Cover()
-        { }
-
-        public Cover(string code,string name, string description, bool optional, decimal? sumInsured)
-        {
-            Id = Guid.NewGuid();
-            Code = code;
-            Name = name;
-            Description = description;
-            Optional = optional;
-            SumInsured = sumInsured;
-        }
     }
+
+    public Cover(string code, string name, string description, bool optional, decimal? sumInsured)
+    {
+        Id = Guid.NewGuid();
+        Code = code;
+        Name = name;
+        Description = description;
+        Optional = optional;
+        SumInsured = sumInsured;
+    }
+
+    public Guid Id { get; }
+    public string Code { get; }
+    public string Name { get; }
+    public string Description { get; }
+    public bool Optional { get; }
+    public decimal? SumInsured { get; }
+
+    //public Product Product { get; private set; }
 }

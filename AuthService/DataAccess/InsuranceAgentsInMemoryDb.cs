@@ -1,26 +1,30 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using AuthService.Controllers;
 using AuthService.Domain;
 
-namespace AuthService.DataAccess
+namespace AuthService.DataAccess;
+
+public class InsuranceAgentsInMemoryDb : IInsuranceAgents
 {
-    public class InsuranceAgentsInMemoryDb : IInsuranceAgents
+    private readonly IDictionary<string, InsuranceAgent> db = new ConcurrentDictionary<string, InsuranceAgent>();
+
+    public InsuranceAgentsInMemoryDb()
     {
-        private readonly IDictionary<string, InsuranceAgent> db = new ConcurrentDictionary<string, InsuranceAgent>();
+        Add(new InsuranceAgent("jimmy.solid", "secret", "static/avatars/jimmy_solid.png",
+            new List<string> { "TRI", "HSI", "FAI", "CAR" }));
+        Add(new InsuranceAgent("danny.solid", "secret", "static/avatars/danny.solid.png",
+            new List<string> { "TRI", "HSI", "FAI", "CAR" }));
+        Add(new InsuranceAgent("admin", "admin", "static/avatars/admin.png",
+            new List<string> { "TRI", "HSI", "FAI", "CAR" }));
+    }
 
-        public InsuranceAgentsInMemoryDb()
-        {
-            Add(new InsuranceAgent("jimmy.solid", "secret", "static/avatars/jimmy_solid.png", new List<string>() {"TRI", "HSI", "FAI", "CAR"}));
-            Add(new InsuranceAgent("danny.solid", "secret", "static/avatars/danny.solid.png", new List<string>() {"TRI", "HSI", "FAI", "CAR"}));
-            Add(new InsuranceAgent("admin", "admin", "static/avatars/admin.png", new List<string>() {"TRI", "HSI", "FAI", "CAR"}));
-        }
+    public void Add(InsuranceAgent agent)
+    {
+        db[agent.Login] = agent;
+    }
 
-        public void Add(InsuranceAgent agent)
-        {
-            db[agent.Login] = agent;
-        }
-
-        public InsuranceAgent FindByLogin(string login) => db[login];
+    public InsuranceAgent FindByLogin(string login)
+    {
+        return db[login];
     }
 }

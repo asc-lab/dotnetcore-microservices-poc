@@ -1,7 +1,6 @@
-namespace AgentPortalApiGateway
+namespace AgentPortalApiGateway;
+
+public class AppSettings
 {
-    public class AppSettings
-    {
-        public string[] AllowedChatOrigins { get; set; }
-    }
+    public string[] AllowedChatOrigins { get; set; }
 }

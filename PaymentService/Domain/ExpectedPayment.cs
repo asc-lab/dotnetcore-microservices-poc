@@ -1,19 +1,21 @@
 ﻿using System;
 
-namespace PaymentService.Domain
+namespace PaymentService.Domain;
+
+public class ExpectedPayment : AccountingEntry
 {
-    public class ExpectedPayment : AccountingEntry
+    protected ExpectedPayment()
     {
-        protected ExpectedPayment() : base()
-        { }
+    }
 
-        public ExpectedPayment(PolicyAccount policyAccount, DateTimeOffset creationDate, DateTimeOffset effectiveDate, decimal amount) :
-                base(policyAccount, creationDate, effectiveDate, amount)
-        { }
+    public ExpectedPayment(PolicyAccount policyAccount, DateTimeOffset creationDate, DateTimeOffset effectiveDate,
+        decimal amount) :
+        base(policyAccount, creationDate, effectiveDate, amount)
+    {
+    }
 
-        public override decimal Apply(decimal state)
-        {
-            return state - Amount;
-        }
+    public override decimal Apply(decimal state)
+    {
+        return state - Amount;
     }
 }

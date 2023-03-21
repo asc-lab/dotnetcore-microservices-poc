@@ -1,8 +1,7 @@
-namespace AuthService.Domain
+namespace AuthService.Domain;
+
+public class AuthRequest
 {
-    public class AuthRequest
-    {
-        public string Login { get; set; }
-        public string Password { get; set; }
-    }
+    public string Login { get; set; }
+    public string Password { get; set; }
 }

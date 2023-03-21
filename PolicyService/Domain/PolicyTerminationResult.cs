@@ -1,14 +1,13 @@
-namespace PolicyService.Domain
-{
-    public class PolicyTerminationResult
-    {
-        public PolicyVersion TerminalVersion { get; private set; }
-        public decimal AmountToReturn { get; private set; }
+namespace PolicyService.Domain;
 
-        public PolicyTerminationResult(PolicyVersion terminalVersion, decimal amountToReturn)
-        {
-            TerminalVersion = terminalVersion;
-            AmountToReturn = amountToReturn;
-        }
+public class PolicyTerminationResult
+{
+    public PolicyTerminationResult(PolicyVersion terminalVersion, decimal amountToReturn)
+    {
+        TerminalVersion = terminalVersion;
+        AmountToReturn = amountToReturn;
     }
+
+    public PolicyVersion TerminalVersion { get; }
+    public decimal AmountToReturn { get; }
 }

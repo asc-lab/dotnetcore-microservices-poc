@@ -1,36 +1,30 @@
 ﻿using System.Threading.Tasks;
 using PaymentService.Domain;
 
-namespace PaymentService.Init
+namespace PaymentService.Init;
+
+public class DataLoader
 {
-    public class DataLoader
+    private readonly IDataStore dataStore;
+
+    public DataLoader(IDataStore dataStore)
     {
-        private readonly IDataStore dataStore;
+        this.dataStore = dataStore;
+    }
 
-        public DataLoader(IDataStore dataStore)
+    public async Task Seed()
+    {
+        using (dataStore)
         {
-            this.dataStore = dataStore;
-        }
+            foreach (var demoAccount in DemoAccountsFactory.DemoAccounts()) await AddIfNotExists(demoAccount);
 
-        public async Task Seed()
-        {
-            using (dataStore)
-            {
-                foreach (var demoAccount in DemoAccountsFactory.DemoAccounts())
-                {
-                    await AddIfNotExists(demoAccount);
-                }
-                
-                await dataStore.CommitChanges();
-            }
+            await dataStore.CommitChanges();
         }
+    }
 
-        private async Task AddIfNotExists(PolicyAccount account)
-        {
-            if (await dataStore.PolicyAccounts.FindByNumber(account.PolicyNumber) == null)
-            {
-                dataStore.PolicyAccounts.Add(account);
-            }
-        }
+    private async Task AddIfNotExists(PolicyAccount account)
+    {
+        if (await dataStore.PolicyAccounts.FindByNumber(account.PolicyNumber) == null)
+            dataStore.PolicyAccounts.Add(account);
     }
 }

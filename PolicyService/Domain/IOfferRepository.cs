@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace PolicyService.Domain
+namespace PolicyService.Domain;
+
+public interface IOfferRepository
 {
-    public interface IOfferRepository
-    {
-        void Add(Offer offer);
+    void Add(Offer offer);
 
-        Task<Offer> WithNumber(string number);
-    }
+    Task<Offer> WithNumber(string number);
 }

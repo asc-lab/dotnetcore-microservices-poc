@@ -2,19 +2,18 @@
 using PolicyService.Domain;
 using PolicyService.Test.Domain;
 
-namespace PolicyService.Test.TestData
+namespace PolicyService.Test.TestData;
+
+public class PolicyFactory
 {
-    public class PolicyFactory
+    internal static Policy AlreadyTerminatedPolicy()
     {
-        internal static Policy AlreadyTerminatedPolicy()
-        {
-            var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
+        var offer = OfferFactory.NewOfferValidUntil(DateTime.Now.AddDays(5));
 
-            var policy = offer.Buy(PolicyHolderFactory.Abc());
+        var policy = offer.Buy(PolicyHolderFactory.Abc());
 
-            policy.Terminate(DateTime.Now.AddDays(3));
+        policy.Terminate(DateTime.Now.AddDays(3));
 
-            return policy;
-        }
+        return policy;
     }
 }

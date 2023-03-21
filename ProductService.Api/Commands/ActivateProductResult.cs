@@ -1,9 +1,8 @@
 using System;
 
-namespace ProductService.Api.Commands
+namespace ProductService.Api.Commands;
+
+public class ActivateProductResult
 {
-    public class ActivateProductResult
-    {
-        public Guid ProductId { get; set; }
-    }
+    public Guid ProductId { get; set; }
 }

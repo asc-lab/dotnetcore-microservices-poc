@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿namespace ProductService.Domain;
 
-namespace ProductService.Domain
+public interface IProductRepository
 {
-    public interface IProductRepository
-    {
-        Task<Product> Add(Product product);
+    Task<Product> Add(Product product);
 
-        Task<List<Product>> FindAllActive();
+    Task<List<Product>> FindAllActive();
 
-        Task<Product> FindOne(string productCode);
-        
-        Task<Product> FindById(Guid id);
-    }
+    Task<Product> FindOne(string productCode);
+
+    Task<Product> FindById(Guid id);
 }
