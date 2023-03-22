@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
 ENV APP_HOME /opt/app
 RUN mkdir $APP_HOME
@@ -28,7 +28,7 @@ FROM build AS publish
 WORKDIR $APP_HOME/PaymentService
 RUN dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-focal AS final
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:5070
 ENV ASPNETCORE_ENVIRONMENT=docker
