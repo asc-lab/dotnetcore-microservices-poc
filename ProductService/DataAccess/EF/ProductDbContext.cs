@@ -23,23 +23,8 @@ public class ProductDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new ProductConfig());
-
-        //modelBuilder.Entity<Cover>().HasOne(p => p.Product).WithMany(c => c.Covers);
-//        modelBuilder.Entity<Cover>().Property(c => c.Code).IsRequired();
-        //      modelBuilder.Entity<Cover>().Property(c => c.Name).IsRequired();
-
-        modelBuilder.Entity<Question>().HasOne(p => p.Product).WithMany(p => p.Questions);
-        modelBuilder.Entity<Question>().Property(q => q.Code).IsRequired();
-        modelBuilder.Entity<Question>().Property(q => q.Index).IsRequired();
-
-        modelBuilder.Entity<Question>()
-            .HasDiscriminator<int>("QuestionType")
-            .HasValue<Question>(0)
-            .HasValue<NumericQuestion>(1)
-            .HasValue<DateQuestion>(2)
-            .HasValue<ChoiceQuestion>(3);
-
-        modelBuilder.Entity<Choice>().HasKey("Code");
-        modelBuilder.Entity<Choice>().HasOne(q => q.Question).WithMany(c => c.Choices);
+        modelBuilder.ApplyConfiguration(new QuestionConfig());
+        modelBuilder.ApplyConfiguration(new ChoiceQuestionConfig());
+        modelBuilder.ApplyConfiguration(new ChoiceConfig());
     }
 }
