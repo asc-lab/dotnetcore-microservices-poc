@@ -4,7 +4,7 @@
 
 This is an example of a very simplified insurance sales system made in a microservice architecture using:
 
-* .NET 5
+* .NET 7
 * Entity Framework Core
 * MediatR
 * Marten
