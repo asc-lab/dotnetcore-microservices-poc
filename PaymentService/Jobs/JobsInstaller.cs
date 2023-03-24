@@ -19,13 +19,13 @@ public static class JobsInstaller
             config.UseLogProvider(new ColouredConsoleLogProvider());
         });
         services.AddScoped<InPaymentRegistrationJob, InPaymentRegistrationJob>();
+        services.AddHangfireServer();
         return services;
     }
 
     public static void UseBackgroundJobs(this IApplicationBuilder app)
     {
-        app.UseHangfireServer();
         app.UseHangfireDashboard();
-        RecurringJob.AddOrUpdate<InPaymentRegistrationJob>(j => j.Run(), Cron.MinuteInterval(1));
+        RecurringJob.AddOrUpdate<InPaymentRegistrationJob>(j => j.Run(), "*/1 * * * *");
     }
 }
