@@ -20,7 +20,7 @@ This is an example of a very simplified insurance sales system made in a microse
 * DynamicExpresso
 * SignalR
 
-**Comprehensive guide describing exactly the architecture, applied design patterns and technologies can be found on our blog:**
+**Comprehensive guide describing the architecture, applied design patterns and technologies can be found on our blog:**
 
 * [Part 1 The Plan](https://altkomsoftware.pl/en/blog/building-microservices-net-core-part-1-plan/)
 * [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://altkomsoftware.pl/en/blog/microservices-net-core-cqrs-mediatr/)
@@ -99,6 +99,9 @@ To run the whole solution:
 ```
 
 >If ElasticSearch fails to start, try running `sudo sysctl -w vm.max_map_count=262144` first
+
+Once the application and infrastructure are started you can open http://localhost:8080 in your browser and see our welcome page.
+Once there you can use Account menu item to log into the system. Valid users and passwords can be found [here] (https://github.com/asc-lab/dotnetcore-microservices-poc/blob/master/AuthService/DataAccess/InsuranceAgentsInMemoryDb.cs). You can for example login as admin with password admin.
 
 ## Manual running
 
