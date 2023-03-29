@@ -1,7 +1,5 @@
 # ASCLAB .NET Core PoC - LAB Insurance Sales Portal
 
-[![Build Status](https://travis-ci.org/asc-lab/dotnetcore-microservices-poc.svg?branch=master)](https://travis-ci.org/asc-lab/dotnetcore-microservices-poc)
-
 This is an example of a very simplified insurance sales system made in a microservice architecture using:
 
 * .NET 7
