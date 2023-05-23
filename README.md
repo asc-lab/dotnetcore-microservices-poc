@@ -20,7 +20,7 @@ This is an example of a very simplified insurance sales system made in a microse
 
 **Comprehensive guide describing the architecture, applied design patterns and technologies can be found on our blog:**
 
-* [Part 1 The Plan](https://altkomsoftware.pl/en/blog/building-microservices-net-core-part-1-plan/)
+* [Part 1 The Plan](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-1-plan/)
 * [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://www.altkomsoftware.com/blog/microservices-net-core-cqrs-mediatr/)
 * [Part 3 Service Discovery with Eureka](https://www.altkomsoftware.com/blog/microservices-service-discovery-eureka/)
 * [Part 4 Building API Gateways With Ocelot](https://www.altkomsoftware.com/blog/building-api-gateways-with-ocelot/)
