@@ -21,18 +21,18 @@ This is an example of a very simplified insurance sales system made in a microse
 **Comprehensive guide describing the architecture, applied design patterns and technologies can be found on our blog:**
 
 * [Part 1 The Plan](https://altkomsoftware.pl/en/blog/building-microservices-net-core-part-1-plan/)
-* [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://altkomsoftware.pl/en/blog/microservices-net-core-cqrs-mediatr/)
-* [Part 3 Service Discovery with Eureka](https://altkomsoftware.pl/en/blog/service-discovery-eureka/)
-* [Part 4 Building API Gateways With Ocelot](https://altkomsoftware.pl/en/blog/building-api-gateways-with-ocelot/)
-* [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://altkomsoftware.pl/blog/building-microservices-net-core-part-5-marten-ideal-repository-domain-aggregates//)
-* [Part 6 Real time server client communication with SignalR and RabbitMQ](https://altkomsoftware.pl/en/blog/building-microservices-6/)
-* [Part 7 Transactional Outbox with RabbitMQ](https://altkomsoftware.pl/en/blog/microservices-outbox-rabbitmq/)
+* [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://www.altkomsoftware.com/blog/microservices-net-core-cqrs-mediatr/)
+* [Part 3 Service Discovery with Eureka](https://www.altkomsoftware.com/blog/microservices-service-discovery-eureka/)
+* [Part 4 Building API Gateways With Ocelot](https://www.altkomsoftware.com/blog/building-api-gateways-with-ocelot/)
+* [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-5-marten-ideal-repository-domain-aggregates/)
+* [Part 6 Real time server client communication with SignalR and RabbitMQ](https://www.altkomsoftware.com/blog/building-microservices-6/)
+* [Part 7 Transactional Outbox with RabbitMQ](https://www.altkomsoftware.com/blog/microservices-outbox-rabbitmq/)
 
 Other articles around microservices that could be interesting:
 
-* [CQRS and Event Sourcing Intro For Developers](https://altkomsoftware.pl/en/blog/cqrs-event-sourcing/)
-* [From monolith to microservices – to migrate or not to migrate?](https://altkomsoftware.pl/en/blog/monolith-microservices/)
-* [Event Storming — innovation in IT projects](https://altkomsoftware.pl/en/blog/event-storming/)
+* [CQRS and Event Sourcing Intro For Developers](https://www.altkomsoftware.com/blog/cqrs-event-sourcing/)
+* [From monolith to microservices – to migrate or not to migrate?](https://www.altkomsoftware.com/blog/monolith-microservices/)
+* [Event Storming — innovation in IT projects](https://www.altkomsoftware.com/blog/event-storming/)
 
 ## Business Case
 
