@@ -2,23 +2,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyNetQ;
+using EasyNetQ.Topology;
 using Microsoft.Extensions.Logging;
 using NHibernate;
-using RawRabbit;
 
 namespace PolicyService.Messaging.RabbitMq.Outbox;
 
 public class Outbox
 {
-    private readonly IBusClient busClient;
+    private readonly IBus busClient;
     private readonly OutboxLogger logger;
     private readonly ISessionFactory sessionFactory;
+    private readonly Exchange exchange;
 
-    public Outbox(IBusClient busClient, ISessionFactory sessionFactory, ILogger<Outbox> logger)
+    public Outbox(IBus busClient, ISessionFactory sessionFactory, ILogger<Outbox> logger)
     {
         this.busClient = busClient;
         this.sessionFactory = sessionFactory;
         this.logger = new OutboxLogger(logger);
+        this.exchange = busClient.Advanced.ExchangeDeclare("lab-dotnet-micro", ExchangeType.Topic);
     }
 
 
@@ -35,13 +38,11 @@ public class Outbox
     private IList<Message> FetchPendingMessages()
     {
         List<Message> messagesToPush;
-        using (var session = sessionFactory.OpenStatelessSession())
-        {
-            messagesToPush = session.Query<Message>()
-                .OrderBy(m => m.Id)
-                .Take(50)
-                .ToList();
-        }
+        using var session = sessionFactory.OpenStatelessSession();
+        messagesToPush = session.Query<Message>()
+            .OrderBy(m => m.Id)
+            .Take(50)
+            .ToList();
 
         return messagesToPush;
     }
@@ -75,8 +76,7 @@ public class Outbox
     {
         var deserializedMsg = msg.RecreateMessage();
         var messageKey = deserializedMsg.GetType().Name.ToLower();
-        await busClient.BasicPublishAsync(deserializedMsg,
-            cfg => { cfg.OnExchange("lab-dotnet-micro").WithRoutingKey(messageKey); });
+        await busClient.Advanced.PublishAsync(exchange, messageKey, true, new  RabbitMessage(msg));
     }
 }
 
@@ -103,4 +103,23 @@ internal class OutboxLogger
     {
         logger.LogError(e, "Failed to push message from outbox");
     }
+}
+
+internal class RabbitMessage : IMessage
+{
+    private readonly Message outboxMessage;
+
+    public RabbitMessage(Message outboxMessage)
+    {
+        this.outboxMessage = outboxMessage;
+    }
+
+    public object GetBody()
+    {
+        return outboxMessage.RecreateMessage();
+    }
+
+    public MessageProperties Properties => new MessageProperties();
+    
+    public Type MessageType => System.Type.GetType(outboxMessage.Type);
 }

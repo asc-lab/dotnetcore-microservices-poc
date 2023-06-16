@@ -5,19 +5,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="MediatR" Version="12.0.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
-        <PackageReference Include="NEST" Version="6.4.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5"/>
-        <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-rc5"/>
-        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3"/>
-        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3"/>
+        <PackageReference Include="MediatR" Version="12.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+        <PackageReference Include="NEST" Version="6.4.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
+        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
+        <PackageReference Include="EasyNetQ" Version="7.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DashboardService.Api\DashboardService.Api.csproj"/>
-        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj"/>
+        <ProjectReference Include="..\DashboardService.Api\DashboardService.Api.csproj" />
+        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
     </ItemGroup>
 
 

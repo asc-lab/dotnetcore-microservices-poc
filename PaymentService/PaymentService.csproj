@@ -8,22 +8,21 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
-        <PackageReference Include="Dapper" Version="2.0.123"/>
-        <PackageReference Include="GlobalExceptionHandler" Version="4.0.2"/>
-        <PackageReference Include="Hangfire.PostgreSql" Version="1.19.12"/>
-        <PackageReference Include="Hangfire.PostgreSql.NetCore" Version="1.4.3"/>
-        <PackageReference Include="Marten" Version="5.11.0"/>
-        <PackageReference Include="MediatR" Version="12.0.1"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3"/>
-        <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5"/>
-        <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-rc5"/>
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+        <PackageReference Include="Dapper" Version="2.0.123" />
+        <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
+        <PackageReference Include="Hangfire.PostgreSql" Version="1.19.12" />
+        <PackageReference Include="Hangfire.PostgreSql.NetCore" Version="1.4.3" />
+        <PackageReference Include="Marten" Version="5.11.0" />
+        <PackageReference Include="MediatR" Version="12.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
+        <PackageReference Include="EasyNetQ" Version="7.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PaymentService.Api\PaymentService.Api.csproj"/>
-        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj"/>
+        <ProjectReference Include="..\PaymentService.Api\PaymentService.Api.csproj" />
+        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
     </ItemGroup>
 
 </Project>
