@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using EasyNetQ;
+using EasyNetQ.Topology;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using RawRabbit;
-using RawRabbit.Configuration.Exchange;
 
 namespace ChatService.Messaging.RabbitMq;
 
 public class RabbitEventListener
 {
-    private readonly IBusClient busClient;
+    private readonly IBus busClient;
     private readonly IServiceProvider serviceProvider;
+    private readonly Exchange exchange;
 
     public RabbitEventListener(
-        IBusClient busClient,
+        IBus busClient,
         IServiceProvider serviceProvider)
     {
         this.busClient = busClient;
         this.serviceProvider = serviceProvider;
+        this.exchange = this.busClient.Advanced.ExchangeDeclare("lab-dotnet-micro", ExchangeType.Topic);
     }
 
     public void ListenTo(List<Type> eventsToSubscribe)
@@ -26,32 +28,22 @@ public class RabbitEventListener
         foreach (var evtType in eventsToSubscribe)
             //add check if is INotification
             GetType()
-                .GetMethod("Subscribe",
-                    BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetMethod("Subscribe", BindingFlags.NonPublic | BindingFlags.Instance)
                 .MakeGenericMethod(evtType)
                 .Invoke(this, new object[] { });
     }
 
     private void Subscribe<T>() where T : INotification
     {
-        //TODO: move exchange name and queue prefix to cfg
-        busClient.SubscribeAsync<T>(
-            async msg =>
-            {
-                //add logging
-                using (var scope = serviceProvider.CreateScope())
-                {
-                    var internalBus = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await internalBus.Publish(msg);
-                }
-            },
-            cfg => cfg.UseSubscribeConfiguration(
-                c => c
-                    .OnDeclaredExchange(e => e
-                        .WithName("lab-dotnet-micro")
-                        .WithType(ExchangeType.Topic)
-                        .WithArgument("key", typeof(T).Name.ToLower()))
-                    .FromDeclaredQueue(q => q.WithName("lab-chat-service-" + typeof(T).Name)))
-        );
+        //create queue & binding
+        var queue = busClient.Advanced.QueueDeclare("lab-chat-service-" + typeof(T).Name);
+        busClient.Advanced.Bind(exchange, queue, typeof(T).Name.ToLower());
+        //subscribe
+        busClient.Advanced.Consume(queue, (IMessage<T> msg, MessageReceivedInfo messageReceivedInfo) =>
+        {
+            using var scope = serviceProvider.CreateScope();
+            var internalBus = scope.ServiceProvider.GetRequiredService<IMediator>();
+            return internalBus.Publish(msg.Body);
+        });
     }
 }

@@ -5,19 +5,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
-        <PackageReference Include="GlobalExceptionHandler" Version="4.0.2"/>
-        <PackageReference Include="MediatR" Version="12.0.1"/>
-        <PackageReference Include="NEST" Version="6.4.0"/>
-        <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5"/>
-        <PackageReference Include="RawRabbit.Operations.Subscribe" Version="2.0.0-rc5"/>
-        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3"/>
-        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3"/>
+        <PackageReference Include="EasyNetQ" Version="7.5.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+        <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
+        <PackageReference Include="MediatR" Version="12.0.1" />
+        <PackageReference Include="NEST" Version="6.4.0" />
+        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
+        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PolicySearchService.Api\PolicySearchService.Api.csproj"/>
-        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj"/>
+        <ProjectReference Include="..\PolicySearchService.Api\PolicySearchService.Api.csproj" />
+        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
     </ItemGroup>
 
 </Project>

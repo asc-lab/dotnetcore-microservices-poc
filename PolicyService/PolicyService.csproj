@@ -6,35 +6,34 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Messaging\RabbitMq\Outbox\Message.hbm.xml"/>
-        <None Remove="Messaging\Outbox\Message.hbm.xml"/>
-        <None Remove="Domain\Offer.hbm.xml"/>
-        <None Remove="Domain\Policy.hbm.xml"/>
-        <EmbeddedResource Include="Domain\Policy.hbm.xml"/>
-        <EmbeddedResource Include="Domain\Offer.hbm.xml"/>
+        <EmbeddedResource Include="Messaging\RabbitMq\Outbox\Message.hbm.xml" />
+        <None Remove="Messaging\Outbox\Message.hbm.xml" />
+        <None Remove="Domain\Offer.hbm.xml" />
+        <None Remove="Domain\Policy.hbm.xml" />
+        <EmbeddedResource Include="Domain\Policy.hbm.xml" />
+        <EmbeddedResource Include="Domain\Offer.hbm.xml" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Queries\"/>
+        <Folder Include="Queries\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
-        <PackageReference Include="NHibernate" Version="5.4.1"/>
-        <PackageReference Include="Npgsql" Version="7.0.2"/>
-        <PackageReference Include="Polly" Version="7.2.1"/>
-        <PackageReference Include="RawRabbit.DependencyInjection.ServiceCollection" Version="2.0.0-rc5"/>
-        <PackageReference Include="RawRabbit.Operations.Tools" Version="2.0.0-rc5"/>
-        <PackageReference Include="RestEase" Version="1.6.1"/>
-        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0"/>
-        <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1"/>
-        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3"/>
-        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3"/>
+        <PackageReference Include="EasyNetQ" Version="7.5.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
+        <PackageReference Include="NHibernate" Version="5.4.1" />
+        <PackageReference Include="Npgsql" Version="7.0.2" />
+        <PackageReference Include="Polly" Version="7.2.1" />
+        <PackageReference Include="RestEase" Version="1.6.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+        <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
+        <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
+        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj"/>
-        <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj"/>
+        <ProjectReference Include="..\PolicyService.Api\PolicyService.Api.csproj" />
+        <ProjectReference Include="..\PricingService.Api\PricingService.Api.csproj" />
     </ItemGroup>
 
 </Project>
