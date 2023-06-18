@@ -40,6 +40,7 @@ public class Startup
         services.AddSingleton<PolicyAccountNumberGenerator>();
         services.AddRabbitListeners();
         services.AddBackgroundJobs(Configuration.GetSection("BackgroundJobs").Get<BackgroundJobsConfig>());
+        services.AddSwaggerGen();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +49,12 @@ public class Startup
         app.UseRouting();
         app.UseGlobalExceptionHandler(cfg => cfg.MapExceptions());
         if (!env.IsDevelopment()) app.UseHsts();
+        
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
         app.UseHttpsRedirection();
         app.UseInitializer();

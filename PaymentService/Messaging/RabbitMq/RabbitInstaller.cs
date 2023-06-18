@@ -20,8 +20,6 @@ public static class RabbitInstaller
         services.AddSingleton(svc => new RabbitEventListener(svc.GetRequiredService<IBus>(), svc));
 
         return services;
-
-        return services;
     }
 }
 

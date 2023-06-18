@@ -60,6 +60,7 @@ public class Startup
 
         services.AddSingleton<Domain.AuthService>();
         services.AddSingleton<IInsuranceAgents, InsuranceAgentsInMemoryDb>();
+        services.AddSwaggerGen();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +72,12 @@ public class Startup
         else
             app.UseHsts();
 
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        
         app.UseCors("CorsPolicy");
 
         app.UseAuthentication();
