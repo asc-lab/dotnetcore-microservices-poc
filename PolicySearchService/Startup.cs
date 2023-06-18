@@ -30,6 +30,7 @@ public class Startup
         services.AddMediatR(opts => opts.RegisterServicesFromAssemblyContaining<Startup>());
         services.AddElasticSearch(Configuration.GetConnectionString("ElasticSearchConnection"));
         services.AddRabbitListeners();
+        services.AddSwaggerGen();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +42,12 @@ public class Startup
         else
             app.UseHsts();
 
+        if (env.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+        
         app.UseHttpsRedirection();
         app.UseRabbitListeners(new List<Type> { typeof(PolicyCreated) });
         app.UseEndpoints(endpoints => endpoints.MapControllers());

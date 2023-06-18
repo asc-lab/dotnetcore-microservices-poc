@@ -12,6 +12,8 @@
         <PackageReference Include="NEST" Version="6.4.0" />
         <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
         <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
