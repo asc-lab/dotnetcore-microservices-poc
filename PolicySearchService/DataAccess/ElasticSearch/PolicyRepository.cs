@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using PolicySearchService.Domain;
 
 namespace PolicySearchService.DataAccess.ElasticSearch;
 
 public class PolicyRepository : IPolicyRepository
 {
-    private readonly ElasticClient elasticClient;
+    private readonly ElasticsearchClient elasticClient;
 
-    public PolicyRepository(ElasticClient elasticClient)
+    public PolicyRepository(ElasticsearchClient elasticClient)
     {
         this.elasticClient = elasticClient;
     }
 
     public async Task Add(Policy policy)
     {
-        await elasticClient.IndexDocumentAsync(policy);
+        await elasticClient.IndexAsync(policy);
     }
 
     public async Task<List<Policy>> Find(string queryText)
@@ -30,9 +31,9 @@ public class PolicyRepository : IPolicyRepository
                         .Query(q =>
                             q.MultiMatch(mm =>
                                 mm.Query(queryText)
-                                    .Fields(f => f.Fields(p => p.PolicyNumber, p => p.PolicyHolder))
+                                    .Fields(Infer.Fields<Policy>(p=>p.PolicyNumber, p=>p.PolicyHolder))
                                     .Type(TextQueryType.BestFields)
-                                    .Fuzziness(Fuzziness.Auto)
+                                    .Fuzziness(new Fuzziness("AUTO"))
                             )
                         ));
 

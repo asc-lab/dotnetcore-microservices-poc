@@ -6,14 +6,14 @@
 
     <ItemGroup>
         <PackageReference Include="EasyNetQ" Version="7.5.0" />
+        <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
         <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
         <PackageReference Include="MediatR" Version="12.0.1" />
-        <PackageReference Include="NEST" Version="6.4.0" />
         <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
         <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
