@@ -44,7 +44,7 @@ services:
     image: dotnet-policy-search-service
     container_name: dotnet-policy-search-service
     ports:
-    - 5060:5060
+    - 5065:5065
 
   dotnet-policy-service:
     build: 

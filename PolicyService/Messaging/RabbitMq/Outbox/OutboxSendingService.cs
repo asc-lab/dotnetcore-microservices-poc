@@ -7,7 +7,7 @@ namespace PolicyService.Messaging.RabbitMq.Outbox;
 
 public class OutboxSendingService : IHostedService
 {
-    private static readonly object locker = new();
+    private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1);
     private readonly Outbox outbox;
     private Timer timer;
 
@@ -38,19 +38,16 @@ public class OutboxSendingService : IHostedService
 
     private async void PushMessages(object state)
     {
-        var hasLock = false;
+        if (!await semaphore.WaitAsync(0))
+            return;
 
         try
         {
-            Monitor.TryEnter(locker, ref hasLock);
-
-            if (!hasLock) return;
-
-            await outbox.PushPendingMessages();
+            outbox.PushPendingMessages().Wait();
         }
         finally
         {
-            if (hasLock) Monitor.Exit(locker);
+            semaphore.Release();
         }
     }
 }
