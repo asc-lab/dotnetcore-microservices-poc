@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using DashboardService.Domain;
-using Nest;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Aggregations;
+using Elastic.Clients.Elasticsearch.QueryDsl;
+using Microsoft.VisualBasic;
+using Steeltoe.Common.Util;
 
 namespace DashboardService.DataAccess.Elastic;
 
@@ -18,22 +22,26 @@ public class SalesTrendsQueryAdapter : QueryAdapter<SalesTrendsQuery, SalesTrend
 
     public override SearchRequest<PolicyDocument> BuildQuery()
     {
-        var filters = new List<QueryContainer>();
+        var filters = new List<Query>();
 
         if (!string.IsNullOrWhiteSpace(query.FilterByProductCode))
-            filters.Add(new TermQuery
+        {
+            var tq = new TermQuery(new Field("productCode.keyword"))
             {
-                Field = new Field("productCode.keyword"),
                 Value = query.FilterByProductCode
-            });
+            };
+            filters.Add(tq);
+        }
 
         if (query.FilterBySalesDateStart != default || query.FilterBySalesDateEnd != default)
-            filters.Add(new DateRangeQuery
+        {
+            var drq = new DateRangeQuery(new Field("from"))
             {
-                Field = new Field("from"),
-                GreaterThanOrEqualTo = query.FilterBySalesDateStart,
-                LessThanOrEqualTo = query.FilterBySalesDateEnd
-            });
+                Gte = query.FilterBySalesDateStart,
+                Lte = query.FilterBySalesDateEnd
+            };
+            filters.Add(drq);
+        }
 
 
         if (filters.Count == 0) filters.Add(new MatchAllQuery());
@@ -62,7 +70,7 @@ public class SalesTrendsQueryAdapter : QueryAdapter<SalesTrendsQuery, SalesTrend
         };
     }
 
-    public override SalesTrendsResult ExtractResult(ISearchResponse<PolicyDocument> searchResponse)
+    public override SalesTrendsResult ExtractResult(SearchResponse<PolicyDocument> searchResponse)
     {
         var result = new SalesTrendsResult();
 

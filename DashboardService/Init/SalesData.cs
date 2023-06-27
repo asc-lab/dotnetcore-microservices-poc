@@ -2,24 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DashboardService.Domain;
-using Elasticsearch.Net;
-using Nest;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.IndexManagement;
 
 namespace DashboardService.Init;
 
 public class SalesData
 {
-    private readonly ElasticClient elasticClient;
+    private readonly ElasticsearchClient elasticClient;
 
-    public SalesData(ElasticClient elasticClient)
+    public SalesData(ElasticsearchClient elasticClient)
     {
         this.elasticClient = elasticClient;
     }
 
     public async Task SeedData()
     {
-        var policyIndexExists = await elasticClient.IndexExistsAsync("policy_lab_stats");
-        if (policyIndexExists.Exists) await elasticClient.DeleteIndexAsync(new DeleteIndexRequest("policy_lab_stats"));
+        var policyIndexExists = await elasticClient.Indices.ExistsAsync("policy_lab_stats");
+        if (policyIndexExists.Exists) await elasticClient.Indices.DeleteAsync(new DeleteIndexRequest("policy_lab_stats"));
 
         var salesData = new Dictionary<string, (string Product, int Month, int Policies)[]>
         {

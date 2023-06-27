@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using DashboardService.Domain;
-using Nest;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Aggregations;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 
 namespace DashboardService.DataAccess.Elastic;
 
@@ -18,29 +20,35 @@ public class AgentSalesQueryAdapter : QueryAdapter<AgentSalesQuery, AgentSalesQu
 
     public override SearchRequest<PolicyDocument> BuildQuery()
     {
-        var filters = new List<QueryContainer>();
+        var filters = new List<Query>();
 
         if (!string.IsNullOrWhiteSpace(query.FilterByAgentLogin))
-            filters.Add(new TermQuery
+        {
+            var tq = new TermQuery(new Field("agentLogin.keyword"))
             {
-                Field = new Field("agentLogin.keyword"),
                 Value = query.FilterByAgentLogin
-            });
+            };
+            filters.Add(tq);
+        }
 
         if (!string.IsNullOrWhiteSpace(query.FilterByProductCode))
-            filters.Add(new TermQuery
+        {
+            var tq = new TermQuery(new Field("productCode.keyword"))
             {
-                Field = new Field("productCode.keyword"),
                 Value = query.FilterByProductCode
-            });
+            };
+            filters.Add(tq);
+        }
 
         if (query.FilterBySalesDateStart != default || query.FilterBySalesDateEnd != default)
-            filters.Add(new DateRangeQuery
+        {
+            var drq = new DateRangeQuery(new Field("from"))
             {
-                Field = new Field("from"),
-                GreaterThanOrEqualTo = query.FilterBySalesDateStart,
-                LessThanOrEqualTo = query.FilterBySalesDateEnd
-            });
+                Gte = query.FilterBySalesDateStart,
+                Lte = query.FilterBySalesDateEnd
+            };
+            filters.Add(drq);
+        }
 
         if (filters.Count == 0) filters.Add(new MatchAllQuery());
 
@@ -70,7 +78,7 @@ public class AgentSalesQueryAdapter : QueryAdapter<AgentSalesQuery, AgentSalesQu
         };
     }
 
-    public override AgentSalesQueryResult ExtractResult(ISearchResponse<PolicyDocument> searchResponse)
+    public override AgentSalesQueryResult ExtractResult(SearchResponse<PolicyDocument> searchResponse)
     {
         var result = new AgentSalesQueryResult();
 

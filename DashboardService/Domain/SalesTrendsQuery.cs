@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Nest;
-using TimeUnit = DashboardService.Api.Queries.Dtos.TimeUnit;
+using DashboardService.Api.Queries.Dtos;
+using Microsoft.VisualBasic;
 
 namespace DashboardService.Domain;
 
@@ -37,7 +37,7 @@ public static class TimeAggregationUnitExtensions
         return unit switch
         {
             TimeAggregationUnit.Day => DateInterval.Day,
-            TimeAggregationUnit.Week => DateInterval.Week,
+            TimeAggregationUnit.Week => DateInterval.WeekOfYear,
             TimeAggregationUnit.Month => DateInterval.Month,
             TimeAggregationUnit.Year => DateInterval.Year,
             _ => throw new ArgumentException($"Invalid value of unit {unit}")

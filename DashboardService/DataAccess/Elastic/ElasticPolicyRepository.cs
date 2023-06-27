@@ -1,16 +1,15 @@
 using System;
 using System.Linq;
 using DashboardService.Domain;
-using Elasticsearch.Net;
-using Nest;
+using Elastic.Clients.Elasticsearch;
 
 namespace DashboardService.DataAccess.Elastic;
 
 public class ElasticPolicyRepository : IPolicyRepository
 {
-    private readonly ElasticClient elasticClient;
+    private readonly ElasticsearchClient elasticClient;
 
-    public ElasticPolicyRepository(ElasticClient elasticClient)
+    public ElasticPolicyRepository(ElasticsearchClient elasticClient)
     {
         this.elasticClient = elasticClient;
     }
@@ -26,7 +25,7 @@ public class ElasticPolicyRepository : IPolicyRepository
                 .Refresh(Refresh.True)
         );
 
-        if (!response.IsValid) throw new ApplicationException("Failed to index a policy document");
+        if (!response.IsValidResponse) throw new ApplicationException("Failed to index a policy document");
     }
 
     public PolicyDocument FindByNumber(string policyNumber)
@@ -38,7 +37,7 @@ public class ElasticPolicyRepository : IPolicyRepository
                     .Bool(b => b
                         .Filter(bf => bf
                             .Term(
-                                new Field("number.keyword"), policyNumber)))
+                                 new Field("number.keyword"), policyNumber)))
                 )
         );
 

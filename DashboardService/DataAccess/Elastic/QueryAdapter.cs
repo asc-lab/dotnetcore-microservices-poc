@@ -1,4 +1,5 @@
-using Nest;
+
+using Elastic.Clients.Elasticsearch;
 
 namespace DashboardService.DataAccess.Elastic;
 
@@ -13,5 +14,5 @@ public abstract class QueryAdapter<TQuery, TQueryResult, TIndex> where TIndex : 
 
     public abstract SearchRequest<TIndex> BuildQuery();
 
-    public abstract TQueryResult ExtractResult(ISearchResponse<TIndex> searchResponse);
+    public abstract TQueryResult ExtractResult(SearchResponse<TIndex> searchResponse);
 }
