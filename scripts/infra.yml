@@ -21,7 +21,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.9.2
     container_name: elasticsearch
     environment:
-    - cluster.name=docker-cluster
+    - discovery.type=single-node
     - bootstrap.memory_lock=true
     - xpack.security.enabled=false
     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
