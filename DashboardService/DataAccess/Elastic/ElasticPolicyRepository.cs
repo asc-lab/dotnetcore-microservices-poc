@@ -37,7 +37,7 @@ public class ElasticPolicyRepository : IPolicyRepository
                     .Bool(b => b
                         .Filter(bf => bf
                             .Term(
-                                 new Field("number.keyword"), policyNumber)))
+                                 p => new Field("number.keyword"), policyNumber)))
                 )
         );
 

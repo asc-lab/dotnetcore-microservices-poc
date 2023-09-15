@@ -4,8 +4,6 @@ using DashboardService.Domain;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Aggregations;
 using Elastic.Clients.Elasticsearch.QueryDsl;
-using Microsoft.VisualBasic;
-using Steeltoe.Common.Util;
 
 namespace DashboardService.DataAccess.Elastic;
 
@@ -54,19 +52,15 @@ public class SalesTrendsQueryAdapter : QueryAdapter<SalesTrendsQuery, SalesTrend
         var histogram = new DateHistogramAggregation("sales")
         {
             Field = new Field("from"),
-            Interval = new Union<DateInterval, Time>(query.AggregationUnit.ToDateInterval()),
+            CalendarInterval = query.AggregationUnit.ToCalendarInterval(),
+            //Interval = new Union<DateInterval, Time>(query.AggregationUnit.ToDateInterval()),
             Aggregations = new SumAggregation("total_premium", new Field("totalPremium"))
-        };
-
-        var filteredAgg = new FilterAggregation("agg_filter")
-        {
-            Filter = filter,
-            Aggregations = histogram
         };
 
         return new SearchRequest<PolicyDocument>
         {
-            Aggregations = filteredAgg
+            Query = filter,
+            Aggregations = new AggregationDictionary(new Dictionary<string, Aggregation> { ["sales"] = histogram })
         };
     }
 
@@ -76,13 +70,12 @@ public class SalesTrendsQueryAdapter : QueryAdapter<SalesTrendsQuery, SalesTrend
 
         var histogram = searchResponse
             .Aggregations
-            .Nested("agg_filter")
-            .DateHistogram("sales");
+            .GetDateHistogram("sales");
 
         foreach (var bucket in histogram.Buckets)
         {
-            var periodStart = bucket.Date;
-            var totalPremium = Convert.ToDecimal(bucket.Sum("total_premium").Value ?? 0.0);
+            var periodStart = DateTime.Parse(bucket.KeyAsString);
+            var totalPremium = Convert.ToDecimal((bucket["total_premium"] as SumAggregate).Value ?? 0);
 
             result.PeriodResult
             (
@@ -92,7 +85,7 @@ public class SalesTrendsQueryAdapter : QueryAdapter<SalesTrendsQuery, SalesTrend
                     periodStart.ToShortDateString(),
                     new SalesResult
                     (
-                        bucket.DocCount ?? 0,
+                        bucket.DocCount,
                         totalPremium
                     )
                 )

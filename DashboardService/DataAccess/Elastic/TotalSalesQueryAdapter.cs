@@ -57,39 +57,16 @@ public class TotalSalesQueryAdapter : QueryAdapter<TotalSalesQuery, TotalSalesQu
             Aggregations = new SumAggregation("total_premium", new Field("totalPremium"))
         };
 
-        /*
-        var filteredAgg = new FilterAggregation("agg_filter")
-        {
-            Filter = filter,
-            Aggregations = termAgg
-        };*/
-
         return new SearchRequest<PolicyDocument>
         {
             Query = filter,
-            Aggregations = new AggregationDictionary(new Dictionary<string, Aggregation> { ["agg_filter"] = termAgg })
+            Aggregations = new AggregationDictionary(new Dictionary<string, Aggregation> { ["count_by_product"] = termAgg })
         };
     }
 
     public override TotalSalesQueryResult ExtractResult(SearchResponse<PolicyDocument> searchResponse)
     {
         var result = new TotalSalesQueryResult();
-/*
-        var countByProduct = searchResponse
-            .Aggregations
-            .Nested("agg_filter")
-            .Terms("count_by_product");
-
-        foreach (var bucket in countByProduct.Buckets)
-        {
-            var sum = bucket.Sum("total_premium");
-            result.ProductResult
-            (
-                bucket.Key,
-                new SalesResult(bucket.DocCount ?? 0, Convert.ToDecimal(sum.Value ?? 0.0))
-            );
-        }
-*/
 
         var countByProduct = searchResponse
             .Aggregations
@@ -98,11 +75,11 @@ public class TotalSalesQueryAdapter : QueryAdapter<TotalSalesQuery, TotalSalesQu
             
         foreach (var bucket in countByProduct.Buckets)
         {
-            decimal? sum = 0.00M; /*bucket.Sum("total_premium");*/
+            var sum = (bucket["total_premium"] as SumAggregate).Value ?? 0; 
             result.ProductResult
             (
-                bucket.Key,
-                new SalesResult(bucket.DocCount ?? 0, Convert.ToDecimal(sum.Value ?? 0.0))
+                bucket.Key.ToString(),
+                new SalesResult(bucket.DocCount, Convert.ToDecimal(sum))
             );
         }
         

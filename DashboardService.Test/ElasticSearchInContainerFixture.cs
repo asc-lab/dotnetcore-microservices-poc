@@ -1,39 +1,43 @@
+using System.Threading.Tasks;
 using DashboardService.DataAccess.Elastic;
 using DashboardService.Domain;
-using DotNet.Testcontainers.Containers.Builders;
-using DotNet.Testcontainers.Containers.Modules;
-using DotNet.Testcontainers.Containers.WaitStrategies;
-using Nest;
+using DotNet.Testcontainers.Builders;
+using Elastic.Clients.Elasticsearch;
+using Testcontainers.Elasticsearch;
 using Xunit;
 
 namespace DashboardService.Test;
 
-public class ElasticSearchInContainerFixture
+public class ElasticSearchInContainerFixture : IAsyncLifetime
 {
-    private readonly TestcontainersContainer testContainer;
-
-    public ElasticSearchInContainerFixture()
+    private readonly ElasticsearchContainer testContainer = new ElasticsearchBuilder()
+        .WithImage("elasticsearch:8.9.2")
+        .WithName("elasticsearch-892")
+        .WithEnvironment("discovery.type", "single-node")
+        .WithEnvironment("xpack.security.enabled", "false")
+        .WithPortBinding(9200, 9200)
+        .WithPortBinding(9300, 9300)
+        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200))
+        .Build();
+    
+    public async Task InitializeAsync()
     {
-        var testContainersBuilder = new TestcontainersBuilder<TestcontainersContainer>()
-            .WithImage("elasticsearch:6.4.0")
-            .WithName("elasticsearch-33333")
-            .WithEnvironment("discovery.type", "single-node")
-            .WithPortBinding(9200, 9200)
-            .WithPortBinding(9300, 9300)
-            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200));
-
-        testContainer = testContainersBuilder.Build();
-        testContainer.StartAsync().Wait();
-
+        await testContainer.StartAsync();
         InsertData();
     }
 
-    public ElasticClient ElasticClient()
+    public Task DisposeAsync()
     {
-        var connectionSettings = new ConnectionSettings()
+        return testContainer.DisposeAsync().AsTask();
+    }
+    
+
+    public ElasticsearchClient ElasticClient()
+    {
+        var connectionSettings = new ElasticsearchClientSettings()
             .DefaultMappingFor<PolicyDocument>(m =>
                 m.IndexName("policy_lab_stats").IdProperty(d => d.Number));
-        return new ElasticClient(connectionSettings);
+        return new ElasticsearchClient(connectionSettings);
     }
 
     private void InsertData()

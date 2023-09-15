@@ -13,7 +13,7 @@
         <PackageReference Include="EasyNetQ" Version="7.5.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
-        <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.1.1" />
+        <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.9.3" />
     </ItemGroup>
 
     <ItemGroup>

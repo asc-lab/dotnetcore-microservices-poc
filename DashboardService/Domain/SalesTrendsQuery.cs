@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DashboardService.Api.Queries.Dtos;
+using Elastic.Clients.Elasticsearch.Aggregations;
 using Microsoft.VisualBasic;
 
 namespace DashboardService.Domain;
@@ -32,29 +33,34 @@ public enum TimeAggregationUnit
 
 public static class TimeAggregationUnitExtensions
 {
-    public static DateInterval ToDateInterval(this TimeAggregationUnit unit)
+    public static DateInterval ToDateInterval(this TimeAggregationUnit unit) => unit switch
     {
-        return unit switch
-        {
-            TimeAggregationUnit.Day => DateInterval.Day,
-            TimeAggregationUnit.Week => DateInterval.WeekOfYear,
-            TimeAggregationUnit.Month => DateInterval.Month,
-            TimeAggregationUnit.Year => DateInterval.Year,
-            _ => throw new ArgumentException($"Invalid value of unit {unit}")
-        };
-    }
+        TimeAggregationUnit.Day => DateInterval.Day,
+        TimeAggregationUnit.Week => DateInterval.WeekOfYear,
+        TimeAggregationUnit.Month => DateInterval.Month,
+        TimeAggregationUnit.Year => DateInterval.Year,
+        _ => throw new ArgumentException($"Invalid value of unit {unit}")
+    };
+    
 
-    public static TimeAggregationUnit ToTimeAggregationUnit(this TimeUnit unit)
+    public static CalendarInterval ToCalendarInterval(this TimeAggregationUnit unit) => unit switch
     {
-        return unit switch
-        {
-            TimeUnit.Day => TimeAggregationUnit.Day,
-            TimeUnit.Week => TimeAggregationUnit.Week,
-            TimeUnit.Month => TimeAggregationUnit.Month,
-            TimeUnit.Year => TimeAggregationUnit.Year,
-            _ => throw new ArgumentException($"Invalid value of unit {unit}")
-        };
-    }
+        TimeAggregationUnit.Day => CalendarInterval.Day,
+        TimeAggregationUnit.Week => CalendarInterval.Week,
+        TimeAggregationUnit.Month => CalendarInterval.Month,
+        TimeAggregationUnit.Year => CalendarInterval.Year,
+        _ => throw new ArgumentException($"Invalid value of unit {unit}")
+    };
+
+    public static TimeAggregationUnit ToTimeAggregationUnit(this TimeUnit unit) => unit switch
+    {
+        TimeUnit.Day => TimeAggregationUnit.Day,
+        TimeUnit.Week => TimeAggregationUnit.Week,
+        TimeUnit.Month => TimeAggregationUnit.Month,
+        TimeUnit.Year => TimeAggregationUnit.Year,
+        _ => throw new ArgumentException($"Invalid value of unit {unit}")
+    };
+
 }
 
 public class SalesTrendsResult

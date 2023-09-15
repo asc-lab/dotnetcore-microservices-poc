@@ -64,17 +64,11 @@ public class AgentSalesQueryAdapter : QueryAdapter<AgentSalesQuery, AgentSalesQu
             Field = new Field("agentLogin.keyword"),
             Aggregations = sumAmountAgg
         };
-
-        var filteredAgg = new FilterAggregation("agg_filter")
-        {
-            Filter = filter,
-            Aggregations = termAgg
-        };
-
-
+        
         return new SearchRequest<PolicyDocument>
         {
-            Aggregations = filteredAgg
+            Query = filter,
+            Aggregations = new AggregationDictionary(new Dictionary<string, Aggregation> { ["count_by_agent"] = termAgg })
         };
     }
 
@@ -84,20 +78,19 @@ public class AgentSalesQueryAdapter : QueryAdapter<AgentSalesQuery, AgentSalesQu
 
         var countByAgent = searchResponse
             .Aggregations
-            .Nested("agg_filter")
-            .Terms("count_by_agent");
+            .GetStringTerms("count_by_agent");
 
         foreach (var bucket in countByAgent.Buckets)
         {
-            var sum = bucket.Sum("total_premium");
+            var sum = (bucket["total_premium"] as SumAggregate).Value ?? 0;
 
             result.AgentResult
             (
-                bucket.Key,
+                bucket.Key.ToString(),
                 new SalesResult
                 (
-                    bucket.DocCount ?? 0,
-                    Convert.ToDecimal(sum.Value ?? 0.0)
+                    bucket.DocCount,
+                    Convert.ToDecimal(sum)
                 )
             );
         }
