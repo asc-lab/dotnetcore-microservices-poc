@@ -20,7 +20,7 @@ RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
-ENV ASPNETCORE_URLS=http://+:5060
+ENV ASPNETCORE_URLS=http://+:5065
 ENV ASPNETCORE_ENVIRONMENT=docker
 COPY --from=publish /opt/app/PolicySearchService/out ./
 ENTRYPOINT ["dotnet", "PolicySearchService.dll"]
