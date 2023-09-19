@@ -18,7 +18,7 @@ public class AuthService
         this.appSettings = appSettings.Value;
     }
 
-    public string Authenticate(string login, string pwd)
+    public AuthResult Authenticate(string login, string pwd)
     {
         var agent = agents.FindByLogin(login);
 
@@ -46,7 +46,15 @@ public class AuthService
                 SecurityAlgorithms.HmacSha256Signature)
         };
         var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
+        return new AuthResult
+        (
+            tokenHandler.WriteToken(token),
+            agent.Login,
+            new []{ "SALESMAN", "USER" },
+            agent.Avatar,
+            "SALESMAN",
+            tokenDescriptor.Expires!.Value
+        );
     }
 
     public InsuranceAgent AgentFromLogin(string login)

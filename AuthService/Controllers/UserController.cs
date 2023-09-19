@@ -20,12 +20,20 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] AuthRequest user)
     {
-        var token = authService.Authenticate(user.Login, user.Password);
+        var authResult = authService.Authenticate(user.Login, user.Password);
 
-        if (token == null)
+        if (authResult == null)
             return BadRequest(new { message = "Username of password incorrect" });
 
-        return Ok(new { Token = token });
+        return Ok(new
+        {
+            Token = authResult.Token,
+            UserName = authResult.Login,
+            Roles = authResult.Roles,
+            Avatar = authResult.Avatar,
+            UserType = authResult.UserType,
+            ExpiresIn = authResult.ExpiresIn
+        });
     }
 
     [HttpGet]
