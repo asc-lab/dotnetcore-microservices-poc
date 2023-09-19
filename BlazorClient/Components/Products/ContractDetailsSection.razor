@@ -1,0 +1,113 @@
+@using PolicyService.Api.Commands.Dtos
+<CardBody>
+    <CardText>Enter policy holder data</CardText>
+</CardBody>
+<CardBody>
+    <Validations Mode="ValidationMode.Auto" ValidateOnLoad="true" StatusChanged="ValidationStatusChanged">
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder first name</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolder.FirstName">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder last name</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolder.LastName">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder tax id</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolder.TaxId">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder address country</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolderAddress.Country">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder address zip code</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolderAddress.ZipCode">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder address city</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolderAddress.City">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    <Field Horizontal>
+        <FieldLabel ColumnSize="ColumnSize.Is2">Policy holder address street</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Validation Validator="ValidationRule.IsNotEmpty">
+                <TextEdit
+                    @bind-Text="@PolicyHolderAddress.Street">
+                    <Feedback>
+                        <ValidationError>Enter required value!</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </Validation>
+        </FieldBody>
+    </Field>
+    </Validations>
+</CardBody>
+
+@code {
+    [Parameter]
+    public PersonDto PolicyHolder { get; set; }
+    [Parameter]
+    public AddressDto PolicyHolderAddress { get; set; }
+    public bool IsValid { get; private set; } = false;
+
+    private Task ValidationStatusChanged(ValidationsStatusChangedEventArgs eventArgs )
+    {
+        IsValid = eventArgs.Status == ValidationStatus.Success; 
+        return Task.CompletedTask;
+    }
+}

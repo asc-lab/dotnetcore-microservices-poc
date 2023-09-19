@@ -1,0 +1,100 @@
+﻿@using Blazorise.Localization
+<Bar @bind-Visible="@topbarVisible" Breakpoint="Breakpoint.Desktop" Background="Background.Primary" ThemeContrast="ThemeContrast.Light">
+    <BarBrand>
+        <BarItem>
+            <BarLink To="">
+                <BarIcon Margin="Margin.Is2.FromEnd" IconName="IconName.Dashboard" />
+                BlazorClient
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarToggler />
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="/">Home</BarLink>
+            </BarItem>
+            <AuthorizeView>
+                <Authorized>
+                    <BarItem>
+                        <BarLink To="/products"><Icon Name="IconName.ShoppingCart"/> Products</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/policies"><Icon Name="IconName.Wallet"/> Policies</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/dashboard"><Icon Name="IconName.ChartPie"/> Dashboard</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/chat"><Icon Name="IconName.HandsHelping"/> Chat</BarLink>
+                    </BarItem>
+                </Authorized>
+            </AuthorizeView>
+        </BarStart>
+        <BarEnd>
+            <AuthorizeView>
+                <Authorized>
+                    <BarItem>
+                        <BarLink><Icon Name="IconName.UserTie"/> Logged as: @UserName</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink @onclick="Logout"><Icon Name="IconName.Lock"/> Logout</BarLink>
+                    </BarItem>
+                </Authorized>
+                <NotAuthorized>
+                    <BarItem>
+                        <BarLink To="/login"><Icon Name="IconName.LockOpen"/> Login</BarLink>
+                    </BarItem>
+                </NotAuthorized>
+            </AuthorizeView>
+        </BarEnd>
+    </BarMenu>
+</Bar>
+@code {
+    [Inject] 
+    private AuthenticationStateProvider AuthStateProvider { get; set; }
+    [Inject]
+    private NavigationManager NavManager { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+    private string UserName { get; set; }
+
+    protected async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        NavManager.NavigateTo("/", true);
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var authState = await AuthenticationState;
+        UserName = authState.User.Identity?.Name;
+    }
+
+    private bool topbarVisible = false;
+
+    Task OnLayoutTypeChecked( string layoutType )
+    {
+        LayoutType = layoutType;
+
+        return LayoutTypeChanged.InvokeAsync( layoutType );
+    }
+
+    [Parameter] public EventCallback<bool> ThemeEnabledChanged { get; set; }
+
+    [Parameter] public EventCallback<bool> ThemeGradientChanged { get; set; }
+
+    [Parameter] public EventCallback<bool> ThemeRoundedChanged { get; set; }
+
+    [Parameter] public EventCallback<string> ThemeColorChanged { get; set; }
+
+    [Parameter] public string? LayoutType { get; set; }
+
+    [Parameter] public EventCallback<string> LayoutTypeChanged { get; set; }
+
+    [Inject] protected ITextLocalizerService? LocalizationService { get; set; }
+
+    [CascadingParameter] protected Theme? Theme { get; set; }
+}

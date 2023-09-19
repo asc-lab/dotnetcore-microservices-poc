@@ -1,0 +1,16 @@
+﻿.demo-theme-color-item {
+    display: table-cell;
+    width: 36px;
+    height: 36px;
+    vertical-align: top;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+    .demo-theme-color-item .material-icons {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+    }

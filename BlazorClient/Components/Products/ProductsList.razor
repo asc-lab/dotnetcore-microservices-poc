@@ -1,0 +1,38 @@
+@page "/products"
+@using ProductService.Api.Queries.Dtos
+
+<Row>
+    @foreach (var product in Products)
+    {
+        <Column ColumnSize="ColumnSize.Is4">
+            <ProductCard Product="product"></ProductCard>
+        </Column>
+    }
+</Row>
+
+
+
+@code {
+    private IEnumerable<ProductDto> Products { get; set; } = new List<ProductDto>{};
+    [Inject]
+    private ProductsClient ProductsClient { get; set; }
+    [Inject]
+    private INotificationService NotificationService { get; set; } 
+
+    protected override async Task OnInitializedAsync()
+    {
+        var productsResult = await ProductsClient.GetAllProducts();
+
+        if (productsResult.IsSuccess)
+        {
+            Products = productsResult.Result;
+        }
+        else
+        {
+            await NotificationService.Error("Error while loading products. Please try again." ,"Error", options => options.IntervalBeforeClose = 3000);
+        }
+        
+    }
+
+
+}

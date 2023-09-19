@@ -1,0 +1,22 @@
+﻿@using BlazorClient.Components.Layout
+@inherits LayoutComponentBase
+
+<Layout Sider>
+    <LayoutSider>
+        <LayoutSiderContent>
+            <SideMenu />
+        </LayoutSiderContent>
+    </LayoutSider>
+    <Layout>
+        <LayoutHeader Fixed>
+            <TopMenu ThemeEnabledChanged="@OnThemeEnabledChanged"
+                 ThemeGradientChanged="@OnThemeGradientChanged"
+                 ThemeRoundedChanged="@OnThemeRoundedChanged"
+                 ThemeColorChanged="@OnThemeColorChanged"
+                 @bind-LayoutType="@layoutType" />
+        </LayoutHeader>
+        <LayoutContent Padding="Padding.Is4.OnX.Is4.FromTop">
+            @Body
+        </LayoutContent>
+    </Layout>
+</Layout>

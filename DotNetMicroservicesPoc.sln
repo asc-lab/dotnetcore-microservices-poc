@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardService", "Dashboa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DashboardService.Test", "DashboardService.Test\DashboardService.Test.csproj", "{4B044FAA-8281-4936-9211-6B236890A199}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClient", "BlazorClient\BlazorClient.csproj", "{CF722BAF-9A89-4A87-AC65-4144FAB639EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{4B044FAA-8281-4936-9211-6B236890A199}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B044FAA-8281-4936-9211-6B236890A199}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B044FAA-8281-4936-9211-6B236890A199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF722BAF-9A89-4A87-AC65-4144FAB639EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF722BAF-9A89-4A87-AC65-4144FAB639EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF722BAF-9A89-4A87-AC65-4144FAB639EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF722BAF-9A89-4A87-AC65-4144FAB639EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

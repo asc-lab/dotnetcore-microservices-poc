@@ -1,0 +1,67 @@
+@using DashboardService.Api.Queries
+<Card>
+    <CardHeader>
+        Agents sales
+    </CardHeader>
+    <CardBody>
+        <BarChart
+            Options="options"
+            OptionsObject="new { animation = new { duration = 0 }, hover = new { animationDuration = 0 }, responsiveAnimationDuration = 0 }" 
+            TItem="decimal"
+            @ref="barChart">
+
+        </BarChart>
+    </CardBody>
+</Card>
+
+@code {
+    [Inject]
+    private DashboardClient DashboardClient { get; set; }
+    
+    private BarChart<decimal> barChart;
+
+    private BarChartOptions options = new()
+    {
+        Responsive = true,
+        MaintainAspectRatio = false
+    };
+
+    protected override async Task OnAfterRenderAsync( bool firstRender )
+    {
+        if (firstRender)
+        {
+            await HandleRedraw();
+        }
+    }
+
+    private async Task HandleRedraw()
+    {
+        var agentSalesData = await LoadData();
+        
+        await barChart.Clear();
+        
+        await barChart.AddLabelsDatasetsAndUpdate
+        (
+            agentSalesData.PerAgentTotal.Select(kv=>kv.Key).ToList(),
+            new BarChartDataset<decimal>
+            {
+                Label = "Agents sales (EUR)",
+                Data = agentSalesData.PerAgentTotal.Select(kv=>kv.Value.PremiumAmount).ToList(),
+                BorderWidth = 1, 
+                BackgroundColor = "rgba(138, 22, 82, 0.8)"
+            }
+        );
+    }
+
+    private async Task<GetAgentsSalesResult> LoadData()
+    {
+        var getAgentsSales = await DashboardClient.GetAgentsSales(new GetAgentsSalesQuery
+        {
+            SalesDateFrom = new DateTime(2020, 1, 1),
+            SalesDateTo = new DateTime(2029, 12, 31)
+        });
+        
+        return getAgentsSales.Result;
+    }
+
+}

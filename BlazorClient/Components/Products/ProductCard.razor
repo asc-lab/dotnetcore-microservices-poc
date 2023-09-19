@@ -1,0 +1,41 @@
+@using ProductService.Api.Queries.Dtos
+<Card Margin="Margin.Is3.OnY" >
+    <CardHeader>
+        <CardTitle>@Product.Name</CardTitle>
+    </CardHeader>
+    <CardBody>
+        <CardText>@Product.Description</CardText>
+        <CardImage @bind-Source="@Product.Image"></CardImage>
+    </CardBody>
+    <CardBody>
+        <Table Bordered Striped>
+            <TableHeader>
+                <TableHeaderCell>Risk</TableHeaderCell>
+                <TableHeaderCell>Sum insured</TableHeaderCell>
+            </TableHeader>
+            @foreach (var cover in Product.Covers)
+            {
+                <TableRow>
+                    <TableRowCell>@cover.Name</TableRowCell>
+                    <TableRowCell>@cover.SumInsured</TableRowCell>
+                </TableRow>
+            }
+        </Table>
+        
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" @onclick="() => Buy(Product.Code)">
+            Buy <Icon Name="IconName.Wallet" />
+        </Button>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public ProductDto Product { get; set; }
+    [Inject]
+    private NavigationManager NavManager { get; set; }
+    
+    protected void Buy(string productCode)
+    {
+        NavManager.NavigateTo($"/product/{productCode}");
+    }
+}

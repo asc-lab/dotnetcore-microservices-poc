@@ -1,0 +1,191 @@
+@page "/product/{ProductCode}"
+@using ProductService.Api.Queries.Dtos
+@using PolicyService.Api.Commands
+@using PolicyService.Api.Commands.Dtos
+@using PolicyService.Api.Queries
+
+@if (Product != null)
+{
+    <Row>
+        <Column TextAlignment="TextAlignment.Center">
+            <Image @bind-Source="@Product.Image"></Image>
+        </Column>
+        <Column>
+            <Card>
+                <CardHeader>
+                    <h1>@Product.Name</h1>
+                    <CardText>@Product.Description</CardText>
+                </CardHeader>
+
+                <CardBody>
+                    <Steps @ref="stepsRef" @bind-SelectedStep="SelectedStep">
+                        <Step Name="1">Calculation</Step>
+                        <Step Name="2">Contract data</Step>
+                        <Step Name="3">Summary</Step>
+                    </Steps>
+                </CardBody>
+
+                @if (ShowOfferParams)
+                {
+                    <OfferParamsSection
+                        OfferParams="OfferParams"
+                        ShowPrice="ShowPrice"
+                        Offer="Offer"
+                        OfferParamsReadOnly="OfferParamsReadOnly"
+                        @ref="offerParamsSection"/>
+                }
+
+                @if (ShowContractDetails)
+                {
+                    <ContractDetailsSection
+                        PolicyHolder="PolicyHolder"
+                        PolicyHolderAddress="PolicyHolderAddress"
+                        @ref="contractParamsSection"/>
+                }
+
+                @if (ShowPolicyConfirmation)
+                {
+                    <PolicySummarySection PolicyResult="PolicyCreateResult"/>
+                }
+
+                <CardBody>
+                    <Field Horizontal JustifyContent="JustifyContent.End">
+                        <FieldBody ColumnSize="ColumnSize.Is12">
+                            <Button Color="Color.Secondary" @onclick="BackToEdit" Margin="Margin.Is1">Back</Button>
+                            @if (!OfferParamsReadOnly)
+                            {
+                                <Button Color="Color.Primary" @onclick="CalculatePrice" Margin="Margin.Is1">Calculate price</Button>
+                            }
+                            @if (ShowPrice)
+                            {
+                                <Button Color="Color.Secondary" @onclick="ChangeParams" Margin="Margin.Is1">Change Params</Button>
+                                <Button Color="Color.Primary" @onclick="Buy" Margin="Margin.Is1">Buy</Button>
+                            }
+
+                            @if (ShowContractDetails)
+                            {
+                                <Button Color="Color.Primary" @onclick="Confirm" Margin="Margin.Is1">Confirm</Button>
+                            }
+                        </FieldBody>
+                    </Field>
+                </CardBody>
+            </Card>
+            
+        </Column>
+    </Row>
+}
+
+@code {
+    [Parameter]
+    public string ProductCode { get; set; }
+    [Inject]
+    protected ProductsClient ProductsClient { get; set; }
+    [Inject]
+    protected PolicyClient PolicyClient { get; set; }
+    [Inject] 
+    protected NavigationManager NavManager { get; set; }
+    [Inject]
+    private INotificationService NotificationService { get; set; }
+    private ProductDto Product { get; set; }
+    private OfferParametersModel OfferParams { get; set; } = new ();
+    private CreateOfferResult Offer { get; set; } = null;
+    private PersonDto PolicyHolder { get; set; } = new ();
+    private AddressDto PolicyHolderAddress { get; set; } = new();
+    private bool ShowOfferParams { get; set; } = true;
+    private bool OfferParamsReadOnly { get; set; } = false;
+    private bool ShowPrice { get; set; } = false;
+    private bool ShowContractDetails { get; set; } = false;
+    private bool ShowPolicyConfirmation { get; set; } = false;
+    private GetPolicyDetailsQueryResult PolicyCreateResult { get; set; }
+    private Steps stepsRef;
+    private string SelectedStep { get; set; } = "1";
+    private OfferParamsSection offerParamsSection;
+    private ContractDetailsSection contractParamsSection;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var productResponse = await ProductsClient.GetProduct(ProductCode);
+        Product = productResponse.Result;
+        OfferParams.InitQuestions(Product);
+    }
+
+    private void BackToEdit()
+    {
+        NavManager.NavigateTo("/products");
+    }
+
+    private async Task CalculatePrice()
+    {
+        if (!offerParamsSection.IsValid)
+            return;
+        
+        var calculationResult = await PolicyClient.CreateOffer(new CreateOfferCommand
+        {
+            ProductCode = Product.Code,
+            PolicyFrom = OfferParams.PolicyFrom.Value,
+            PolicyTo = OfferParams.PolicyTo.Value,
+            SelectedCovers = Product.Covers.Select(c=>c.Code).ToList(),
+            Answers = OfferParams.QuestionAnswers.Select(qa=>qa.Answer).ToList()
+        });
+        
+        if (calculationResult.IsSuccess)
+        {
+            Offer = calculationResult.Result;
+            OfferParamsReadOnly = true;
+            ShowPrice = true;
+        }
+        else
+        {
+            await NotificationService.Error("Error while calculating price. Try again later", "Error", options => options.IntervalBeforeClose = 3000);
+        }
+        
+    }
+
+    private void ChangeParams()
+    {
+        Offer = null;
+        OfferParamsReadOnly = false;
+        ShowPrice = false;
+        ShowPolicyConfirmation = false;
+        SelectedStep = "1";
+    }
+
+    private void Buy()
+    {
+        ShowOfferParams = false;
+        ShowPrice = false;
+        ShowContractDetails = true;
+        ShowPolicyConfirmation = false;
+        SelectedStep = "2";
+    }
+
+    private async Task Confirm()
+    {
+        if (!contractParamsSection.IsValid)
+            return;
+        
+        var request = new CreatePolicyCommand
+        {
+            OfferNumber = Offer.OfferNumber,
+            PolicyHolder = PolicyHolder,
+            PolicyHolderAddress = PolicyHolderAddress
+        };
+
+
+        var createPolicyResult = await PolicyClient.CreatePolicy(request);
+
+        if (createPolicyResult.IsSuccess)
+        {
+            PolicyCreateResult = (await PolicyClient.GetPolicy(createPolicyResult.Result.PolicyNumber)).Result;
+            ShowOfferParams = false;
+            ShowPrice = false;
+            ShowContractDetails = false;
+            ShowPolicyConfirmation = true;
+            SelectedStep = "3";
+        }
+        else
+        {
+            await NotificationService.Error("Error while creating policy. Try again later", "Error", options => options.IntervalBeforeClose = 3000);
+        }
+    }
+}

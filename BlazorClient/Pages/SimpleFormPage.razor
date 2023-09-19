@@ -1,0 +1,124 @@
+﻿@page "/simple-form"
+<Row>
+    <Column ColumnSize="ColumnSize.Is6.OnDesktop">
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardTitle>Basic Example</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <Validations @ref="validationsBasicExampleRef" Mode="ValidationMode.Auto" ValidateOnLoad="false">
+                    <Validation Validator="@ValidationRule.IsEmail">
+                        <Field>
+                            <FieldLabel>Email address</FieldLabel>
+                            <TextEdit Placeholder="Enter email" />
+                            <FieldHelp>We'll never share your email with anyone else.</FieldHelp>
+                        </Field>
+                    </Validation>
+                    <Validation Validator="@ValidatePassword">
+                        <Field>
+                            <FieldLabel>Password</FieldLabel>
+                            <TextEdit Role="TextRole.Password" Placeholder="Password" />
+                        </Field>
+                    </Validation>
+
+                    <Field>
+                        <Check TValue="bool">Remember me?</Check>
+                    </Field>
+                    <Button Color="Color.Primary" Clicked="SubmitBasicExample">Submit</Button>
+                </Validations>
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is6.OnDesktop">
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardTitle>Horizontal Form</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <Validations @ref="validationsHorizontalFormRef" Mode="ValidationMode.Auto" ValidateOnLoad="false">
+                    <Validation Validator="@ValidationRule.IsEmail">
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is3.OnDesktop">Email address</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is9.OnDesktop">
+                                <TextEdit Placeholder="Email" />
+                            </FieldBody>
+                        </Field>
+                    </Validation>
+                    <Validation Validator="@ValidatePassword">
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is3.OnDesktop">Password</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is9.OnDesktop">
+                                <TextEdit Role="TextRole.Password" Placeholder="Password" @bind-Text="@password" />
+                            </FieldBody>
+                        </Field>
+                    </Validation>
+                    <Validation Validator="@ValidatePassword2">
+                        <Field Horizontal>
+                            <FieldLabel ColumnSize="ColumnSize.IsFull.OnTablet.Is3.OnDesktop">Re Password</FieldLabel>
+                            <FieldBody ColumnSize="ColumnSize.IsFull.OnTablet.Is9.OnDesktop">
+                                <TextEdit Role="TextRole.Password" Placeholder="Retype password" />
+                            </FieldBody>
+                        </Field>
+                    </Validation>
+                    <Field Horizontal JustifyContent="JustifyContent.End">
+                        <FieldBody ColumnSize="ColumnSize.Is9.Is3.WithOffset">
+                            <Check TValue="bool">Remember me?</Check>
+                        </FieldBody>
+                    </Field>
+                    <Field Horizontal JustifyContent="JustifyContent.End">
+                        <FieldBody ColumnSize="ColumnSize.Is9.Is3.WithOffset">
+                            <Button Color="Color.Primary" Clicked="SubmitHorizontalForm">Submit</Button>
+                        </FieldBody>
+                    </Field>
+                </Validations>
+            </CardBody>
+        </Card>
+    </Column>
+</Row>
+@code {
+    Validations? validationsBasicExampleRef;
+    Validations? validationsHorizontalFormRef;
+    string? password;
+
+    void ValidatePassword( ValidatorEventArgs e )
+    {
+        e.Status = Convert.ToString( e.Value )?.Length >= 6 ? ValidationStatus.Success : ValidationStatus.Error;
+    }
+
+    void ValidatePassword2( ValidatorEventArgs e )
+    {
+        var password2 = Convert.ToString( e.Value );
+
+        if ( password2?.Length < 6 )
+        {
+            e.Status = ValidationStatus.Error;
+            e.ErrorText = "Password must be at least 6 characters long!";
+        }
+        else if ( password2 != password )
+        {
+            e.Status = ValidationStatus.Error;
+        }
+        else
+        {
+            e.Status = ValidationStatus.Success;
+        }
+    }
+
+    async Task SubmitBasicExample()
+    {
+        if ( await validationsBasicExampleRef!.ValidateAll() )
+        {
+            await validationsBasicExampleRef.ClearAll();
+        }
+    }
+
+    async Task SubmitHorizontalForm()
+    {
+        if ( await validationsHorizontalFormRef!.ValidateAll() )
+        {
+            await validationsHorizontalFormRef.ClearAll();
+        }
+    }
+
+
+}

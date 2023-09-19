@@ -1,0 +1,30 @@
+<Card>
+    <CardBody TextAlignment="TextAlignment.Center">
+        <Row>
+            <Column>
+                <Badge Color="Color.Primary">
+                    <Icon IconSize="IconSize.x2" Name="Icon"></Icon>
+                </Badge>
+            </Column>
+            <Column>
+                <CardText TextColor="TextColor.Primary">@Amount</CardText>
+                <CardText TextWeight="TextWeight.Bold" TextSize="TextSize.Small" TextColor="TextColor.Muted">@Title.ToUpper()</CardText>
+                @if (PoliciesCount.HasValue)
+                {
+                    <CardText>@PoliciesCount PCS.</CardText>
+                }
+            </Column>
+        </Row>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public IconName Icon { get; set; }
+    [Parameter]
+    public decimal Amount { get; set; }
+    [Parameter]
+    public long? PoliciesCount { get; set; }
+}

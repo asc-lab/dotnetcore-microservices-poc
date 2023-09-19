@@ -1,0 +1,85 @@
+@page "/login"
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+@inject INotificationService notificationService
+
+<h3>Login</h3>
+<Row>
+    <Column>
+        <Card>
+            <CardHeader>
+                <CardTitle>Login</CardTitle>
+            </CardHeader>
+            <CardBody>
+                <Field Horizontal>
+                    <FieldLabel>User name</FieldLabel>
+                    <FieldBody>
+                        <Addons>
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel><Icon Name="IconName.UserTie" /></AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit @bind-Text="LoginRequest.Login"></TextEdit>
+                            </Addon>
+                        </Addons>
+                    </FieldBody>
+                </Field>
+                
+                <Field Horizontal>
+                    <FieldLabel>
+                        Password
+                    </FieldLabel>
+                    <FieldBody>
+                        <Addons>
+                            <Addon AddonType="AddonType.Start">
+                                <AddonLabel><Icon Name="IconName.Key" /></AddonLabel>
+                            </Addon>
+                            <Addon AddonType="AddonType.Body">
+                                <TextEdit Role="TextRole.Password" @bind-Text="LoginRequest.Password"></TextEdit>
+                            </Addon>
+                        </Addons>
+                    </FieldBody>
+                </Field>
+                
+                <Field Horizontal JustifyContent="JustifyContent.End">
+                    <FieldBody ColumnSize="ColumnSize.Is9.Is3.WithOffset">
+                        <Button Color="Color.Primary" @onclick="Authenticate">Submit</Button>
+                    </FieldBody>
+                </Field>
+            </CardBody>
+        </Card>
+    </Column>
+</Row>
+
+@code {
+    private AuthRequest LoginRequest { get; set; } = new ();
+    [Inject] private AuthClient AuthClient { get; set; }
+    
+    private async Task Authenticate()
+    {
+        var loginResponse = await AuthClient.Login(LoginRequest);
+
+        if (loginResponse.IsSuccess)
+        {
+            var session = new UserSession
+            {
+                UserName = loginResponse.Result.UserName,
+                Role = loginResponse.Result.UserType,
+                Token = loginResponse.Result.Token,
+                Avatar = loginResponse.Result.Avatar
+            };
+            var customAuthProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            await customAuthProvider.UpdateAuthenticationState(session);
+            navManager.NavigateTo("/", true);
+        }
+        else
+        {
+            await notificationService.Error
+            (
+                "Failed to login. Please try again", 
+                "Login error", 
+                options => options.IntervalBeforeClose = 3000
+            );
+        }
+    }
+}

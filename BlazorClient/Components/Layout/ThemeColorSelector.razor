@@ -1,0 +1,26 @@
+<div>
+    @foreach ( var color in ThemeColors.Items.Values )
+    {
+        <div @key="color.Key">
+            @foreach ( var shade in color.Shades.Values )
+            {
+                var temp = shade.Value;
+
+                <div @key="shade.Key" class="demo-theme-color-item" style="background: @temp" @onclick="@(()=>OnThemeColorSelect(temp))"></div>
+            }
+        </div>
+    }
+</div>
+@code{
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    Task OnThemeColorSelect( string value )
+    {
+        Value = value;
+        return ValueChanged.InvokeAsync(value);
+    }
+}

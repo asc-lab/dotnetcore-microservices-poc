@@ -1,0 +1,44 @@
+@using PolicyService.Api.Queries
+<CardBody>
+    <CardText>You successfully created a new policy. See details below.</CardText>
+</CardBody>
+<CardBody>
+    <Table Bordered>
+        <TableBody>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">Policy number</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.Number</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">From</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.DateFrom.ToShortDateString()</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">To</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.DateTo.ToShortDateString()</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">Policy holder</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.PolicyHolder</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">Total premium</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.TotalPremium EUR</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">Product code</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.ProductCode</TableRowCell>
+            </TableRow>
+            <TableRow>
+                <TableRowCell TextWeight="TextWeight.Bold">Covers</TableRowCell>
+                <TableRowCell>@PolicyResult.Policy.Covers.Aggregate((c1, c2) => c1 + "," + c2)</TableRowCell>
+            </TableRow>
+        </TableBody>
+    </Table>
+</CardBody>
+
+
+@code {
+    [Parameter]
+    public GetPolicyDetailsQueryResult PolicyResult { get; set; }
+}

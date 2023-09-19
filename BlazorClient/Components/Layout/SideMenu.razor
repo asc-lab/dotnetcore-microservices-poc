@@ -1,0 +1,41 @@
+﻿<Bar Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Dark"
+     Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">
+    <BarToggler />
+    <BarBrand>
+        <BarItem>
+            <BarLink To="">
+                <BarIcon IconName="customIcon" />
+                BlazorClient
+            </BarLink>
+        </BarItem>
+    </BarBrand>
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="/">
+                    <BarIcon IconName="IconName.Home" />
+                    Home
+                </BarLink>
+            </BarItem>
+            <AuthorizeView>
+                <Authorized>
+                    <BarItem>
+                        <BarLink To="/products"><Icon Name="IconName.ShoppingCart"/> Products</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/policies"><Icon Name="IconName.Wallet"/> Policies</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/dashboard"><Icon Name="IconName.ChartPie"/> Dashboard</BarLink>
+                    </BarItem>
+                    <BarItem>
+                        <BarLink To="/chat"><Icon Name="IconName.HandsHelping"/> Chat</BarLink>
+                    </BarItem>
+                </Authorized>
+            </AuthorizeView>
+        </BarStart>
+    </BarMenu>
+</Bar>
+@code {
+    RenderFragment customIcon =@<img src="/brand-logo.png" style="width:32px; height: 32px" />;
+}
