@@ -57,7 +57,7 @@
     private List<ChatMessage> Messages { get; set; } = new ();
 
     private HubConnection hubConnection;
-
+    
     protected override async Task OnInitializedAsync()
     {
         var authProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
@@ -89,9 +89,8 @@
 
     private async Task SendMessage()
     {
-        var msg = new ChatMessage("a", "b", Message);
+        await hubConnection.SendAsync("SendMessage",Message);
         Message = string.Empty;
-        await hubConnection.SendAsync("SendMessage",msg.Text);
     }
     
     public async ValueTask DisposeAsync()
