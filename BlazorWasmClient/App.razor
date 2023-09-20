@@ -1,0 +1,50 @@
+﻿<CascadingAuthenticationState>
+    <Blazorise.ThemeProvider Theme="@theme">
+        <Router AppAssembly="typeof(App).Assembly">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(BlazorWasmClient.Layouts.MainLayout)" />
+            </Found>
+            <NotFound>
+                <p>Sorry, there's nothing at this address.</p>
+            </NotFound>
+        </Router>
+        <NotificationProvider />
+        <MessageProvider />
+        <PageProgressProvider />
+    </Blazorise.ThemeProvider>
+</CascadingAuthenticationState>
+@code {
+    private Theme theme = new()
+        {
+            BarOptions = new()
+            {
+                HorizontalHeight = "72px"
+            },
+            ColorOptions = new()
+            {
+                Primary = "#0288D1",
+                Secondary = "#A65529",
+                Success = "#23C02E",
+                Info = "#9BD8FE",
+                Warning = "#F8B86C",
+                Danger = "#F95741",
+                Light = "#F0F0F0",
+                Dark = "#535353",
+            },
+            BackgroundOptions = new()
+            {
+                Primary = "#0288D1",
+                Secondary = "#A65529",
+                Success = "#23C02E",
+                Info = "#9BD8FE",
+                Warning = "#F8B86C",
+                Danger = "#F95741",
+                Light = "#F0F0F0",
+                Dark = "#535353",
+            },
+            InputOptions = new()
+            {
+                CheckColor = "#0288D1",
+            }
+        };
+}

@@ -1,0 +1,101 @@
+@page "/Dashboard"
+@using BlazorWasmClient.Shared
+@using DashboardService.Api.Queries
+@using Microsoft.AspNetCore.Authorization
+@using ProductService.Api.Queries.Dtos
+@using BlazorWasmClient.Components.Products
+
+@attribute [Authorize]
+
+<Row>
+    <CardDeck>
+        <TotalSalesCard 
+            Title="Total Sales" 
+            Amount="@TotalAmount" 
+            Icon="IconName.MoneyBillAlt"></TotalSalesCard>
+    
+    
+    
+        <TotalSalesCard 
+            Title="Num. policies" 
+            Amount="@TotalPolicies" 
+            Icon="IconName.Book"></TotalSalesCard>
+    
+    
+        @foreach (var prodTotalSale in ProductTotalSalesModels)
+        {
+            
+            <TotalSalesCard 
+                Title="@prodTotalSale.Name" 
+                Amount="@prodTotalSale.TotalPremium" 
+                PoliciesCount="@prodTotalSale.TotalPolicies" 
+                Icon="@prodTotalSale.Icon"></TotalSalesCard>
+            
+        }
+    </CardDeck>
+</Row>
+
+<CardDeck>
+    <SalesAgentsCard PeriodFrom="@PeriodFrom" PeriodTo="@PeriodTo"></SalesAgentsCard>
+    <ProductsSalesCard PeriodFrom="@PeriodFrom" PeriodTo="@PeriodTo"></ProductsSalesCard>
+    <TrandsCard PeriodFrom="@PeriodFrom" PeriodTo="@PeriodTo"></TrandsCard>
+</CardDeck>
+
+
+@code {
+
+    [Inject]
+    private ProductsClient ProductsClient { get; set; }
+    
+    [Inject]
+    private DashboardClient DashboardClient { get; set; }
+    
+    [Inject]
+    private INotificationService NotificationService { get; set; }
+
+    private IEnumerable<ProductDto> Products { get; set; } = new List<ProductDto> {};
+    private decimal TotalAmount { get; set; }
+    private long TotalPolicies { get; set; }
+    private List<ProductTotalSalesModel> ProductTotalSalesModels { get; set; } = new();
+    
+    private DateTime PeriodFrom { get; set; } = DateTime.Now.YearAgo();
+    private DateTime PeriodTo { get; set; } = DateTime.Now;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var getAllProductsResult = await ProductsClient.GetAllProducts();
+
+        if (!getAllProductsResult.IsSuccess)
+        {
+            await NotificationService.Error("Error while loading products data. Please try again.", "Error");
+            return;
+        }
+        Products = getAllProductsResult.Result;
+
+        var getTotalSalesResult = await DashboardClient.GetTotalSales(new GetTotalSalesQuery
+        {
+            ProductCode = null,
+            SalesDateFrom = PeriodFrom,
+            SalesDateTo = PeriodTo
+        });
+
+        if (getTotalSalesResult.IsSuccess)
+        {
+            TotalAmount = getTotalSalesResult.Result.Total.PremiumAmount;
+            TotalPolicies = getTotalSalesResult.Result.Total.PoliciesCount;
+            ProductTotalSalesModels.Clear();
+            ProductTotalSalesModels = getTotalSalesResult.Result.PerProductTotal
+                .Select(kv => new ProductTotalSalesModel
+                    (
+                        kv.Key,
+                        Products.First(p=>p.Code==kv.Key).Name,
+                        ProductIcons.FromProductIcon(Products.First(p=>p.Code==kv.Key).Icon),
+                        kv.Value.PremiumAmount, 
+                        kv.Value.PoliciesCount
+                    ))
+                .ToList();
+        }
+    
+    }
+
+}

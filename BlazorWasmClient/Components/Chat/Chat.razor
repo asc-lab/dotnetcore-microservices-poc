@@ -1,0 +1,104 @@
+@page "/Chat"
+@using Microsoft.AspNetCore.SignalR.Client
+@using BlazorWasmClient.Components.Auth
+<h3>Chat</h3>
+
+<Card>
+    <CardBody>
+        <Row>
+            <Column ColumnSize="ColumnSize.Is12">
+                <Inline>
+                    <Field ColumnSize="ColumnSize.Is9">
+                        <TextEdit @bind-Text="Message" Width="Width.Is100"/>
+                    </Field>
+                    <Field>
+                        <Button
+                            @onclick="SendMessage"
+                            disabled="@(!IsConnected)"
+                            Margin="Margin.Is2.OnX"
+                            Color="Color.Primary">
+                            <Icon Name="IconName.Phone"/> Send
+                        </Button>
+                    </Field>
+                </Inline>
+            </Column>
+        </Row>
+    </CardBody>
+    <CardBody>
+        @foreach (var msg in Messages)
+        {
+            <CardText>
+                @if (msg.Avatar != null)
+                {
+                    <Image Source="@msg.Avatar"></Image> 
+                    @msg.FormattedMessage
+                }
+                else
+                {
+                    <Alert Color="Color.Success" Visible>
+                        <AlertMessage>@msg.Text</AlertMessage>
+                    </Alert>
+                }
+                
+            </CardText>
+        }
+    </CardBody>
+</Card>
+
+@code {
+    [Inject] 
+    private AuthenticationStateProvider AuthStateProvider { get; set; }
+    
+    [Inject]
+    private IConfiguration Configuration { get; set; }
+    
+    private string Message { get; set; }
+
+    private List<ChatMessage> Messages { get; set; } = new ();
+
+    private HubConnection hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authProvider = (CustomAuthenticationStateProvider)AuthStateProvider;
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{Configuration["Services:Chat"]}/agentsChat", opts =>
+            {
+                opts.AccessTokenProvider = () => authProvider.GetToken();
+            })
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<string, string,string>("ReceiveMessage", (user, avatar, text) =>
+        {
+            Messages.Insert(0, new ChatMessage(user,avatar,text));
+            StateHasChanged();
+        });
+
+        hubConnection.On<string>("ReceiveNotification", notification =>
+        {
+            Messages.Insert(0, new ChatMessage(string.Empty,null,notification));
+
+        });
+
+        await hubConnection.StartAsync();
+    }
+    
+    public bool IsConnected =>
+        hubConnection?.State == HubConnectionState.Connected;
+
+    private async Task SendMessage()
+    {
+        var msg = new ChatMessage("a", "b", Message);
+        Message = string.Empty;
+        await hubConnection.SendAsync("SendMessage",msg.Text);
+    }
+    
+    public async ValueTask DisposeAsync()
+    {
+        if (hubConnection is not null)
+        {
+            await hubConnection.DisposeAsync();
+        }
+    }
+}
