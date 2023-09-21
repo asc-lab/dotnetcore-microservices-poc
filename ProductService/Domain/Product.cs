@@ -2,6 +2,17 @@
 
 public class Product
 {
+    public Guid Id { get; }
+    public string Code { get; }
+    public string Name { get; }
+    public ProductStatus Status { get; private set; }
+    public string Image { get; }
+    public string Description { get; }
+    public IList<Cover> Covers { get; }
+    public IList<Question> Questions { get; }
+    public int MaxNumberOfInsured { get; }
+    public string ProductIcon { get; }
+
     private Product()
     {
     }
@@ -20,19 +31,7 @@ public class Product
         MaxNumberOfInsured = maxNumberOfInsured;
         ProductIcon = productIcon;
     }
-
-    public Guid Id { get; }
-    public string Code { get; }
-    public string Name { get; }
-    public ProductStatus Status { get; private set; }
-    public string Image { get; }
-    public string Description { get; }
-    public IList<Cover> Covers { get; }
-    public IList<Question> Questions { get; }
-    public int MaxNumberOfInsured { get; }
-
-    public string ProductIcon { get; }
-
+    
     public static Product CreateDraft(string code, string name, string image, string description,
         int maxNumberOfInsured, string productIcon)
     {

@@ -1,8 +1,22 @@
 namespace BlazorWasmClient.Shared;
 
-public class ProductIcons
+public static class ProductIcons
 {
-    public static IconName FromProductIcon(string productIcon) =>
-        string.IsNullOrWhiteSpace(productIcon) ? IconName.Bus : Enum.Parse<IconName>(productIcon);
+    private static readonly IDictionary<string, IconName> ProductIconsMap = new Dictionary<string, IconName>
+    {
+        ["plane"] = IconName.Plane,
+        ["building"] = IconName.Building,
+        ["apple"] = IconName.Seedling,
+        ["car"] = IconName.Car
+    };
+    
+    public static IconName FromProductIcon(string productIcon)
+    {
+        if (string.IsNullOrWhiteSpace(productIcon) || !ProductIconsMap.ContainsKey(productIcon))
+            return IconName.Bus;
+
+        return ProductIconsMap[productIcon];
+    }
+        
     
 }

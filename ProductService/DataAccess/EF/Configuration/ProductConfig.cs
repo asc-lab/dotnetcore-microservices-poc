@@ -15,6 +15,7 @@ internal class ProductConfig : IEntityTypeConfiguration<Product>
         entity.Property(q => q.Status).HasConversion<string>();
         entity.Property(q => q.Image);
         entity.Property(q => q.Description);
+        entity.Property(q => q.ProductIcon);
 
         entity.OwnsMany(q => q.Covers, opts =>
         {
