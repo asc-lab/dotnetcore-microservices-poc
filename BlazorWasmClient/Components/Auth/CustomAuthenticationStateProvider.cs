@@ -50,7 +50,6 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
                 new Claim(ClaimTypes.Name, userSession.UserName),
                 new Claim(ClaimTypes.Role, userSession.Role),
             }));
-            //userSession.ExpiryTimestamp = DateTime.Now.AddSeconds(userSession.ExpiresIn);
             await sessionStorageService.SaveItemAsEncrypted("UserSession", userSession);
         }
         else
@@ -66,9 +65,10 @@ public class CustomAuthenticationStateProvider : AuthenticationStateProvider
         var result = string.Empty;
 
         var userSession = await sessionStorageService.ReadEncryptedItem<UserSession>("UserSession");
-        //TODO: handle expiry
-        //if (userSession!=null && DateTime.Now < userSession.ExpiryTimeStamp)
-        result = userSession.Token;
+        if (userSession != null && DateTime.Now < userSession.ExpiryTimestamp)
+        {
+            return userSession.Token;
+        }
         
         return result;
     }

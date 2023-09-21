@@ -32,7 +32,7 @@ public class UserController : ControllerBase
             Roles = authResult.Roles,
             Avatar = authResult.Avatar,
             UserType = authResult.UserType,
-            ExpiresIn = authResult.ExpiresIn
+            ExpiryTimeStamp = authResult.ExpiryTimeStamp
         });
     }
 

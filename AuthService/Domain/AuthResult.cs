@@ -9,5 +9,5 @@ public record AuthResult
     string[] Roles,
     string Avatar,
     string UserType,
-    DateTime ExpiresIn
+    DateTime ExpiryTimeStamp
 );
