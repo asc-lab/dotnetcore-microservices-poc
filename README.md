@@ -1,5 +1,7 @@
 # ASCLAB .NET Core PoC - LAB Insurance Sales Portal
 
+[![BuiltWithDot.Net shield](https://builtwithdot.net/project/409/microservices-on-net-core-sample/badge)](https://builtwithdot.net/project/409/microservices-on-net-core-sample)
+
 This is an example of a very simplified insurance sales system made in a microservice architecture using:
 
 * .NET 7
