@@ -101,7 +101,7 @@ To run the whole solution:
 >If ElasticSearch fails to start, try running `sudo sysctl -w vm.max_map_count=262144` first
 
 Once the application and infrastructure are started you can open http://localhost:8080 in your browser and see our welcome page.
-Once there you can use Account menu item to log into the system. Valid users and passwords can be found [here] (https://github.com/asc-lab/dotnetcore-microservices-poc/blob/master/AuthService/DataAccess/InsuranceAgentsInMemoryDb.cs). You can for example login as admin with password admin.
+Once there you can use Account menu item to log into the system. Valid users and passwords can be found [here](https://github.com/asc-lab/dotnetcore-microservices-poc/blob/master/AuthService/DataAccess/InsuranceAgentsInMemoryDb.cs). You can for example login as admin with password admin.
 
 ## Manual running
 
