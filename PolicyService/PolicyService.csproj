@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <UserSecretsId>0a1d70d5-102b-4bdc-9526-438b3daef0b5</UserSecretsId>
     </PropertyGroup>
 
@@ -29,8 +29,8 @@
         <PackageReference Include="Serilog.Sinks.ColoredConsole" Version="3.0.1" />
         <PackageReference Include="Steeltoe.Discovery.ClientBase" Version="3.2.3" />
         <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
