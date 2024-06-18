@@ -16,22 +16,22 @@
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
-		<PackageReference Include="Blazorise.Charts" Version="1.3.1" />
-		<PackageReference Include="Blazorise.Components" Version="1.3.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.11" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.11" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.11" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="7.0.11" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+		<PackageReference Include="Blazorise.Charts" Version="1.5.3" />
+		<PackageReference Include="Blazorise.Components" Version="1.5.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.6" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazorise" Version="1.3.*" />
-		<PackageReference Include="Blazorise.Bootstrap5" Version="1.3.*" />
-		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.3.*" />
+		<PackageReference Include="Blazorise" Version="1.5.3" />
+		<PackageReference Include="Blazorise.Bootstrap5" Version="1.5.3" />
+		<PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.3" />
 	</ItemGroup>
 
 	<ItemGroup>
