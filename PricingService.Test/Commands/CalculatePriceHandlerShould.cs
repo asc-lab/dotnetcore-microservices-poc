@@ -26,7 +26,7 @@ public class CalculatePriceHandlerShould
             await Assert.ThrowsAsync<ValidationException>(() => handler.Handle(command, CancellationToken.None));
 
         Assert.NotNull(exception);
-        Assert.True(exception.Errors.Count() > 0);
+        Assert.True(exception.Errors.Any());
     }
 
     [Fact]
