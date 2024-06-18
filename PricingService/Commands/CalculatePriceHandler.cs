@@ -20,7 +20,7 @@ public class CalculatePriceHandler : IRequestHandler<CalculatePriceCommand, Calc
 
     public async Task<CalculatePriceResult> Handle(CalculatePriceCommand cmd, CancellationToken cancellationToken)
     {
-        commandValidator.ValidateAndThrow(cmd);
+        await commandValidator.ValidateAndThrowAsync(cmd);
 
         var tariff = await dataStore.Tariffs[cmd.ProductCode];
 
