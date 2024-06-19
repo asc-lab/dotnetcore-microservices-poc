@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <UserSecretsId>4761b4d0-7f3f-4a3a-b774-89de95b85112</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.4"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3"/>
-        <PackageReference Include="Ocelot" Version="18.0.0"/>
-        <PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0"/>
-        <PackageReference Include="Ocelot.Provider.Eureka" Version="18.0.0"/>
-        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.3"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.6.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
+        <PackageReference Include="Ocelot" Version="23.3.3" />
+        <PackageReference Include="Ocelot.Cache.CacheManager" Version="23.3.3" />
+        <PackageReference Include="Ocelot.Provider.Eureka" Version="23.3.3" />
+        <PackageReference Include="Steeltoe.Discovery.Eureka" Version="3.2.7" />
     </ItemGroup>
 
 </Project>

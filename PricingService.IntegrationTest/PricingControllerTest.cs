@@ -44,14 +44,14 @@ public class PricingControllerTest
             _.StatusCodeShouldBeOk();
         });
 
-        var calculationResult = response.ReadAsJson<CalculatePriceResult>();
+        var calculationResult = await response.ReadAsJsonAsync<CalculatePriceResult>();
         Equal(98M, calculationResult.TotalPrice);
     }
 
     [Fact]
     public async Task CommandIsProperlyValidated()
     {
-        var response = await fixture.SystemUnderTest.Scenario(_ =>
+        _ = await fixture.SystemUnderTest.Scenario(_ =>
         {
             _.Post
                 .Json(new CalculatePriceCommand())

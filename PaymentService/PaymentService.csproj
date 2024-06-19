@@ -1,25 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
         <UserSecretsId>6e9f2776-8954-46fe-b74a-372f9006db7b</UserSecretsId>
     </PropertyGroup>
 
 
     <ItemGroup>
-        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.3" />
-        <PackageReference Include="Dapper" Version="2.0.123" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
+        <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="GlobalExceptionHandler" Version="4.0.2" />
-        <PackageReference Include="Hangfire.PostgreSql" Version="1.19.12" />
+        <PackageReference Include="Hangfire.PostgreSql" Version="1.20.8" />
         <PackageReference Include="Hangfire.PostgreSql.NetCore" Version="1.4.3" />
-        <PackageReference Include="Marten" Version="5.11.0" />
-        <PackageReference Include="MediatR" Version="12.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.3" />
-        <PackageReference Include="EasyNetQ" Version="7.5.0" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Marten" Version="7.19.1" />
+        <PackageReference Include="MediatR" Version="12.3.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+        <PackageReference Include="EasyNetQ" Version="7.8.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
 
     <ItemGroup>

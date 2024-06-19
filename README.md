@@ -4,37 +4,37 @@
 
 This is an example of a very simplified insurance sales system made in a microservice architecture using:
 
-* .NET 7
-* Entity Framework Core
-* MediatR
-* Marten
-* Eureka
-* Ocelot
-* JWT Tokens
-* RestEase
-* RawRabbit
-* NHibernate
-* Polly
-* NEST (ElasticSearch client)
-* Dapper
-* DynamicExpresso
-* SignalR
+- .NET 8
+- Entity Framework Core
+- MediatR
+- Marten
+- Eureka
+- Ocelot
+- JWT Tokens
+- RestEase
+- RawRabbit
+- NHibernate
+- Polly
+- NEST (ElasticSearch client)
+- Dapper
+- DynamicExpresso
+- SignalR
 
 **Comprehensive guide describing the architecture, applied design patterns and technologies can be found on our blog:**
 
-* [Part 1 The Plan](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-1-plan/)
-* [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://www.altkomsoftware.com/blog/microservices-net-core-cqrs-mediatr/)
-* [Part 3 Service Discovery with Eureka](https://www.altkomsoftware.com/blog/microservices-service-discovery-eureka/)
-* [Part 4 Building API Gateways With Ocelot](https://www.altkomsoftware.com/blog/building-api-gateways-with-ocelot/)
-* [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-5-marten-ideal-repository-domain-aggregates/)
-* [Part 6 Real time server client communication with SignalR and RabbitMQ](https://www.altkomsoftware.com/blog/building-microservices-6/)
-* [Part 7 Transactional Outbox with RabbitMQ](https://www.altkomsoftware.com/blog/microservices-outbox-rabbitmq/)
+- [Part 1 The Plan](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-1-plan/)
+- [Part 2 Shaping microservice internal architecture with CQRS and MediatR](https://www.altkomsoftware.com/blog/microservices-net-core-cqrs-mediatr/)
+- [Part 3 Service Discovery with Eureka](https://www.altkomsoftware.com/blog/microservices-service-discovery-eureka/)
+- [Part 4 Building API Gateways With Ocelot](https://www.altkomsoftware.com/blog/building-api-gateways-with-ocelot/)
+- [Part 5 Marten An Ideal Repository For Your Domain Aggregates](https://www.altkomsoftware.com/blog/building-microservices-net-core-part-5-marten-ideal-repository-domain-aggregates/)
+- [Part 6 Real time server client communication with SignalR and RabbitMQ](https://www.altkomsoftware.com/blog/building-microservices-6/)
+- [Part 7 Transactional Outbox with RabbitMQ](https://www.altkomsoftware.com/blog/microservices-outbox-rabbitmq/)
 
 Other articles around microservices that could be interesting:
 
-* [CQRS and Event Sourcing Intro For Developers](https://www.altkomsoftware.com/blog/cqrs-event-sourcing/)
-* [From monolith to microservices – to migrate or not to migrate?](https://www.altkomsoftware.com/blog/monolith-microservices/)
-* [Event Storming — innovation in IT projects](https://www.altkomsoftware.com/blog/event-storming/)
+- [CQRS and Event Sourcing Intro For Developers](https://www.altkomsoftware.com/blog/cqrs-event-sourcing/)
+- [From monolith to microservices – to migrate or not to migrate?](https://www.altkomsoftware.com/blog/monolith-microservices/)
+- [Event Storming — innovation in IT projects](https://www.altkomsoftware.com/blog/event-storming/)
 
 ## Business Case
 
@@ -51,33 +51,33 @@ Latest feature is a business dashboard that displays sales stats using ElasticSe
     <img alt="NET Microservices Architecture" src="https://raw.githubusercontent.com/asc-lab/dotnetcore-microservices-poc/master/readme-images/dotnetcore-microservices-architecture.png" />
 </p>
 
-* **Web** - a VueJS Single Page Application that provides insurance agents ability to select appropriate product for their customers, calculate price, create an offer and conclude the sales process by converting offer to policy. This application also provides search and view functions for policies and offers. Frontend talks to backend services via `agent-portal-gateway`.
+- **Web** - a VueJS Single Page Application that provides insurance agents ability to select appropriate product for their customers, calculate price, create an offer and conclude the sales process by converting offer to policy. This application also provides search and view functions for policies and offers. Frontend talks to backend services via `agent-portal-gateway`.
 
-* **Agent Portal API Gateway** - is a special microservice whose main purpose it to hide complexity of the underlying back office services structure from client application. Usually we create a dedicated API gateway for each client app. In case in the future we add a Xamarin mobile app to our system, we will need to build a dedicated API gateway for it. API gateway provides also security barrier and does not allow unauthenticated request to be passed to backend services. Another popular usage of API gateways is content aggregation from multiple services.
+- **Agent Portal API Gateway** - is a special microservice whose main purpose it to hide complexity of the underlying back office services structure from client application. Usually we create a dedicated API gateway for each client app. In case in the future we add a Xamarin mobile app to our system, we will need to build a dedicated API gateway for it. API gateway provides also security barrier and does not allow unauthenticated request to be passed to backend services. Another popular usage of API gateways is content aggregation from multiple services.
 
-* **Auth Service** - a service responsible for users authentication. Our security system will be based on JWT tokens. Once user identifies himself correctly, auth service issues a token that is further use to check user permission and available products.
+- **Auth Service** - a service responsible for users authentication. Our security system will be based on JWT tokens. Once user identifies himself correctly, auth service issues a token that is further use to check user permission and available products.
 
-* **Chat Service** - a service that uses SignalR to give agents ability to chat with each other.
+- **Chat Service** - a service that uses SignalR to give agents ability to chat with each other.
 
-* **Payment Service** - main responsibilities: create Policy Account, show Policy Account list, register in payments from bank statement file. \
-This module is taking care of a managing policy accounts. Once the policy is created, an account is created in this service with expected money income.  PaymentService also has an implementation of a scheduled process where CSV file with payments is imported and payments are assigned to policy accounts. This component shows asynchronous communication between services using RabbitMQ and ability to create background jobs. It also features accessing database using Dapper.
+- **Payment Service** - main responsibilities: create Policy Account, show Policy Account list, register in payments from bank statement file. \
+  This module is taking care of a managing policy accounts. Once the policy is created, an account is created in this service with expected money income. PaymentService also has an implementation of a scheduled process where CSV file with payments is imported and payments are assigned to policy accounts. This component shows asynchronous communication between services using RabbitMQ and ability to create background jobs. It also features accessing database using Dapper.
 
-* **Policy Service** - creates offers, converts offers to insurance policies. \
-In this service we demonstrated usage of CQRS pattern for better read/write operation isolation. This service demonstrates two ways of communication between services: synchronous REST based calls to `PricingService` through HTTP Client to get the price, and asynchronous event based using RabbitMQ to publish information about newly created policies. In this service we also access RDBMS using NHibernate.
+- **Policy Service** - creates offers, converts offers to insurance policies. \
+  In this service we demonstrated usage of CQRS pattern for better read/write operation isolation. This service demonstrates two ways of communication between services: synchronous REST based calls to `PricingService` through HTTP Client to get the price, and asynchronous event based using RabbitMQ to publish information about newly created policies. In this service we also access RDBMS using NHibernate.
 
-* **Policy Search Service** - provides insurance policy search. \
-This module listens for events from RabbitMQ, converts received DTOs to “read model” and indexes given model in ElasticSearch to provide advanced search capabilities.
+- **Policy Search Service** - provides insurance policy search. \
+  This module listens for events from RabbitMQ, converts received DTOs to “read model” and indexes given model in ElasticSearch to provide advanced search capabilities.
 
-* **Pricing Service** - a service responsible for calculation of price for given insurance product based on its parametrization. \
-For each product a tariff should be defined. The tariff is a set of rules on the basis of which the price is calculated. DynamicExpresso was used to parse the rules. During the policy purchase process, the `PolicyService` connects with this service to calculate a price. Price is calculated based on user’s answers for defined questions.
+- **Pricing Service** - a service responsible for calculation of price for given insurance product based on its parametrization. \
+  For each product a tariff should be defined. The tariff is a set of rules on the basis of which the price is calculated. DynamicExpresso was used to parse the rules. During the policy purchase process, the `PolicyService` connects with this service to calculate a price. Price is calculated based on user’s answers for defined questions.
 
-* **Product Service** - simple insurance product catalog. \
-It provides basic information about each insurance product and its parameters that can be customized while creating an offer for a customer.
+- **Product Service** - simple insurance product catalog. \
+  It provides basic information about each insurance product and its parameters that can be customized while creating an offer for a customer.
 
-* **Document Service** - this service uses JS Report to generate pdf certificates.
+- **Document Service** - this service uses JS Report to generate pdf certificates.
 
-* **Dashboard Service** - Dashboard that presents sales statistics. \
-Business dashboards that presents our agents sales results. Dashboard service subscribes to events of selling policies and index sales data in ElasticSearch. Then ElasticSearch aggregation framework is used to calculate sales stats like: total sales and number of policies per product per time period, sales per agent in given time period and sales timeline. Sales stats are nicely visualized using ChartJS.
+- **Dashboard Service** - Dashboard that presents sales statistics. \
+  Business dashboards that presents our agents sales results. Dashboard service subscribes to events of selling policies and index sales data in ElasticSearch. Then ElasticSearch aggregation framework is used to calculate sales stats like: total sales and number of policies per product per time period, sales per agent in given time period and sales timeline. Sales stats are nicely visualized using ChartJS.
 
 Each business microservice has also **.Api project** (`PaymentService.Api`, `PolicyService.Api` etc.), where we defined commands, events, queries and operations and **.Test project** (`PaymentService.Test`, `PolicyService.Test`) with unit and integration tests.
 
@@ -86,19 +86,20 @@ Each business microservice has also **.Api project** (`PaymentService.Api`, `Pol
 You must install Docker & Docker Compose before. \
 Scripts have been divided into two parts:
 
-* [`infra.yml`](scripts/infra.yml) runs the necessary infrastructure.
-* [`app.yml`](scripts/app.yml) is used to run the application.
+- [`infra.yml`](scripts/infra.yml) runs the necessary infrastructure.
+- [`app.yml`](scripts/app.yml) is used to run the application.
 
 You can use scripts to build/run/stop/down all containers.
 
 To run the whole solution:
 
 ```bash
+cd scripts
 ./infra-run.sh
 ./app-run.sh
 ```
 
->If ElasticSearch fails to start, try running `sudo sysctl -w vm.max_map_count=262144` first
+> If ElasticSearch fails to start, try running `sudo sysctl -w vm.max_map_count=262144` first
 
 Once the application and infrastructure are started you can open http://localhost:8080 in your browser and see our welcome page.
 Once there you can use Account menu item to log into the system. Valid users and passwords can be found [here](https://github.com/asc-lab/dotnetcore-microservices-poc/blob/master/AuthService/DataAccess/InsuranceAgentsInMemoryDb.cs). You can for example login as admin with password admin.
