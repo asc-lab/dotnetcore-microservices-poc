@@ -9,6 +9,7 @@ using PricingService.Configuration;
 using PricingService.DataAccess.Marten;
 using PricingService.Infrastructure;
 using PricingService.Init;
+using Serilog;
 using Steeltoe.Discovery.Client;
 
 namespace PricingService;
@@ -34,6 +35,7 @@ public class Startup
         services.AddMediatR(options => options.RegisterServicesFromAssemblyContaining<Program>());
         services.AddLoggingBehavior();
         services.AddSwaggerGen();
+        services.AddSerilog();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

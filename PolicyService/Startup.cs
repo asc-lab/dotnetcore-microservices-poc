@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using PolicyService.DataAccess.NHibernate;
 using PolicyService.Messaging.RabbitMq;
 using PolicyService.RestClients;
+using Serilog;
 using Steeltoe.Discovery.Client;
 
 namespace PolicyService;
@@ -30,6 +31,7 @@ public class Startup
         services.AddNHibernate(Configuration.GetConnectionString("DefaultConnection"));
         services.AddRabbitListeners();
         services.AddSwaggerGen();
+        services.AddSerilog();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

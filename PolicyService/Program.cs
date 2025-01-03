@@ -32,7 +32,6 @@ public static class Program
 
         return WebHost.CreateDefaultBuilder(args)
             .UseConfiguration(config)
-            .UseStartup<Startup>()
-            .UseSerilog();
+            .UseStartup<Startup>();
     }
 }

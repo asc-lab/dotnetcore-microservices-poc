@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using DashboardService.DataAccess.Elastic;
 using DashboardService.Domain;
-using DotNet.Testcontainers.Builders;
 using Elastic.Clients.Elasticsearch;
 using Testcontainers.Elasticsearch;
 using Xunit;
@@ -12,12 +11,15 @@ public class ElasticSearchInContainerFixture : IAsyncLifetime
 {
     private readonly ElasticsearchContainer testContainer = new ElasticsearchBuilder()
         .WithImage("elasticsearch:8.9.2")
-        .WithName("elasticsearch-892")
-        .WithEnvironment("discovery.type", "single-node")
+        //.WithImage("elasticsearch:8.6.1")
+        //.WithName("elasticsearch-892-dashboard-test")
+        //.WithEnvironment("discovery.type", "single-node")
         .WithEnvironment("xpack.security.enabled", "false")
+        //.WithEnvironment("ES_JAVA_OPTS", "-Xms512m -Xmx512m")
+        //.WithEnvironment("bootstrap.memory_lock", "true")
         .WithPortBinding(9200, 9200)
         .WithPortBinding(9300, 9300)
-        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200))
+        //.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200))
         .Build();
     
     public async Task InitializeAsync()
