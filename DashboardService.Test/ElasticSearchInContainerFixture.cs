@@ -1,7 +1,9 @@
+using System;
 using System.Threading.Tasks;
 using DashboardService.DataAccess.Elastic;
 using DashboardService.Domain;
 using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 using Testcontainers.Elasticsearch;
 using Xunit;
 
@@ -11,15 +13,11 @@ public class ElasticSearchInContainerFixture : IAsyncLifetime
 {
     private readonly ElasticsearchContainer testContainer = new ElasticsearchBuilder()
         .WithImage("elasticsearch:8.9.2")
-        //.WithImage("elasticsearch:8.6.1")
-        //.WithName("elasticsearch-892-dashboard-test")
-        //.WithEnvironment("discovery.type", "single-node")
-        .WithEnvironment("xpack.security.enabled", "false")
-        //.WithEnvironment("ES_JAVA_OPTS", "-Xms512m -Xmx512m")
-        //.WithEnvironment("bootstrap.memory_lock", "true")
-        .WithPortBinding(9200, 9200)
-        .WithPortBinding(9300, 9300)
-        //.WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(9200))
+        .WithEnvironment("ES_JAVA_OPTS", "-Xms2147483648 -Xmx4294967296")
+        .WithEnvironment("cluster.routing.allocation.disk.watermark.low", "100%")
+        .WithEnvironment("cluster.routing.allocation.disk.watermark.high", "100%")
+        .WithEnvironment("cluster.routing.allocation.disk.watermark.flood_stage", "100%")
+        .WithTmpfsMount("/usr/share/elasticsearch/data") 
         .Build();
     
     public async Task InitializeAsync()
@@ -36,9 +34,10 @@ public class ElasticSearchInContainerFixture : IAsyncLifetime
 
     public ElasticsearchClient ElasticClient()
     {
-        var connectionSettings = new ElasticsearchClientSettings()
+        var connectionSettings = new ElasticsearchClientSettings(new Uri(testContainer.GetConnectionString()))
             .DefaultMappingFor<PolicyDocument>(m =>
                 m.IndexName("policy_lab_stats").IdProperty(d => d.Number));
+        connectionSettings.ServerCertificateValidationCallback(CertificateValidations.AllowAll);
         return new ElasticsearchClient(connectionSettings);
     }
 

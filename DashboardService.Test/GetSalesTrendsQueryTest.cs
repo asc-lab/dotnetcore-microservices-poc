@@ -10,15 +10,8 @@ using Xunit;
 namespace DashboardService.Test;
 
 [Collection("ElasticSearch in a container")]
-public class GetSalesTrendsQueryTest
+public class GetSalesTrendsQueryTest(ElasticSearchInContainerFixture fixture)
 {
-    private readonly ElasticSearchInContainerFixture fixture;
-
-    public GetSalesTrendsQueryTest(ElasticSearchInContainerFixture fixture)
-    {
-        this.fixture = fixture;
-    }
-
     [Fact]
     public async Task SalesTrends_All_Product_In_First_Q_2020()
     {

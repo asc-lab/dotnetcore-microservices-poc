@@ -9,15 +9,8 @@ using Xunit;
 namespace DashboardService.Test;
 
 [Collection("ElasticSearch in a container")]
-public class GetTotalSalesQueryTest
+public class GetTotalSalesQueryTest(ElasticSearchInContainerFixture fixture)
 {
-    private readonly ElasticSearchInContainerFixture fixture;
-
-    public GetTotalSalesQueryTest(ElasticSearchInContainerFixture fixture)
-    {
-        this.fixture = fixture;
-    }
-
     [Fact]
     public async Task TotalSales_All_Product_In_First_Q_2020()
     {
