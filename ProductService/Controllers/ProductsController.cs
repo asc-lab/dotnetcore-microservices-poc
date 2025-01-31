@@ -7,15 +7,8 @@ namespace ProductService.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ProductsController : ControllerBase
+public class ProductsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    public ProductsController(IMediator mediator)
-    {
-        this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-    }
-
     // GET api/products
     [HttpGet]
     public async Task<ActionResult> GetAll()

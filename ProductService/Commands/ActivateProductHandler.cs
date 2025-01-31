@@ -4,15 +4,9 @@ using ProductService.Domain;
 
 namespace ProductService.Commands;
 
-public class ActivateProductHandler : IRequestHandler<ActivateProductCommand, ActivateProductResult>
+public class ActivateProductHandler(IProductRepository products)
+    : IRequestHandler<ActivateProductCommand, ActivateProductResult>
 {
-    private readonly IProductRepository products;
-
-    public ActivateProductHandler(IProductRepository products)
-    {
-        this.products = products;
-    }
-
     public async Task<ActivateProductResult> Handle(ActivateProductCommand request, CancellationToken cancellationToken)
     {
         var product = await products.FindById(request.ProductId);

@@ -5,15 +5,10 @@ using ProductService.Domain;
 
 namespace ProductService.Queries;
 
-public class FindProductByCodeHandler : IRequestHandler<FindProductByCodeQuery, ProductDto>
+public class FindProductByCodeHandler(IProductRepository productRepository)
+    : IRequestHandler<FindProductByCodeQuery, ProductDto>
 {
-    private readonly IProductRepository productRepository;
-
-    public FindProductByCodeHandler(IProductRepository productRepository)
-    {
-        this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-    }
-
+    
     public async Task<ProductDto> Handle(FindProductByCodeQuery request, CancellationToken cancellationToken)
     {
         var result = await productRepository.FindOne(request.ProductCode);

@@ -3,15 +3,8 @@ using ProductService.Domain;
 
 namespace ProductService.DataAccess.EF;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(ProductDbContext productDbContext) : IProductRepository
 {
-    private readonly ProductDbContext productDbContext;
-
-    public ProductRepository(ProductDbContext productDbContext)
-    {
-        this.productDbContext = productDbContext ?? throw new ArgumentNullException(nameof(productDbContext));
-    }
-
     public async Task<Product> Add(Product product)
     {
         await productDbContext.Products.AddAsync(product);

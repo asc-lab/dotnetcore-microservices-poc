@@ -15,11 +15,11 @@ public class FindProductsHandlersTest
 {
     private readonly Mock<IProductRepository> productRepository;
 
-    private readonly List<Product> products = new()
-    {
+    private readonly List<Product> products =
+    [
         TestProductFactory.Travel(),
         TestProductFactory.House()
-    };
+    ];
 
     public FindProductsHandlersTest()
     {
@@ -38,7 +38,7 @@ public class FindProductsHandlersTest
     {
         var findAllProductsHandler = new FindAllProductsHandler(productRepository.Object);
 
-        var result = await findAllProductsHandler.Handle(new FindAllProductsQuery(), new CancellationToken());
+        var result = await findAllProductsHandler.Handle(new FindAllProductsQuery(), CancellationToken.None);
 
         Assert.NotNull(result);
         Assert.Equal(products.Count, result.Count());
@@ -50,7 +50,7 @@ public class FindProductsHandlersTest
         var findProductByCodeHandler = new FindProductByCodeHandler(productRepository.Object);
 
         var result = await findProductByCodeHandler.Handle(
-            new FindProductByCodeQuery { ProductCode = TestProductFactory.Travel().Code }, new CancellationToken());
+            new FindProductByCodeQuery { ProductCode = TestProductFactory.Travel().Code }, CancellationToken.None);
 
         Assert.NotNull(result);
     }
@@ -61,7 +61,7 @@ public class FindProductsHandlersTest
         var findProductByCodeHandler = new FindProductByCodeHandler(productRepository.Object);
 
         var result = await findProductByCodeHandler.Handle(new FindProductByCodeQuery { ProductCode = "ASDASD" },
-            new CancellationToken());
+            CancellationToken.None);
 
         Assert.Null(result);
     }

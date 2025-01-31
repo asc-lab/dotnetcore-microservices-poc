@@ -5,15 +5,10 @@ using ProductService.Domain;
 
 namespace ProductService.Queries;
 
-public class FindAllProductsHandler : IRequestHandler<FindAllProductsQuery, IEnumerable<ProductDto>>
+public class FindAllProductsHandler(IProductRepository productRepository)
+    : IRequestHandler<FindAllProductsQuery, IEnumerable<ProductDto>>
 {
-    private readonly IProductRepository productRepository;
-
-    public FindAllProductsHandler(IProductRepository productRepository)
-    {
-        this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-    }
-
+    
     public async Task<IEnumerable<ProductDto>> Handle(FindAllProductsQuery request, CancellationToken cancellationToken)
     {
         var result = await productRepository.FindAllActive();

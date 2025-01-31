@@ -8,15 +8,9 @@ using static Xunit.Assert;
 
 namespace ProductService.Test.Controllers;
 
-public class ProductsControllerTest : IClassFixture<WebApplicationFactory<Program>>
+public class ProductsControllerTest(WebApplicationFactory<Program> factory)
+    : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> factory;
-
-    public ProductsControllerTest(WebApplicationFactory<Program> factory)
-    {
-        this.factory = factory;
-    }
-
     [Fact]
     public async Task GetAll_ReturnsJsonResult_WithListOfProducts()
     {

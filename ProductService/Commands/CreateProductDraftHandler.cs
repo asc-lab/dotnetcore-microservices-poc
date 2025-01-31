@@ -5,17 +5,14 @@ using ProductService.Domain;
 
 namespace ProductService.Commands;
 
-public class CreateProductDraftHandler : IRequestHandler<CreateProductDraftCommand, CreateProductDraftResult>
+public class CreateProductDraftHandler(IProductRepository products)
+    : IRequestHandler<CreateProductDraftCommand, CreateProductDraftResult>
 {
-    private readonly IProductRepository products;
-
-    public CreateProductDraftHandler(IProductRepository products)
-    {
-        this.products = products;
-    }
-
-    public async Task<CreateProductDraftResult> Handle(CreateProductDraftCommand request,
-        CancellationToken cancellationToken)
+    public async Task<CreateProductDraftResult> Handle
+    (
+        CreateProductDraftCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var draft = Product.CreateDraft
         (
