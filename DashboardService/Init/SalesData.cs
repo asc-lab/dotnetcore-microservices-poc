@@ -28,6 +28,8 @@ public class SalesData
             { "admin", AdminSalesData() }
         };
 
+        List<PolicyDocument> policyDocuments = new();
+
         foreach (var agentSalesData in salesData)
         foreach (var (product, month, policies) in agentSalesData.Value)
         {
@@ -46,16 +48,12 @@ public class SalesData
                     agentSalesData.Key
                 );
 
-                await elasticClient.IndexAsync
-                (
-                    policy,
-                    i => i
-                        .Index("policy_lab_stats")
-                        .Id(policy.Number)
-                        .Refresh(Refresh.True)
-                );
+                policyDocuments.Add(policy);
             }
         }
+
+        await elasticClient.BulkAsync(bd => bd
+             .IndexMany<PolicyDocument>(policyDocuments, (descriptor, s) => descriptor.Index("policy_lab_stats").Id(s.Number)));
     }
 
     private static (string Product, int Month, int Policies)[] JimmySalesData()
