@@ -27,7 +27,6 @@ public class Startup
         services.AddPricingRestClient();
         services.AddNHibernate(Configuration.GetConnectionString("DefaultConnection"));
         services.AddRabbitListeners();
-        services.AddSwaggerGen();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
